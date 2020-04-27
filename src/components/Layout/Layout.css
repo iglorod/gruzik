@@ -1,0 +1,27 @@
+.main-layout {
+    height: 100vh;
+}
+
+.header .logo {
+    margin-right: 20px;
+    width: 120px;
+    float: left;
+}
+
+.header .logo img {
+    width: inherit;
+}
+
+.content-layout-background {
+    padding: 24px;
+    margin: 0;
+    background: #fff;
+}
+
+.header .header-actions-menu {
+    float: left;
+}
+
+.header .header-auth-menu {
+    float: right;
+}
