@@ -13,16 +13,12 @@ const HeaderComponent = () => {
         <Header className='header'>
             <div className='logo'>
                 <img src={Logo} alt={'logo'} />
-            </div>
+            </div> 
 
-            <Menu
-                className={'header-actions-menu'}
-                items={contentLinks}
+            <Menu position={'left'} items={contentLinks}
             ></Menu>
 
-            <Menu
-                className={'header-auth-menu'}
-                items={authLinks}
+            <Menu position={'right'} items={authLinks}
             ></Menu>
         </Header>
     )

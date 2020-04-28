@@ -4,6 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import { Layout } from 'antd';
 
 import SignUp from '../../Authorization/SignUp/SignUp';
+import SignIn from '../../Authorization/SignIn/SignIn';
 
 const ContentComponent = () => {
     const { Content } = Layout;
@@ -12,6 +13,7 @@ const ContentComponent = () => {
         <Content className="content-layout-background">
             <Switch>
                 <Route path='/sign-up' component={SignUp} exact />
+                <Route path='/sign-in' component={SignIn} exact />
                 <Route path='/' render={() => <div>Content</div>} />
             </Switch>
         </Content>

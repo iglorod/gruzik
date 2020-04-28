@@ -1,23 +1,24 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-import { Menu } from 'antd';
+import classes from './Menu.module.css';
 
 const MenuComponent = (props) => {
     return (
-        <Menu
-            className={props.className}
-            theme="dark"
-            mode="horizontal"
-        >
+        <div className={props.position === 'left' ? classes.leftMenu : classes.rightMenu}>
             {
                 props.items.map((item, index) => (
-                    <Menu.Item key={index}>
-                        <NavLink to={item.path}>{item.title}</NavLink>
-                    </Menu.Item>
+                    <NavLink
+                        key={index}
+                        to={item.path}
+                        className={classes.navLink}
+                        activeClassName={classes.navLinkActive}>
+
+                        {item.title}
+                    </NavLink>
                 ))
             }
-        </Menu>
+        </div>
     )
 }
 

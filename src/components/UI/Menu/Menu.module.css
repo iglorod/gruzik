@@ -1,0 +1,20 @@
+.navLink {
+    margin: 0 15px;
+    color: lightgrey;
+}
+
+.navLinkActive {
+    color: white !important;
+}
+
+.leftMenu, .rightMenu {
+    display: flex;
+}
+
+.leftMenu {
+    float: left;
+}
+
+.rightMenu {
+    float: right;
+}
