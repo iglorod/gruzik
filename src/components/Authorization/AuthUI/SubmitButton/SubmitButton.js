@@ -6,6 +6,7 @@ const SubmitButton = ({ authStart, label }) => {
     return (
         <Button
             type="primary"
+            htmlType="submit"
             className={'submit-btn'}
             loading={authStart}
             disabled={authStart}

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import { Layout } from 'antd';
 import './Layout.css';
@@ -7,10 +8,19 @@ import './Layout.css';
 import Header from './Header/Header';
 import Sidebar from './Sidebar/Sidebar';
 import Content from './Content/Content';
+import { signInLocallyActionCreator } from '../../store/actions/authorization';
+import ModalSpinner from '../UI/ModalSpinner/ModalSpinner';
 
-const LayoutComponent = () => {
+const LayoutComponent = (props) => {
+    const { signInLocally, loading } = props;
+
+    useEffect(() => {
+        signInLocally();
+    }, [signInLocally])
+
     return (
         <Layout className='main-layout'>
+            {loading ? <ModalSpinner /> : null}
             <Header />
             <Layout>
                 <Route path='/music' component={Sidebar} exact />
@@ -22,4 +32,16 @@ const LayoutComponent = () => {
     )
 }
 
-export default LayoutComponent;
+const mapStateToProps = state => {
+    return {
+        loading: state.auth.loading,
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        signInLocally: () => { dispatch(signInLocallyActionCreator()) },
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LayoutComponent);

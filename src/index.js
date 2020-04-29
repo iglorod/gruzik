@@ -5,6 +5,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
 import authReducer from './store/reducers/authorization';
+import bandReducer from './store/reducers/band';
 
 import './index.css';
 import App from './App';
@@ -12,6 +13,7 @@ import * as serviceWorker from './serviceWorker';
 
 const store = createStore(combineReducers({
   auth: authReducer,
+  band: bandReducer,
 }), applyMiddleware(thunk));
 
 ReactDOM.render(

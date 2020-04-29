@@ -4,8 +4,7 @@ import { Redirect } from 'react-router-dom';
 
 import { Form, Checkbox } from 'antd';
 
-//import { signUpAction } from '../../../../store/actions/authorization';
-import { finishLoadingActionCreator } from '../../../store/actions/authorization';
+import { signUpActionCreator } from '../../../store/actions/authorization';
 import '../Authorization.css';
 import SubmitButton from '../AuthUI/SubmitButton/SubmitButton';
 import BottomNote from '../AuthUI/BottomNote/BottomNote';
@@ -14,8 +13,6 @@ import Head from '../AuthUI/Head/Head';
 import Inputs from '../AuthUI/Inputs/Inputs';
 
 const SignUp = (props) => {
-    const { finishLoading } = props;
-
     const [isBand, setIsBand] = useState(false);
 
     const [stateInputs, setStateInputs] = useState({
@@ -46,13 +43,9 @@ const SignUp = (props) => {
     });
 
     useEffect(() => {
-        finishLoading();
-    }, [finishLoading])
-
-    useEffect(() => {
         if (isBand) {
             const bandData = {
-                name: {
+                bandName: {
                     config: {
                         name: 'name',
                         label: 'Band name',
@@ -80,24 +73,19 @@ const SignUp = (props) => {
             setStateInputs({ ...bandData, ...stateInputs });
         } else if (Object.keys(stateInputs).length > 2) {
             let stateInputsClone = { ...stateInputs };
-            delete stateInputsClone.name;
+            delete stateInputsClone.bandName;
             delete stateInputsClone.genres;
             setStateInputs({ ...stateInputsClone });
         }
     }, [isBand])
 
-    const signUpHandler = (values) => {
-        console.log(values);
-        /*        const newUser = {
-                    email: stateInputs.email.value,
-                    password: stateInputs.password.value
-                };
-        
-                try {
-                    props.onSignUp(newUser);
-                } catch (error) {
-                    console.log(error);
-                }*/
+    const signUpHandler = () => {
+        const newUser = {}
+        for (let key in stateInputs) {
+            newUser[key] = stateInputs[key].value;
+        }
+
+        props.signUp(newUser);
     }
 
     const onChangeHandler = (inputName, event) => {
@@ -124,7 +112,7 @@ const SignUp = (props) => {
         },
     };
 
-    if (props.userId) return (
+    if (props.email) return (
         <Redirect to={'/'} />
     )
 
@@ -148,9 +136,9 @@ const SignUp = (props) => {
 
                 <Inputs stateInputs={stateInputs} onChangeHandler={onChangeHandler} />
 
-                <Alert errorMessage={props.errorMessage} />
-
                 <Checkbox className={'band-checkbox'} onChange={registerBandToggle}>I want to sign up as a band</Checkbox>
+
+                <Alert errorMessage={props.errorMessage} />
 
                 <SubmitButton authStart={props.authStart} label={'Sign Up'} />
                 <BottomNote to='/sign-in' note='Already have an account? Sign In' />
@@ -162,15 +150,14 @@ const SignUp = (props) => {
 const mapStateToProps = (state) => {
     return {
         errorMessage: state.auth.errorMessage,
-        userId: state.auth.id,
+        email: state.auth.email,
         authStart: state.auth.authStart
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        //onSignUp: (newUser) => dispatch(signUpAction(newUser)),
-        finishLoading: () => { dispatch(finishLoadingActionCreator()) }
+        signUp: (newUser) => dispatch(signUpActionCreator(newUser)),
     }
 }
 

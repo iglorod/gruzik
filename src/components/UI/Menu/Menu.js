@@ -10,11 +10,11 @@ const MenuComponent = (props) => {
                 props.items.map((item, index) => (
                     <NavLink
                         key={index}
-                        to={item.path}
+                        to={item.split(' ').join('-')}
                         className={classes.navLink}
-                        activeClassName={classes.navLinkActive}>
-
-                        {item.title}
+                        activeClassName={classes.navLinkActive}
+                    >
+                        {item}
                     </NavLink>
                 ))
             }

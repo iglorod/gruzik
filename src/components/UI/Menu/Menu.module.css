@@ -3,6 +3,10 @@
     color: lightgrey;
 }
 
+.navLink::first-letter {
+    text-transform: capitalize;
+}
+
 .navLinkActive {
     color: white !important;
 }

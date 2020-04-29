@@ -25,3 +25,16 @@
 .header .header-auth-menu {
     float: right;
 }
+
+.header .logout-btn {
+    color: lightgrey;
+    display: flex;
+    float: right;
+    cursor: pointer;
+    user-select: none;
+    transition: ease .3s;
+}
+
+.header .logout-btn:hover {
+    color: #1890ff;
+}

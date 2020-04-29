@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import { Form, Input } from 'antd';
+import { Form, Input, Checkbox } from 'antd';
 
-//import { signUpAction } from '../../../../store/actions/authorization';
-import { finishLoadingActionCreator } from '../../../store/actions/authorization';
+import { signInActionCreator } from '../../../store/actions/authorization';
 import '../Authorization.css';
 import SubmitButton from '../AuthUI/SubmitButton/SubmitButton';
 import BottomNote from '../AuthUI/BottomNote/BottomNote';
@@ -13,8 +12,7 @@ import Alert from '../AuthUI/Alert/Alert';
 import Head from '../AuthUI/Head/Head';
 
 const SignIn = (props) => {
-    const { finishLoading } = props;
-
+    const [rememberMe, setRememberMe] = useState(true);
     const [stateInputs, setStateInputs] = useState({
         email: {
             config: {
@@ -42,22 +40,13 @@ const SignIn = (props) => {
         },
     });
 
-    useEffect(() => {
-        finishLoading();
-    }, [finishLoading])
+    const signInHandler = () => {
+        const userData = {}
+        for (let key in stateInputs) {
+            userData[key] = stateInputs[key].value;
+        }
 
-    const signInHandler = (values) => {
-        console.log(values);
-        /*        const newUser = {
-                    email: stateInputs.email.value,
-                    password: stateInputs.password.value
-                };
-        
-                try {
-                    props.onSignUp(newUser);
-                } catch (error) {
-                    console.log(error);
-                }*/
+        props.signIn(userData, rememberMe);
     }
 
     const onChangeHandler = (inputName, event) => {
@@ -70,6 +59,10 @@ const SignIn = (props) => {
                 value: newValue,
             }
         }));
+    }
+
+    const rememberMeToggle = () => {
+        setRememberMe(prevState => !prevState);
     }
 
     const validateMessages = {
@@ -99,7 +92,7 @@ const SignIn = (props) => {
         );
     }
 
-    if (props.userId) return (
+    if (props.email) return (
         <Redirect to={'/'} />
     )
 
@@ -122,6 +115,8 @@ const SignIn = (props) => {
             <Form {...layout} name="nest-messages" onFinish={signInHandler} validateMessages={validateMessages}>
                 {inputs}
 
+                <Checkbox className={'band-checkbox'} defaultChecked onChange={rememberMeToggle}>Remember me</Checkbox>
+
                 <Alert errorMessage={props.errorMessage} />
 
                 <SubmitButton authStart={props.authStart} label={'Sign In'} />
@@ -135,15 +130,14 @@ const SignIn = (props) => {
 const mapStateToProps = (state) => {
     return {
         errorMessage: state.auth.errorMessage,
-        userId: state.auth.id,
+        email: state.auth.email,
         authStart: state.auth.authStart
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        //onSignIn: (newUser) => dispatch(signInAction(newUser)),
-        finishLoading: () => { dispatch(finishLoadingActionCreator()) }
+        signIn: (userData, rememberMe) => dispatch(signInActionCreator(userData, rememberMe)),
     }
 }
 

@@ -1,0 +1,7 @@
+.editable-paragraph svg {
+    font-size: 14px !important;
+}
+
+.editable-paragraph.ant-typography-edit-content {
+    display: inline;
+}

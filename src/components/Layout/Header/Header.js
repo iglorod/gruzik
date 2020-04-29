@@ -1,27 +1,46 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import { Layout } from 'antd';
 
+import { logoutActionCreator } from '../../../store/actions/authorization';
 import Logo from '../../../assets/images/logo.png';
 import Menu from '../../UI/Menu/Menu';
-import { authLinks, contentLinks } from '../../../utility/nav-links-list';
 
 const { Header } = Layout;
 
-const HeaderComponent = () => {
+const HeaderComponent = (props) => {
+    let authSection = <Menu position={'right'} items={['sign in', 'sign up']}></Menu>
+    if (props.email) authSection = <div className={'logout-btn'} onClick={props.logout}>Logout</div>;
+
+    const actionLinks = ['music'];
+    if (props.isBand) actionLinks.push('my band')
+    else if (props.email) actionLinks.push('following')
+
     return (
         <Header className='header'>
             <div className='logo'>
                 <img src={Logo} alt={'logo'} />
-            </div> 
+            </div>
 
-            <Menu position={'left'} items={contentLinks}
-            ></Menu>
+            <Menu position={'left'} items={actionLinks}></Menu>
 
-            <Menu position={'right'} items={authLinks}
-            ></Menu>
+            {authSection}
         </Header>
     )
 }
 
-export default HeaderComponent;
+const mapStateToProps = (state) => {
+    return {
+        email: state.auth.email,
+        isBand: state.auth.isBand,
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        logout: () => { dispatch(logoutActionCreator()) }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderComponent);
