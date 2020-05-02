@@ -1,16 +1,17 @@
 .card {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
-.card > div:first-child {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.card>div:first-child {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 @media(max-width: 576px) {
-    .card {
-        display: block;
-    }
+  .card {
+    display: block;
+  }
 }

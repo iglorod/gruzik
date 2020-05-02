@@ -4,161 +4,161 @@ import { Redirect } from 'react-router-dom';
 
 import { Form, Checkbox } from 'antd';
 
-import { signUpActionCreator } from '../../../store/actions/authorization';
+import { signUpActionCreator } from '../../../store/authorization/actions';
 import '../Authorization.css';
 import SubmitButton from '../AuthUI/SubmitButton/SubmitButton';
 import BottomNote from '../AuthUI/BottomNote/BottomNote';
 import Alert from '../AuthUI/Alert/Alert';
 import Head from '../AuthUI/Head/Head';
-import Inputs from '../AuthUI/Inputs/Inputs';
+import DataInputs from '../../UI/DataInputs/DataInputs';
 
 const SignUp = (props) => {
-    const [isBand, setIsBand] = useState(false);
+  const [isBand, setIsBand] = useState(false);
 
-    const [stateInputs, setStateInputs] = useState({
-        email: {
-            config: {
-                name: 'email',
-                label: 'Email',
-            },
-            validationRules: {
-                required: true,
-                type: 'email',
-            },
-            value: '',
+  const [stateInputs, setStateInputs] = useState({
+    email: {
+      config: {
+        name: 'email',
+        label: 'Email',
+      },
+      validationRules: {
+        required: true,
+        type: 'email',
+      },
+      value: '',
+    },
+    password: {
+      config: {
+        type: 'password',
+        name: 'password',
+        label: 'Password',
+      },
+      validationRules: {
+        required: true,
+        type: 'string',
+        min: 6,
+      },
+      value: '',
+    },
+  });
+
+  useEffect(() => {
+    if (isBand) {
+      const bandData = {
+        bandName: {
+          config: {
+            name: 'name',
+            label: 'Band name',
+          },
+          validationRules: {
+            required: true,
+            type: 'string',
+            min: 2,
+          },
+          value: '',
         },
-        password: {
-            config: {
-                type: 'password',
-                name: 'password',
-                label: 'Password',
-            },
-            validationRules: {
-                required: true,
-                type: 'string',
-                min: 6,
-            },
-            value: '',
+        genres: {
+          config: {
+            type: 'text',
+            name: 'genres',
+            label: 'Genres',
+          },
+          validationRules: {
+            required: true,
+          },
+          value: '',
         },
-    });
+      }
 
-    useEffect(() => {
-        if (isBand) {
-            const bandData = {
-                bandName: {
-                    config: {
-                        name: 'name',
-                        label: 'Band name',
-                    },
-                    validationRules: {
-                        required: true,
-                        type: 'string',
-                        min: 2,
-                    },
-                    value: '',
-                },
-                genres: {
-                    config: {
-                        type: 'text',
-                        name: 'genres',
-                        label: 'Genres',
-                    },
-                    validationRules: {
-                        required: true,
-                    },
-                    value: '',
-                },
-            }
+      setStateInputs({ ...bandData, ...stateInputs });
+    } else if (Object.keys(stateInputs).length > 2) {
+      let stateInputsClone = { ...stateInputs };
+      delete stateInputsClone.bandName;
+      delete stateInputsClone.genres;
+      setStateInputs({ ...stateInputsClone });
+    }
+  }, [isBand])
 
-            setStateInputs({ ...bandData, ...stateInputs });
-        } else if (Object.keys(stateInputs).length > 2) {
-            let stateInputsClone = { ...stateInputs };
-            delete stateInputsClone.bandName;
-            delete stateInputsClone.genres;
-            setStateInputs({ ...stateInputsClone });
-        }
-    }, [isBand])
-
-    const signUpHandler = () => {
-        const newUser = {}
-        for (let key in stateInputs) {
-            newUser[key] = stateInputs[key].value;
-        }
-
-        props.signUp(newUser);
+  const signUpHandler = () => {
+    const newUser = {}
+    for (let key in stateInputs) {
+      newUser[key] = stateInputs[key].value;
     }
 
-    const onChangeHandler = (inputName, event) => {
-        const newValue = (inputName === 'genres') ? event : event.target.value;
-        setStateInputs(prevState => ({
-            ...prevState,
-            [inputName]: {
-                ...prevState[inputName],
-                value: newValue,
-            }
-        }));
-    }
+    props.signUp(newUser);
+  }
 
-    const registerBandToggle = () => {
-        setIsBand(prevState => !prevState);
-    }
+  const onChangeHandler = (inputName, event) => {
+    const newValue = (inputName === 'genres') ? event : event.target.value;
+    setStateInputs(prevState => ({
+      ...prevState,
+      [inputName]: {
+        ...prevState[inputName],
+        value: newValue,
+      }
+    }));
+  }
 
-    const validateMessages = {
-        types: {
-            email: '${label} is not valid!',
-        },
-        string: {
-            min: '${label} must be at least ${min} characters',
-        },
-    };
+  const registerBandToggle = () => {
+    setIsBand(prevState => !prevState);
+  }
 
-    if (props.email) return (
-        <Redirect to={'/'} />
-    )
+  const validateMessages = {
+    types: {
+      email: '${label} is not valid!',
+    },
+    string: {
+      min: '${label} must be at least ${min} characters',
+    },
+  };
 
-    const layout = {
-        labelCol: {
-            sm: { offset: 2, span: 4 },
-            md: { offset: 4, span: 4 },
-            lg: { offset: 6, span: 2 },
-        },
-        wrapperCol: {
-            sm: { span: 12 },
-            md: { span: 8 },
-            lg: { span: 8 },
-        },
-    };
+  if (props.email) return (
+    <Redirect to={'/'} />
+  )
 
-    return (
-        <React.Fragment>
-            <Head title='Sign Up' />
-            <Form {...layout} name="nest-messages" onFinish={signUpHandler} validateMessages={validateMessages}>
+  const layout = {
+    labelCol: {
+      sm: { offset: 2, span: 4 },
+      md: { offset: 4, span: 4 },
+      lg: { offset: 6, span: 2 },
+    },
+    wrapperCol: {
+      sm: { span: 12 },
+      md: { span: 8 },
+      lg: { span: 8 },
+    },
+  };
 
-                <Inputs stateInputs={stateInputs} onChangeHandler={onChangeHandler} />
+  return (
+    <React.Fragment>
+      <Head title='Sign Up' />
+      <Form {...layout} name="nest-messages" onFinish={signUpHandler} validateMessages={validateMessages}>
 
-                <Checkbox className={'band-checkbox'} onChange={registerBandToggle}>I want to sign up as a band</Checkbox>
+        <DataInputs stateInputs={stateInputs} onChangeHandler={onChangeHandler} />
 
-                <Alert errorMessage={props.errorMessage} />
+        <Checkbox className={'band-checkbox'} onChange={registerBandToggle}>I want to sign up as a band</Checkbox>
 
-                <SubmitButton authStart={props.authStart} label={'Sign Up'} />
-                <BottomNote to='/sign-in' note='Already have an account? Sign In' />
-            </Form>
-        </React.Fragment>
-    )
+        <Alert errorMessage={props.errorMessage} />
+
+        <SubmitButton authStart={props.authStart} label={'Sign Up'} />
+        <BottomNote to='/sign-in' note='Already have an account? Sign In' />
+      </Form>
+    </React.Fragment>
+  )
 }
 
 const mapStateToProps = (state) => {
-    return {
-        errorMessage: state.auth.errorMessage,
-        email: state.auth.email,
-        authStart: state.auth.authStart
-    }
+  return {
+    errorMessage: state.auth.errorMessage,
+    email: state.auth.email,
+    authStart: state.auth.authStart
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        signUp: (newUser) => dispatch(signUpActionCreator(newUser)),
-    }
+  return {
+    signUp: (newUser) => dispatch(signUpActionCreator(newUser)),
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

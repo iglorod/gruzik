@@ -1,0 +1,24 @@
+.uploadButton {
+  position: absolute;
+  height: 100%;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: ease .3s;
+}
+
+.uploadButton:hover {
+  opacity: 1;
+}
+
+.backgroundMask {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  transform: translateY(calc(-50% + 15px));
+  background: #000;
+  opacity: .5;
+}
+

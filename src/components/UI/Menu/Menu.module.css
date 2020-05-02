@@ -1,24 +1,24 @@
 .navLink {
-    margin: 0 15px;
-    color: lightgrey;
+  margin: 0 15px;
+  color: lightgrey;
 }
 
 .navLink::first-letter {
-    text-transform: capitalize;
+  text-transform: capitalize;
 }
 
 .navLinkActive {
-    color: white !important;
+  color: white !important;
 }
 
 .leftMenu, .rightMenu {
-    display: flex;
+  display: flex;
 }
 
 .leftMenu {
-    float: left;
+  float: left;
 }
 
 .rightMenu {
-    float: right;
+  float: right;
 }

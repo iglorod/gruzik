@@ -1,12 +1,12 @@
 .modal {
-    position: absolute;
-    height: 100vh;
-    width: 100%;
-    padding-top: 50vh;
-    background: white;
-    z-index: 999;
+  position: absolute;
+  height: 100vh;
+  width: 100%;
+  padding-top: 50vh;
+  background: white;
+  z-index: 999;
 }
 
 .spinner {
-    transform: translateY(-50%)
+  transform: translateY(-50%)
 }

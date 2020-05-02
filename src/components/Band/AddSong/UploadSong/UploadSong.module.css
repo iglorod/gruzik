@@ -1,0 +1,14 @@
+.uploadLabel {
+  display: flex;
+  justify-content: center;
+}
+
+.uploadLabel > div {
+  padding: 0 5px;
+}
+
+.uploadArea > div {
+  float: none !important;
+  width: 100% !important;
+  height: 50px !important;
+}

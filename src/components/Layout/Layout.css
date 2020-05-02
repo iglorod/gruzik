@@ -1,40 +1,40 @@
 .main-layout {
-    min-height: 100vh !important;
+  min-height: 100vh !important;
 }
 
 .header .logo {
-    margin-right: 20px;
-    width: 120px;
-    float: left;
+  margin-right: 20px;
+  width: 120px;
+  float: left;
 }
 
 .header .logo img {
-    width: inherit;
+  width: inherit;
 }
 
 .content-layout-background {
-    padding: 24px;
-    margin: 0;
-    background: #fff;
+  padding: 24px;
+  margin: 0;
+  background: #fff;
 }
 
 .header .header-actions-menu {
-    float: left;
+  float: left;
 }
 
 .header .header-auth-menu {
-    float: right;
+  float: right;
 }
 
 .header .logout-btn {
-    color: lightgrey;
-    display: flex;
-    float: right;
-    cursor: pointer;
-    user-select: none;
-    transition: ease .3s;
+  color: lightgrey;
+  display: flex;
+  float: right;
+  cursor: pointer;
+  user-select: none;
+  transition: ease .3s;
 }
 
 .header .logout-btn:hover {
-    color: #1890ff;
+  color: #1890ff;
 }

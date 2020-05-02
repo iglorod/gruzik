@@ -8,40 +8,40 @@ import './Layout.css';
 import Header from './Header/Header';
 import Sidebar from './Sidebar/Sidebar';
 import Content from './Content/Content';
-import { signInLocallyActionCreator } from '../../store/actions/authorization';
+import { signInLocallyActionCreator } from '../../store/authorization/actions';
 import ModalSpinner from '../UI/ModalSpinner/ModalSpinner';
 
 const LayoutComponent = (props) => {
-    const { signInLocally, loading } = props;
+  const { signInLocally, loading } = props;
 
-    useEffect(() => {
-        signInLocally();
-    }, [signInLocally])
+  useEffect(() => {
+    signInLocally();
+  }, [signInLocally])
 
-    return (
-        <Layout className='main-layout'>
-            {loading ? <ModalSpinner /> : null}
-            <Header />
-            <Layout>
-                <Route path='/music' component={Sidebar} exact />
-                <Layout style={{ padding: '24px' }}>
-                    <Content />
-                </Layout>
-            </Layout>
+  return (
+    <Layout className='main-layout'>
+      {loading ? <ModalSpinner /> : null}
+      <Header />
+      <Layout>
+        <Route path='/music' component={Sidebar} exact />
+        <Layout style={{ padding: '24px' }}>
+          <Content />
         </Layout>
-    )
+      </Layout>
+    </Layout>
+  )
 }
 
 const mapStateToProps = state => {
-    return {
-        loading: state.auth.loading,
-    }
+  return {
+    loading: state.auth.loading,
+  }
 }
 
 const mapDispatchToProps = dispatch => {
-    return {
-        signInLocally: () => { dispatch(signInLocallyActionCreator()) },
-    }
+  return {
+    signInLocally: () => { dispatch(signInLocallyActionCreator()) },
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LayoutComponent);
