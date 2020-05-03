@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import EditableInput from '../../../UI/EditableInput/EditableInput';
-import { updateBandDataActionCreator } from '../../../../store/band/actions';
+import EditableInput from '../../UI/EditableInput/EditableInput';
+import { updateBandDataActionCreator } from '../../../store/band/actions';
 
 const BandName = (props) => {
   const style = {

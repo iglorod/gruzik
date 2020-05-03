@@ -8,6 +8,7 @@ import './Layout.css';
 import Header from './Header/Header';
 import Sidebar from './Sidebar/Sidebar';
 import Content from './Content/Content';
+import Footer from './Footer/Footer';
 import { signInLocallyActionCreator } from '../../store/authorization/actions';
 import ModalSpinner from '../UI/ModalSpinner/ModalSpinner';
 
@@ -22,12 +23,15 @@ const LayoutComponent = (props) => {
     <Layout className='main-layout'>
       {loading ? <ModalSpinner /> : null}
       <Header />
+
       <Layout>
         <Route path='/music' component={Sidebar} exact />
         <Layout style={{ padding: '24px' }}>
           <Content />
         </Layout>
       </Layout>
+
+      <Footer />
     </Layout>
   )
 }

@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { Upload, Button, Tooltip } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 
-import { uploadImageActionCreator, startUpdatingDataActionCreator } from '../../../../store/band/actions';
-import { validateImage } from '../../../../utility/file-validation';
+import { uploadImageActionCreator } from '../../../store/band/actions';
+import { validateImage } from '../../../utility/file-validation';
 import classes from './BandImage.module.css';
 
 const BandImage = (props) => {
@@ -30,8 +30,10 @@ const BandImage = (props) => {
   return (
     <>
       <img
-        src={`https://firebasestorage.googleapis.com/v0/b/gruzik-787b2.appspot.com/o/band-images%2F${props.image}?alt=media`}
         alt="band poster"
+        src={`https://firebasestorage.googleapis.com/v0/b/`
+          + `${process.env.REACT_APP_FIREBASE_KEY_STORE_BUCKET}/o/band-images%2F`
+          + `${props.image}?alt=media`}
       />
       {uploadButton}
     </>)

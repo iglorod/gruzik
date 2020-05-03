@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { Upload, Progress } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 
-import { uploadSongActionCreator } from '../../../../store/songs/actions';
-import { validateSong } from '../../../../utility/file-validation';
+import { uploadSongActionCreator } from '../../../store/songs/actions';
+import { validateSong } from '../../../utility/file-validation';
 import classes from './UploadSong.module.css';
 import SongInfo from './SongInfo/SongInfo';
 
@@ -22,8 +22,8 @@ const UploadSong = (props) => {
     setOpenSongModal(false);
   }
 
-  const createSong = (songInfo) => {
-    props.uploadSong(song, songInfo);
+  const createSong = (songPicture, songInfo) => {
+    props.uploadSong(song, songPicture, songInfo);
   }
 
   const songInfo = (
@@ -73,7 +73,7 @@ const mapStateToProps = (state) => {
 
 const mapDispathToProps = (dispatch) => {
   return {
-    uploadSong: (song, songInfo) => { dispatch(uploadSongActionCreator(song, songInfo)) }
+    uploadSong: (song, songPicture, songInfo) => { dispatch(uploadSongActionCreator(song, songPicture, songInfo)) }
   }
 }
 

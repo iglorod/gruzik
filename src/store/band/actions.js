@@ -45,7 +45,7 @@ export const clearBandDataActionCreator = () => {
 export const fetchBandDataActionCreator = (localId) => {
   return dispatch => {
     let queryParams = `?orderBy="localId"&equalTo="${localId}"&limitToFirst=1`;
-    axios.get('https://gruzik-787b2.firebaseio.com/bands.json/' + queryParams)
+    axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE}/bands.json/${queryParams}`)
       .then(response => {
         if (response.data) {
           const bandKey = Object.keys(response.data)[0];
@@ -67,7 +67,7 @@ export const updateBandDataActionCreator = (data) => {
     const firebaseKey = getState().band.key;
 
     let queryParams = `?auth=${token}`;
-    axios.patch(`https://gruzik-787b2.firebaseio.com/bands/${firebaseKey}/.json/` + queryParams, data)
+    axios.patch(`${process.env.REACT_APP_FIREBASE_DATABASE}/bands/${firebaseKey}/.json/${queryParams}`, data)
       .then(response => {
         dispatch(setBandDataActionCreator(response.data));
         dispatch(finishUpdatingDataActionCreator());

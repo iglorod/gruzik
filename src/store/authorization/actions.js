@@ -96,7 +96,7 @@ export const postBandDataActionCreator = (createdUser, newUser) => {
         description: 'No description yet',
       }
 
-      axios.post(`https://gruzik-787b2.firebaseio.com/bands.json/?auth=` + createdUser.idToken, band)
+      axios.post(`${process.env.REACT_APP_FIREBASE_DATABASE}/bands.json/?auth=${createdUser.idToken}`, band)
         .then(() => {
           createdUser.isBand = true;
           dispatch(loginActionCreator(createdUser))
@@ -114,7 +114,7 @@ export const postBandDataActionCreator = (createdUser, newUser) => {
 export const setUserTypeActionCreator = (user, rememberMe) => { //band or regular user
   return dispatch => {
     let queryParams = `?orderBy="localId"&equalTo="${user.localId}"&limitToFirst=1`;
-    axios.get('https://gruzik-787b2.firebaseio.com/bands.json/' + queryParams)
+    axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE}/bands.json/${queryParams}`)
       .then(response => {
         if (response.data) {
           user.isBand = true;

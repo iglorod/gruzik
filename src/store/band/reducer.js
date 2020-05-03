@@ -8,7 +8,6 @@ const initialState = {
   genres: null,
   description: null,
   image: 'no-image.jpg',
-  songs: [],
   loading: true,      //first fetching
   updating: false,    //updating band data
   error: false,
@@ -20,16 +19,6 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         ...action.bandData,
-      }
-    }
-
-    case actionTypes.ADD_SONG: {
-      return {
-        ...state,
-        songs: [
-          ...state.songs,
-          action.song,
-        ]
       }
     }
 
