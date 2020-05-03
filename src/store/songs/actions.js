@@ -1,6 +1,7 @@
 import * as actionTypes from '../actionTypes';
 import firebase from '../../firebase';
 import axios from 'axios';
+import { genres } from '../../utility/music-genres';
 
 import { getAudioDuration, bandNamesCachingDecorator } from './utility';
 
@@ -43,7 +44,7 @@ export const unshiftSongToListActionCreator = (song) => {
   }
 }
 
-export const clearSongListActionCreator = (error) => {
+export const clearSongListActionCreator = () => {
   return {
     type: actionTypes.CLEAR_SONGS_LIST,
   }
@@ -93,12 +94,21 @@ export const songReadyToPlayActionCreator = () => {
   }
 }
 
+export const changeSelectedGenreActionCreator = (key) => {
+  console.log('Selected', key)
+  return {
+    type: actionTypes.CHANGE_SELECTED_GENRE,
+    key,
+  }
+}
+
 export const createSongInfoActionCreator = (songInfo) => {
   return (dispatch, getState) => {
     songInfo.localId = getState().auth.localId;
 
     axios.post(`${process.env.REACT_APP_FIREBASE_DATABASE}/songs.json/?auth=${getState().auth.idToken}`, songInfo)
       .then(() => {
+        songInfo.bandName = getState().band.bandName;
         dispatch(unshiftSongToListActionCreator(songInfo));
         dispatch(finishCreatingSongActionCreator());
       })
@@ -186,8 +196,23 @@ export const fetchBandSongsActionCreator = (bandId) => {
       })
       .catch(error => {
         dispatch(songsErrorActionCreator(error));
-        dispatch(finishCreatingSongActionCreator());
       })
   }
 }
 
+export const filterByGenreActionCreator = (key) => {
+  return dispatch => {    
+    const selectedGenre = genres[key];
+    console.log('fetch', key)
+    let queryParams = `?orderBy="genre"&equalTo="${selectedGenre}"&limitToLast=5`;
+    axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE}/songs.json/${queryParams}`)
+      .then((response) => {
+        response.data
+          ? dispatch(fetchSongsBandNameActionCreator(Object.values(response.data).reverse()))
+          : dispatch(finishSongsLoadingActionCreator());
+      })
+      .catch(error => {
+        dispatch(songsErrorActionCreator(error));
+      })
+  }
+}

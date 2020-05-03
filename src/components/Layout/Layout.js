@@ -6,7 +6,7 @@ import { Layout } from 'antd';
 import './Layout.css';
 
 import Header from './Header/Header';
-import Sidebar from './Sidebar/Sidebar';
+import Filter from '../Filter/Filter';
 import Content from './Content/Content';
 import Footer from './Footer/Footer';
 import { signInLocallyActionCreator } from '../../store/authorization/actions';
@@ -25,7 +25,7 @@ const LayoutComponent = (props) => {
       <Header />
 
       <Layout>
-        <Route path='/music' component={Sidebar} exact />
+        <Route path='/music' component={Filter} exact />
         <Layout style={{ padding: '24px' }}>
           <Content />
         </Layout>

@@ -5,7 +5,7 @@ import { PlayCircleFilled, PauseCircleFilled, LoadingOutlined } from '@ant-desig
 
 import classes from './Song.module.css';
 
-const Song = React.memo((props) => {
+const BandSong = React.memo((props) => {
   const { Meta } = Card;
   const { song, currentSong, playNow, selectedSongCanPlay } = props;
 
@@ -56,4 +56,4 @@ const Song = React.memo((props) => {
   )
 })
 
-export default Song;
+export default BandSong;

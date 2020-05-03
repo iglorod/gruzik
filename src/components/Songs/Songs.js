@@ -5,13 +5,14 @@ import { Spin, Empty } from 'antd';
 
 import Song from './Song/Song';
 import { startPlayMusicActionCreator } from '../../store/songs/actions';
+import classes from './Song.module.css';
 
 const Songs = (props) => {
   const { songs, loading, playSong, playNow } = props;
 
-  if (loading) return <Spin />
+  if (loading) return <Spin className={classes.UXElement} />
 
-  let songsList = <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />;
+  let songsList = <Empty className={classes.UXElement} image={Empty.PRESENTED_IMAGE_SIMPLE} />;
   if (songs.length > 0) {
     songsList = songs.map((song, index) => (
       <Song

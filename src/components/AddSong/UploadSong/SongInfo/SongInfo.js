@@ -20,11 +20,11 @@ const SongInfo = (props) => {
       },
       value: '',
     },
-    genres: {
+    genre: {
       config: {
         type: 'text',
-        name: 'genres',
-        label: 'Genres',
+        name: 'genre',
+        label: 'Genre',
       },
       validationRules: {
         required: true,
@@ -34,7 +34,7 @@ const SongInfo = (props) => {
   })
 
   const onChangeHandler = (inputName, event) => {
-    const newValue = (inputName === 'genres') ? event : event.target.value;
+    const newValue = (inputName === 'genre') ? event : event.target.value;
     setSongInputs(prevState => ({
       ...prevState,
       [inputName]: {

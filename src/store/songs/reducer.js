@@ -3,6 +3,7 @@ import { message } from 'antd';
 
 const initialState = {
   songs: [],
+  genre: 0,
   playSong: null,
   playNow: false,
   percents: 0,
@@ -126,10 +127,19 @@ const reducer = (state = initialState, action) => {
       }
     }
 
+    case actionTypes.CHANGE_SELECTED_GENRE: {
+      return {
+        ...state,
+        genre: action.key,
+      }
+    }
+
     case actionTypes.CLEAR_SONGS_LIST: {
       return {
-        playSong: state.playSong,
         ...initialState,
+        playSong: state.playSong,
+        playNow: state.playNow,
+        genre: state.genre,
       }
     }
 
