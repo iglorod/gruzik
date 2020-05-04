@@ -16,9 +16,8 @@ const ContentComponent = () => {
       <Switch>
         <Route path='/sign-up' component={SignUp} exact />
         <Route path='/sign-in' component={SignIn} exact />
-        <Route path='/my-band' component={Band} exact />
-        <Route path='/music' component={Music} exact />
-        <Route path='/' render={() => <div>Content</div>} />
+        <Route path='/band' component={Band} exact />
+        <Route path='/' component={Music} />
       </Switch>
     </Content>
   )

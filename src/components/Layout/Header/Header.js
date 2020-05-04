@@ -13,8 +13,19 @@ const HeaderComponent = (props) => {
   let authSection = <Menu position={'right'} items={['sign in', 'sign up']}></Menu>
   if (props.email) authSection = <div className={'logout-btn'} onClick={props.logout}>Logout</div>;
 
+
+  const linkToMyBand = {
+    name: 'my band',
+    to: {
+      pathname: '/band',
+      state: {
+        localId: props.localId,
+      }
+    }
+  }
+
   const actionLinks = ['music'];
-  if (props.isBand) actionLinks.push('my band')
+  if (props.isBand) actionLinks.push(linkToMyBand)
   else if (props.email) actionLinks.push('following')
 
   return (
@@ -34,6 +45,7 @@ const mapStateToProps = (state) => {
   return {
     email: state.auth.email,
     isBand: state.auth.isBand,
+    localId: state.auth.localId,
   }
 }
 

@@ -13,8 +13,7 @@ const Band = (props) => {
   const { fetchBandSongs, fetchBandData, clearSongsList, clearBandData } = props;
 
   useEffect(() => {
-    const bandId = 'j3Jn3VZYnhbuz4cDiTKJHXq7Z4j1';
-
+    const bandId = props.location.state.localId;
     fetchBandData(bandId);
     fetchBandSongs(bandId)
 
@@ -22,7 +21,7 @@ const Band = (props) => {
       clearSongsList();
       clearBandData();
     }
-  }, [fetchBandData, fetchBandSongs, clearSongsList, clearBandData])
+  }, [fetchBandData, fetchBandSongs, clearSongsList, clearBandData, props.location])
 
   return (
     <Row>

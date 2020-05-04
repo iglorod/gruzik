@@ -3,7 +3,7 @@ import firebase from '../../firebase';
 import axios from 'axios';
 import { genres } from '../../utility/music-genres';
 
-import { getAudioDuration, bandNamesCachingDecorator } from './utility';
+import { getAudioDuration, bandNamesCachingDecorator, getSongLikesCount, getSong } from './utility';
 
 export const finishSongsLoadingActionCreator = () => {
   return {
@@ -95,20 +95,54 @@ export const songReadyToPlayActionCreator = () => {
 }
 
 export const changeSelectedGenreActionCreator = (key) => {
-  console.log('Selected', key)
   return {
     type: actionTypes.CHANGE_SELECTED_GENRE,
     key,
   }
 }
 
+export const toggleSongLikesActionCreator = (fileName, key) => {
+  return {
+    type: actionTypes.TOGGLE_SONG_LIKES,
+    fileName,
+    key,
+  }
+}
+
+export const startUpdatingActionCreator = (fileName) => {
+  return {
+    type: actionTypes.START_SONG_UPDATING,
+    fileName,
+  }
+}
+
+export const finishUpdatingActionCreator = (fileName) => {
+  return {
+    type: actionTypes.FINISH_SONG_UPDATING,
+    fileName,
+  }
+}
+
+export const setUpdatedDataToSongActionCreator = (fileName, data) => {
+  return {
+    type: actionTypes.SET_SONG_UPDATED_DATA,
+    fileName,
+    data,
+  }
+}
+
 export const createSongInfoActionCreator = (songInfo) => {
   return (dispatch, getState) => {
     songInfo.localId = getState().auth.localId;
+    songInfo.listened_times = 0;
 
     axios.post(`${process.env.REACT_APP_FIREBASE_DATABASE}/songs.json/?auth=${getState().auth.idToken}`, songInfo)
       .then(() => {
         songInfo.bandName = getState().band.bandName;
+        songInfo.likesCount = 0;
+        songInfo.userIsLikedSong = false;
+        songInfo.userLikeId = null;
+
         dispatch(unshiftSongToListActionCreator(songInfo));
         dispatch(finishCreatingSongActionCreator());
       })
@@ -181,7 +215,7 @@ export const fetchSongsBandNameActionCreator = (songs) => {
       song.bandName = namesOfBands.get(song.localId);
     }
 
-    dispatch(addSongsToListActionCreator(songs));
+    dispatch(getSongsLikesCountActionCreator(songs));
   }
 }
 
@@ -201,9 +235,8 @@ export const fetchBandSongsActionCreator = (bandId) => {
 }
 
 export const filterByGenreActionCreator = (key) => {
-  return dispatch => {    
+  return dispatch => {
     const selectedGenre = genres[key];
-    console.log('fetch', key)
     let queryParams = `?orderBy="genre"&equalTo="${selectedGenre}"&limitToLast=5`;
     axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE}/songs.json/${queryParams}`)
       .then((response) => {
@@ -216,3 +249,81 @@ export const filterByGenreActionCreator = (key) => {
       })
   }
 }
+
+export const getSongsLikesCountActionCreator = (songs) => {
+  return (dispatch, getState) => {
+    const localId = getState().auth.localId;
+    Promise.all(songs.map(song => getSongLikesCount(song, localId)))
+      .then(songsLikes => {
+        songsLikes.forEach((songLikes, index) => {
+          songs[index] = {
+            ...songs[index],
+            ...songLikes
+          }
+        })
+        dispatch(addSongsToListActionCreator(songs));
+      })
+  }
+}
+
+export const addSongLikeActionCreator = (fileName, key) => {
+  return (dispatch, getState) => {
+    if (key) return;    // user already liked this song
+    dispatch(startUpdatingActionCreator(fileName));
+
+    const like = {
+      fileName,
+      localId: getState().auth.localId,
+    }
+
+    axios.post(`${process.env.REACT_APP_FIREBASE_DATABASE}/song_likes.json/?auth=${getState().auth.idToken}`, like)
+      .then((response) => {
+        dispatch(toggleSongLikesActionCreator(fileName, response.data.name));
+        dispatch(finishUpdatingActionCreator(fileName));
+      })
+      .catch(error => {
+        dispatch(songsErrorActionCreator(error));
+        dispatch(finishCreatingSongActionCreator());
+      })
+  }
+}
+
+export const removeSongLikeActionCreator = (fileName, key) => {
+  return (dispatch, getState) => {
+    if (!key) return;     //user has not liked this song
+    dispatch(startUpdatingActionCreator(fileName));
+
+    axios.delete(`${process.env.REACT_APP_FIREBASE_DATABASE}/song_likes/${key}.json/?auth=${getState().auth.idToken}`)
+      .then(() => {
+        dispatch(toggleSongLikesActionCreator(fileName));
+        dispatch(finishUpdatingActionCreator(fileName));
+      })
+      .catch(error => {
+        dispatch(songsErrorActionCreator(error));
+      })
+  }
+}
+
+export const updateSongListenedTimesActionCreator = (fileName) => {
+  return dispatch => {
+    getSong(fileName)
+      .then(response => {
+        const song = Object.entries(response)[0];
+        const data = {
+          listened_times: song[1].listened_times + 1,
+        }
+
+        axios.patch(`${process.env.REACT_APP_FIREBASE_DATABASE}/songs/${song[0]}.json`, data)
+          .then(() => {
+            const updatedData = {
+              listened_times: data.listened_times,
+            }
+            dispatch(setUpdatedDataToSongActionCreator(fileName, updatedData));
+          })
+          .catch(error => {
+            dispatch(songsErrorActionCreator(error));
+          })
+      })
+  }
+}
+

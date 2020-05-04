@@ -9,7 +9,8 @@ import {
   pauseSongActionCreator,
   songReadyToPlayActionCreator,
   playNextSongActionCreator,
-  playPrevSongActionCreator
+  playPrevSongActionCreator,
+  updateSongListenedTimesActionCreator,
 } from '../../store/songs/actions';
 import classes from './Player.module.css';
 
@@ -34,7 +35,7 @@ const Player = (props) => {
         onClickNext={props.playNext}
         onClickPrevious={props.playPrev}
         onCanPlay={props.onReadyToPlayHandler}
-        onEnded={props.playNext}
+        onEnded={() => { props.updateListenedTimes(playSong.fileName); props.playNext(); }}
         src={`https://firebasestorage.googleapis.com/v0/b/`
           + `${process.env.REACT_APP_FIREBASE_KEY_STORE_BUCKET}/o/songs%2F`
           + `${playSong.fileName}?alt=media`}
@@ -58,6 +59,7 @@ const mapDispatchToProps = (dispatch) => {
     onReadyToPlayHandler: () => { dispatch(songReadyToPlayActionCreator()) },
     playNext: () => { dispatch(playNextSongActionCreator()) },
     playPrev: () => { dispatch(playPrevSongActionCreator()) },
+    updateListenedTimes: (fileName) => { dispatch(updateSongListenedTimesActionCreator(fileName)) },
   }
 }
 

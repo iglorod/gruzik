@@ -3,9 +3,11 @@ import React from 'react';
 import { Card, Avatar } from 'antd';
 import { PlayCircleFilled, PauseCircleFilled, LoadingOutlined } from '@ant-design/icons';
 
+import SongBand from './SongBand/SongBand';
+import SongStatistics from './SongStatistics/SongStatistics';
 import classes from './Song.module.css';
 
-const BandSong = React.memo((props) => {
+const Song = React.memo((props) => {
   const { Meta } = Card;
   const { song, currentSong, playNow, selectedSongCanPlay } = props;
 
@@ -49,11 +51,25 @@ const BandSong = React.memo((props) => {
           </div>
         }
         description={
-          <div className={classes.bottomSection}>{song.bandName}</div>
+          <div className={classes.bottomSection}>
+            <div className={classes.bandName}>
+              <SongBand localId={song.localId} bandName={song.bandName} />
+            </div>
+            <div className={classes.songStatistics}>
+              <SongStatistics
+                userIsAuth={props.userIsAuth}
+                listened_times={song.listened_times}
+                userIsLikedSong={song.userIsLikedSong}
+                likesCount={song.likesCount}
+                likeSong={props.likeSong}
+                unlikeSong={props.unlikeSong}
+                updating={props.updating} />
+            </div>
+          </div>
         }
       />
     </Card>
   )
 })
 
-export default BandSong;
+export default Song;

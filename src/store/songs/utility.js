@@ -39,3 +39,33 @@ export const bandNamesCachingDecorator = (src) => {
   }
 }
 
+
+export const getSongLikesCount = (song, localId) => {
+  return new Promise((resolve, reject) => {
+    let queryParams = `?orderBy="fileName"&equalTo="${song.fileName}"`;
+    axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE}/song_likes.json/${queryParams}`)
+      .then((response) => {
+        const likesCount = response.data
+          ? Object.keys(response.data).length
+          : 0;
+
+        const userLike = Object.entries(response.data).find(like => localId === like[1].localId);
+        const userIsLikedSong = !!userLike;
+        const userLikeId = userIsLikedSong ? userLike[0] : null;
+
+        resolve({ likesCount, userIsLikedSong, userLikeId })
+      })
+      .catch(error => reject(error))
+  })
+}
+
+export const getSong = (fileName) => {
+  return new Promise((resolve, reject) => {
+    let queryParams = `?orderBy="fileName"&equalTo="${fileName}"`;
+    axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE}/songs.json/${queryParams}`)
+    .then((response) => {
+      resolve(response.data);
+      })
+      .catch(error => reject(error))
+  })
+}

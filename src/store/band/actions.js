@@ -101,6 +101,8 @@ export const uploadImageActionCreator = (oldFileName, file) => {
 
 export const removeImageActionCreator = (imageName) => {
   return dispatch => {
+    if (imageName === 'no-image.jpg') return;
+    
     firebase.storage().ref(`band-images/${imageName}`).delete()
       .catch(error => console.log(error.message));
   }

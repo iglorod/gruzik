@@ -9,7 +9,8 @@ const initialState = {
   percents: 0,
   loading: true,
   creating: false,
-  selectedSongCanPlay: false,    //is selected song enough loaded to start playing
+  updating: [],                   //array of updating songs
+  selectedSongCanPlay: false,     //is selected song enough loaded to start playing
   error: false,
 }
 
@@ -35,6 +36,20 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+      }
+    }
+
+    case actionTypes.START_SONG_UPDATING: {
+      return {
+        ...state,
+        updating: [...state.updating, action.fileName]
+      }
+    }
+
+    case actionTypes.FINISH_SONG_UPDATING: {
+      return {
+        ...state,
+        updating: state.updating.filter(songName => songName !== action.fileName),
       }
     }
 
@@ -131,6 +146,47 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         genre: action.key,
+      }
+    }
+
+    case actionTypes.TOGGLE_SONG_LIKES: {
+      const stateSongsClone = [...state.songs];
+      const songIndex = stateSongsClone.findIndex(song => song.fileName === action.fileName);
+      let song = stateSongsClone[songIndex];
+
+      const newData = {
+        userIsLikedSong: false,
+        userLikeId: null,
+        likesCount: song.likesCount - 1,
+      }
+      if (action.key) {
+        newData.userIsLikedSong = true;
+        newData.userLikeId = action.key;
+        newData.likesCount = song.likesCount + 1;
+      }
+
+      stateSongsClone[songIndex] = { ...song, ...newData };
+      return {
+        ...state,
+        songs: [
+          ...stateSongsClone,
+        ]
+      }
+    }
+
+    case actionTypes.SET_SONG_UPDATED_DATA: {
+      const stateSongsClone = [...state.songs];
+      const songIndex = stateSongsClone.findIndex(song => song.fileName === action.fileName);
+      stateSongsClone[songIndex] = {
+        ...stateSongsClone[songIndex],
+        ...action.data,
+      };
+
+      return {
+        ...state,
+        songs: [
+          ...stateSongsClone,
+        ]
       }
     }
 

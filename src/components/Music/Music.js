@@ -18,7 +18,7 @@ const Music = (props) => {
   return (
     <Row>
       <Col xs={{ span: 24 }} md={{ offset: 3, span: 18 }} lg={{ offset: 6, span: 12 }} >
-        <Songs />
+        <Songs uxAtCenter />
       </Col>
     </Row>
   )
