@@ -7,6 +7,7 @@ import BandName from './BandName/BandName';
 import BandDescription from './BandDescription/BandDescription';
 import BandGenres from './BandGenres/BandGenres';
 import BandImage from './BandImage/BandImage';
+import BandStatistic from './BandStatistic/BandStatistic';
 import classes from './BandInfo.module.css';
 
 const BandInfo = (props) => {
@@ -22,6 +23,7 @@ const BandInfo = (props) => {
         <BandName bandName={props.bandName} bandId={props.bandId} />
         <BandGenres genres={props.genres} />
         <BandDescription description={props.description} bandId={props.bandId} />
+        <BandStatistic />
       </Card>
     </Spin>
   )

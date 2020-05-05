@@ -242,7 +242,7 @@ export const fetchSongsBandNameActionCreator = (songs) => {
 
 export const fetchBandSongsActionCreator = (bandId) => {
   return dispatch => {
-    let queryParams = `?orderBy="localId"&equalTo="${bandId}"&limitToLast=5`;
+    let queryParams = `?orderBy="localId"&equalTo="${bandId}"`;
     axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE}/songs.json/${queryParams}`)
       .then((response) => {
         response.data
@@ -258,7 +258,7 @@ export const fetchBandSongsActionCreator = (bandId) => {
 export const filterByGenreActionCreator = (key) => {
   return dispatch => {
     const selectedGenre = genres[key];
-    let queryParams = `?orderBy="genre"&equalTo="${selectedGenre}"&limitToLast=5`;
+    let queryParams = `?orderBy="genre"&equalTo="${selectedGenre}"`;
     axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE}/songs.json/${queryParams}`)
       .then((response) => {
         response.data
