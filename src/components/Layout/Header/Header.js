@@ -5,12 +5,13 @@ import { Layout } from 'antd';
 
 import { logoutActionCreator } from '../../../store/authorization/actions';
 import Logo from '../../../assets/images/logo.png';
-import Menu from '../../UI/Menu/Menu';
+import DesktopMenu from '../../UI/DesktopNavMenu/DesktopNavMenu';
+import MobileMenu from '../../UI/MobileNavMenu/MobileNavMenu';
 
 const { Header } = Layout;
 
 const HeaderComponent = (props) => {
-  let authSection = <Menu position={'right'} items={['sign in', 'sign up']}></Menu>
+  let authSection = <DesktopMenu position={'right'} items={['sign in', 'sign up']}></DesktopMenu>
   if (props.email) authSection = <div className={'logout-btn'} onClick={props.logout}>Logout</div>;
 
 
@@ -39,7 +40,8 @@ const HeaderComponent = (props) => {
         <img src={Logo} alt={'logo'} />
       </div>
 
-      <Menu position={'left'} items={actionLinks}></Menu>
+      <DesktopMenu position={'left'} items={actionLinks}></DesktopMenu>
+      <MobileMenu items={actionLinks}></MobileMenu>
 
       {authSection}
     </Header>

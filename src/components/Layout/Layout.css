@@ -38,3 +38,9 @@
 .header .logout-btn:hover {
   color: #1890ff;
 }
+
+@media(max-width: 576px) {
+  .header .logout-btn {
+    display: none;
+  }
+}

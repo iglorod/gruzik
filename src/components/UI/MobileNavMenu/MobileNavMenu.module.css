@@ -1,0 +1,12 @@
+.mobileMenu {
+  display: none !important;
+}
+
+@media(max-width: 576px) {
+  .mobileMenu {
+    display: block !important;
+    float: right;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}

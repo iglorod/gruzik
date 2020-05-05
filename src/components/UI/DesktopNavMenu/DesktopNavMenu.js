@@ -1,9 +1,9 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-import classes from './Menu.module.css';
+import classes from './DesktopNavMenu.module.css';
 
-const MenuComponent = (props) => {
+const DesktopNavMenu = (props) => {
   return (
     <div className={props.position === 'left' ? classes.leftMenu : classes.rightMenu}>
       {
@@ -23,4 +23,4 @@ const MenuComponent = (props) => {
   )
 }
 
-export default MenuComponent;
+export default DesktopNavMenu;

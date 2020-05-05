@@ -22,3 +22,10 @@
 .rightMenu {
   float: right;
 }
+
+@media(max-width: 576px) {
+  .leftMenu, .rightMenu {
+    display: none;
+  }
+}
+
