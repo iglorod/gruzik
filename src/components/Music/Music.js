@@ -7,7 +7,7 @@ import Songs from '../Songs/Songs';
 import { clearSongListActionCreator } from '../../store/songs/actions';
 
 const Music = (props) => {
-  const { clearSongsList } = props
+  const { clearSongsList } = props;
 
   useEffect(() => {
     return () => {

@@ -6,6 +6,7 @@ const initialState = {
   genre: 0,
   playSong: null,
   playNow: false,
+  playlists: [],
   percents: 0,
   loading: true,
   creating: false,
@@ -100,6 +101,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.SELECT_NEXT_SONG: {
       let currentPlaySongIndex = state.songs.findIndex(song => song.fileName === state.playSong.fileName);
 
+      if (state.songs.length === 0) return state;
       if (++currentPlaySongIndex === state.songs.length) currentPlaySongIndex = 0;
       return {
         ...state,
@@ -112,6 +114,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.SELECT_PREV_SONG: {
       let currentPlaySongIndex = state.songs.findIndex(song => song.fileName === state.playSong.fileName);
 
+      if (state.songs.length === 0) return state;
       if (--currentPlaySongIndex === -1) currentPlaySongIndex = state.songs.length - 1;
       return {
         ...state,
@@ -190,12 +193,34 @@ const reducer = (state = initialState, action) => {
       }
     }
 
+    case actionTypes.ADD_PLAYLISTS: {
+      return {
+        ...state,
+        playlists: [
+          ...state.playlists,
+          ...action.playlists
+        ]
+      }
+    }
+
+    case actionTypes.SHUFFLE_SONGS: {
+      const songsClone = [...state.songs];
+      songsClone.sort(() => Math.random() - 0.5);
+
+      return {
+        ...state,
+        songs: [...songsClone]
+      }
+    }
+
     case actionTypes.CLEAR_SONGS_LIST: {
       return {
         ...initialState,
         playSong: state.playSong,
         playNow: state.playNow,
+        selectedSongCanPlay: state.selectedSongCanPlay,
         genre: state.genre,
+        playlists: state.playlists,
       }
     }
 

@@ -1,0 +1,30 @@
+.heat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0 30px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  font-size: 25px;
+}
+
+.description {
+  text-align: justify;
+  padding: 10px 0;
+}
+
+.statistic {
+  display: flex;
+  color: rgba(0, 0, 0, 0.45);
+  transition: ease .3s;
+}
+
+.statistic>div {
+  padding: 0 10px;
+}
+
+.statistic>div:hover {
+  color: rgba(0, 0, 0, 0.6);
+}

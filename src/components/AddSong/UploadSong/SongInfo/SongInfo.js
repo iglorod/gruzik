@@ -17,6 +17,7 @@ const SongInfo = (props) => {
         required: true,
         type: 'string',
         min: 2,
+        max: 25,
       },
       value: '',
     },

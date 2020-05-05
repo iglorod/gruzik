@@ -1,0 +1,41 @@
+.audio-player {
+  position: fixed;
+  bottom: 0;
+  outline: none;
+}
+
+.audio-player div, .audio-player button {
+  outline: none;
+}
+
+.rhap_container {
+  padding: 5px 10px;
+  border-top: 1px solid #e2e2e2;
+  box-shadow: none !important;
+}
+
+.rhap_time {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.rhap_button-clear {
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 24px;
+}
+
+.rhap_progress-indicator, .rhap_volume-indicator {
+  background: rgb(61, 61, 61);
+}
+
+.rhap_progress-indicator {
+  width: 15px;
+  height: 15px;
+  top: -5px;
+}
+
+@media(max-width: 768px) {
+  .rhap_main {
+    flex-direction: column !important;
+  }
+}

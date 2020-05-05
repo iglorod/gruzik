@@ -5,6 +5,7 @@ import { PlayCircleFilled, PauseCircleFilled, LoadingOutlined } from '@ant-desig
 
 import SongBand from './SongBand/SongBand';
 import SongStatistics from './SongStatistics/SongStatistics';
+import { getDurationInHumanTime } from '../../../utility/audio';
 import classes from './Song.module.css';
 
 const Song = React.memo((props) => {
@@ -21,6 +22,8 @@ const Song = React.memo((props) => {
         : <LoadingOutlined />   //if current song is loading
       : <PlayCircleFilled />    //if selected song !== current song
   )
+
+  const songDuration = getDurationInHumanTime(song.duration);
 
   return (
     <Card className={songCardClasses.join(' ')}>
@@ -47,7 +50,7 @@ const Song = React.memo((props) => {
         title={
           <div className={classes.topSection}>
             <div className={classes.songName}>{song.name}</div>
-            <div className={classes.songDuration}>{song.duration.split('.').join(':')}</div>
+            <div className={classes.songDuration}>{songDuration}</div>
           </div>
         }
         description={

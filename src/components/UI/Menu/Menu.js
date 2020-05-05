@@ -13,6 +13,7 @@ const MenuComponent = (props) => {
             to={item.to || item.split(' ').join('-')}
             className={classes.navLink}
             activeClassName={classes.navLinkActive}
+            exact
           >
             {item.name || item}
           </NavLink>

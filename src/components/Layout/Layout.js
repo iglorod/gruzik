@@ -10,14 +10,21 @@ import Filter from '../Filter/Filter';
 import Content from './Content/Content';
 import Footer from './Footer/Footer';
 import { signInLocallyActionCreator } from '../../store/authorization/actions';
+import { fetchPlaylistsActionCreator } from '../../store/songs/actions';
 import ModalSpinner from '../UI/ModalSpinner/ModalSpinner';
 
 const LayoutComponent = (props) => {
-  const { signInLocally, loading } = props;
+  const { signInLocally, loading, fetchPlaylists } = props;
 
   useEffect(() => {
     signInLocally();
   }, [signInLocally])
+
+  useEffect(() => {
+    if (props.localId) {
+      fetchPlaylists(props.localId);
+    }
+  }, [fetchPlaylists, props.localId])
 
   return (
     <Layout className='main-layout'>
@@ -25,7 +32,7 @@ const LayoutComponent = (props) => {
       <Header />
 
       <Layout>
-        <Route path='/music' component={Filter} exact />
+        <Route path='/' component={Filter} exact />
         <Layout style={{ padding: '24px' }}>
           <Content />
         </Layout>
@@ -39,12 +46,14 @@ const LayoutComponent = (props) => {
 const mapStateToProps = state => {
   return {
     loading: state.auth.loading,
+    localId: state.auth.localId,
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     signInLocally: () => { dispatch(signInLocallyActionCreator()) },
+    fetchPlaylists: (userId) => { dispatch(fetchPlaylistsActionCreator(userId)) }
   }
 }
 

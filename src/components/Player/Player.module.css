@@ -1,9 +1,0 @@
-.audioPlayer {
-  position: fixed;
-  bottom: 0;
-  outline: none;
-}
-
-.audioPlayer div, .audioPlayer button {
-  outline: none;
-}

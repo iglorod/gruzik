@@ -24,9 +24,14 @@ const HeaderComponent = (props) => {
     }
   }
 
-  const actionLinks = ['music'];
+  const linkToMyMusic = {
+    name: 'music',
+    to: '/',
+  }
+
+  const actionLinks = [linkToMyMusic];
+  if (props.email) actionLinks.push('playlists');
   if (props.isBand) actionLinks.push(linkToMyBand)
-  else if (props.email) actionLinks.push('following')
 
   return (
     <Header className='header'>

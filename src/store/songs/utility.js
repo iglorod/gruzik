@@ -1,21 +1,5 @@
 import axios from 'axios';
 
-export const getAudioDuration = (song) => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-
-    reader.onload = (event) => {
-      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-      audioContext.decodeAudioData(event.target.result, buffer => {
-        resolve(buffer.duration);
-      })
-    }
-    reader.onerror = (error) => reject(error);
-
-    reader.readAsArrayBuffer(song);
-  })
-}
-
 export const bandNamesCachingDecorator = (src) => {
   const bandNames = new Map();
 
@@ -63,8 +47,31 @@ export const getSong = (fileName) => {
   return new Promise((resolve, reject) => {
     let queryParams = `?orderBy="fileName"&equalTo="${fileName}"`;
     axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE}/songs.json/${queryParams}`)
-    .then((response) => {
-      resolve(response.data);
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch(error => reject(error))
+  })
+}
+
+export const getSongs = (data) => {
+  return new Promise((resolve, reject) => {
+    Promise.all(data.map(item => getSong(item.songName)))
+      .then(songs => resolve(songs))
+      .catch(error => reject(error))
+  })
+}
+
+export const isSongExistInPlaylist = ({ playlistId, songName }) => {
+  return new Promise((resolve, reject) => {
+    let queryParams = `?orderBy="playlistId"&equalTo="${playlistId}"`;
+    axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE}/playlists-songs.json/${queryParams}`)
+      .then((response) => {
+        if (!response.data) resolve(false);
+        const playlistSongs = Object.values(response.data);
+        const isSongExist = ~playlistSongs.findIndex(item => item.songName === songName);
+
+        resolve(!!isSongExist);
       })
       .catch(error => reject(error))
   })

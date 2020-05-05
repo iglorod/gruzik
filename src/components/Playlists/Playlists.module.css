@@ -1,0 +1,105 @@
+.playlistCard {
+  border: none !important;
+}
+
+.playlistCard>div:first-child {
+  border: none;
+}
+
+.playlistCard>div:first-child div {
+  font-size: 18px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.playlist {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: rgba(0, 0, 0, 0.65);
+  height: 100px;
+  width: 21% !important;
+  margin-left: 3%;
+  margin-bottom: 15px;
+  border-radius: 15px !important;
+  background: #fafafa;
+  cursor: pointer;
+  transition: all .3s;
+}
+
+.playlist:hover {
+  background: #1890FF;
+}
+
+@media(max-width: 960px) {
+  .playlist {
+    width: 30% !important;
+    margin-left: 2.5%;
+  }
+}
+
+@media(max-width: 768px) {
+  .playlist {
+    width: 40% !important;
+    margin-left: 7%;
+  }
+}
+
+@media(max-width: 576px) {
+  .playlist {
+    width: 100% !important;
+    margin-left: 0;
+  }
+}
+
+.playlistInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.playlistInfo>div:first-child {
+  font-size: 16px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.playlist:hover .playlistInfo>div:first-child {
+  color: white;
+}
+
+.playlistInfo>div:last-child {
+  font-size: 12px;
+  font-weight: 300;
+  text-align: justify;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+}
+
+.playlist:hover .playlistInfo>div:last-child {
+  color: white;
+}
+
+.addPlaylistButton {
+  font-size: 20px;
+}
+
+.playlist:hover .addPlaylistButton {
+  color: white;
+}
+
+.playlistIcon {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.playlist:hover .playlistIcon {
+  color: white;
+}

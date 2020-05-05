@@ -1,9 +1,17 @@
 import * as actionTypes from '../actionTypes';
 import firebase from '../../firebase';
 import axios from 'axios';
+import { message } from 'antd';
 import { genres } from '../../utility/music-genres';
 
-import { getAudioDuration, bandNamesCachingDecorator, getSongLikesCount, getSong } from './utility';
+import {
+  bandNamesCachingDecorator,
+  getSongLikesCount,
+  getSong,
+  isSongExistInPlaylist,
+  getSongs,
+} from './utility';
+import { getAudioDuration } from '../../utility/audio';
 
 export const finishSongsLoadingActionCreator = () => {
   return {
@@ -131,6 +139,19 @@ export const setUpdatedDataToSongActionCreator = (fileName, data) => {
   }
 }
 
+export const addPlaylistsActionCreator = (playlists) => {
+  return {
+    type: actionTypes.ADD_PLAYLISTS,
+    playlists,
+  }
+}
+
+export const shuffleSongsActionCreator = () => {
+  return {
+    type: actionTypes.SHUFFLE_SONGS,
+  }
+}
+
 export const createSongInfoActionCreator = (songInfo) => {
   return (dispatch, getState) => {
     songInfo.localId = getState().auth.localId;
@@ -157,7 +178,7 @@ export const uploadSongActionCreator = (song, songPicture, songInfo) => {
   return async dispatch => {
     dispatch(startCreatingSongActionCreator());
     songInfo.fileName = new Date().getTime() + song.name;
-    songInfo.duration = (await getAudioDuration(song) / 60).toFixed(2);
+    songInfo.duration = await getAudioDuration(song);
 
     const storeRef = firebase.storage().ref('songs/').child(songInfo.fileName).put(song);
 
@@ -327,3 +348,64 @@ export const updateSongListenedTimesActionCreator = (fileName) => {
   }
 }
 
+export const createPlaylistActionCreator = (data) => {
+  return (dispatch, getState) => {
+    axios.post(`${process.env.REACT_APP_FIREBASE_DATABASE}/playlists.json/?auth=${getState().auth.idToken}`, data)
+      .then(() => {
+        dispatch(addPlaylistsActionCreator([data]));
+        message.success('New playlist was created successfully');
+      })
+      .catch(error => {
+        dispatch(songsErrorActionCreator(error));
+        dispatch(finishCreatingSongActionCreator());
+      })
+  }
+}
+
+export const addSongToPlaylistActionCreator = (data) => {
+  return (dispatch, getState) => {
+    isSongExistInPlaylist(data)
+      .then(isSongExist => {
+        if (isSongExist) {
+          message.warn('Song is alredy in this playlist');
+          return;
+        }
+
+        axios.post(`${process.env.REACT_APP_FIREBASE_DATABASE}/playlists-songs.json/?auth=${getState().auth.idToken}`, data)
+          .then(() => message.success('Song was added to playlist'))
+          .catch(error => {
+            dispatch(songsErrorActionCreator(error));
+            dispatch(finishCreatingSongActionCreator());
+          })
+      })
+  }
+}
+
+export const fetchPlaylistsActionCreator = (userId) => {
+  return dispatch => {
+    let queryParams = `?orderBy="userId"&equalTo="${userId}"`;
+    axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE}/playlists.json/${queryParams}`)
+      .then((response) => {
+        const playlists = Object.values(response.data);
+        dispatch(addPlaylistsActionCreator(playlists));
+      })
+      .catch(error => {
+        dispatch(songsErrorActionCreator(error));
+      })
+  }
+}
+
+export const fetchPlaylistRecordsActionCreator = (playlistId) => {
+  return dispatch => {
+    let queryParams = `?orderBy="playlistId"&equalTo="${playlistId}"`;
+    axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE}/playlists-songs.json/${queryParams}`)
+      .then(response => {
+        if (response.data) return Object.values(response.data).reverse();
+        else dispatch(finishSongsLoadingActionCreator())
+      })
+      .then(records => getSongs(records))
+      .then(songsItems => songsItems.map(songItem => songItem[Object.keys(songItem)[0]]))
+      .then(songs => dispatch(fetchSongsBandNameActionCreator(songs)))
+      .catch(error => dispatch(songsErrorActionCreator(error)))
+  }
+}
