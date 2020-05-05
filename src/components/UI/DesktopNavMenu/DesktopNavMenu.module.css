@@ -23,9 +23,9 @@
   float: right;
 }
 
-@media(max-width: 576px) {
+@media(max-width: 787px) {
   .leftMenu, .rightMenu {
-    display: none;
+    display: none !important;
   }
 }
 

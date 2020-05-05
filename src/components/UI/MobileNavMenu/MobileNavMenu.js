@@ -7,11 +7,15 @@ import Menu from './Menu/Menu';
 import classes from './MobileNavMenu.module.css';
 
 const MobileNavMenu = (props) => {
-  const [openMenu, setOpenMenu] = useState(false);
+  const [menuIsOpen, setMenuIsOpen] = useState(false);
 
-  const toggleOpenMenu = () => {
+  const openMenu = () => {
+    setMenuIsOpen(true);
+  }
+
+  const closeMenu = () => {
     setTimeout(() => {
-      setOpenMenu(prevState => !prevState);
+      setMenuIsOpen(false);
     }, 100)
   }
 
@@ -19,14 +23,14 @@ const MobileNavMenu = (props) => {
     <Dropdown
       overlay={() => <Menu items={props.items} />}
       placement="bottomRight"
-      visible={openMenu}
+      visible={menuIsOpen}
     >
       <Button
         className={classes.mobileMenu}
         icon={<MenuFoldOutlined />}
         ghost
-        onClick={toggleOpenMenu}
-        onBlur={toggleOpenMenu} />
+        onClick={openMenu}
+        onBlur={closeMenu} />
     </Dropdown>
   )
 }

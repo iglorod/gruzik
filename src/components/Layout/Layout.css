@@ -40,6 +40,16 @@
 }
 
 @media(max-width: 576px) {
+  .ant-layout-header {
+    padding: 0 5px !important;
+  }
+
+  .logo {
+    margin: 0 !important;
+  }
+}
+
+@media(max-width: 787px) {
   .header .logout-btn {
     display: none;
   }

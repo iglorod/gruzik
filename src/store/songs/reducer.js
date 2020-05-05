@@ -131,6 +131,15 @@ const reducer = (state = initialState, action) => {
       }
     }
 
+    case actionTypes.PLAY_RECIVED_SONG: {
+      return {
+        ...state,
+        playSong: { ...action.song },
+        playNow: true,
+        selectedSongCanPlay: false,
+      }
+    }
+
     case actionTypes.PLAY_SONG: {
       return {
         ...state,
@@ -200,6 +209,13 @@ const reducer = (state = initialState, action) => {
           ...state.playlists,
           ...action.playlists
         ]
+      }
+    }
+
+    case actionTypes.CLEAR_PLAYLISTS: {
+      return {
+        ...state,
+        playlists: [],
       }
     }
 

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import { Row, Col, Space } from 'antd';
 
@@ -17,7 +18,11 @@ const Music = (props) => {
     return () => {
       clearSongsList();
     }
-  }, [playlistKey, fetchPlaylistSongs, clearSongsList])
+  }, [playlistKey, fetchPlaylistSongs, clearSongsList]);
+
+  if (!props.localId) {
+    return <Redirect to={'/'} />;
+  }
 
   const playlist = playlists.find(item => item.key === playlistKey);
 
@@ -36,6 +41,7 @@ const Music = (props) => {
 const mapStateToProps = (state) => {
   return {
     playlists: state.songs.playlists,
+    localId: state.auth.localId,
   }
 }
 

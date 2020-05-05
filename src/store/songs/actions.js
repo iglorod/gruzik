@@ -72,6 +72,13 @@ export const startPlayMusicActionCreator = (fileName) => {
   }
 }
 
+export const startPlayRecivedSongActionCreator = (song) => {
+  return {
+    type: actionTypes.PLAY_RECIVED_SONG,
+    song,
+  }
+}
+
 export const playNextSongActionCreator = () => {
   return {
     type: actionTypes.SELECT_NEXT_SONG,
@@ -143,6 +150,12 @@ export const addPlaylistsActionCreator = (playlists) => {
   return {
     type: actionTypes.ADD_PLAYLISTS,
     playlists,
+  }
+}
+
+export const clearPlaylistActionCreator = () => {
+  return {
+    type: actionTypes.CLEAR_PLAYLISTS,
   }
 }
 

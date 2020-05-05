@@ -1,0 +1,21 @@
+.search_bar-container {
+  display: flex;
+  align-items: center;
+  float: right;
+  height: 100%;
+  padding: 30px;
+}
+
+@media(max-width: 576px) {
+  .search_bar-container {
+    padding: 0 5px !important;
+  }
+}
+
+.search_bar-container > div {
+  width: 190px;
+}
+
+.ant-select-item-option {
+  padding-left: 24px !important;
+}

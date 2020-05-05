@@ -5,9 +5,15 @@ import { NavLink } from 'react-router-dom';
 import { Menu } from 'antd';
 
 import { logoutActionCreator } from '../../../../store/authorization/actions';
+import { clearPlaylistActionCreator } from '../../../../store/songs/actions';
 import classes from './Menu.module.css';
 
 const MenuComponent = (props) => {
+  const logoutAndCleanup = () => {
+    props.logout();
+    props.clearPlaylists();
+  }
+
   let authSection = ['sign in', 'sign up']
     .map((item, index) => (
       <Menu.Item key={index}>
@@ -26,7 +32,7 @@ const MenuComponent = (props) => {
     <Menu.Item>
       <div
         className={classes.navLink}
-        onClick={props.logout}>
+        onClick={logoutAndCleanup}>
         {'Logout'}
       </div>;
     </Menu.Item>
@@ -64,7 +70,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    logout: () => { dispatch(logoutActionCreator()) }
+    logout: () => { dispatch(logoutActionCreator()) },
+    clearPlaylists: () => { dispatch(clearPlaylistActionCreator()) },
   }
 }
 
