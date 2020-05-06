@@ -177,8 +177,6 @@ export const refreshTokenActionCreator = (token) => {
   return dispatch => {
     axios.post(`https://securetoken.googleapis.com/v1/token?key=${process.env.REACT_APP_FIREBASE_KEY}`, token)
       .then(response => {
-        console.log('refresh token')
-
         const newTokenData = {
           idToken: response.data.id_token,
           refreshToken: response.data.refresh_token,

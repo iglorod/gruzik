@@ -16,7 +16,7 @@ const MenuComponent = (props) => {
 
   let authSection = ['sign in', 'sign up']
     .map((item, index) => (
-      <Menu.Item key={index}>
+      <Menu.Item key={index} disabled={props.disabled}>
         <NavLink
           to={item.to || item.split(' ').join('-')}
           className={classes.navLink}
@@ -32,7 +32,7 @@ const MenuComponent = (props) => {
     <Menu.Item>
       <div
         className={classes.navLink}
-        onClick={logoutAndCleanup}>
+        onClick={props.disabled ? null :logoutAndCleanup}>
         {'Logout'}
       </div>;
     </Menu.Item>
@@ -44,7 +44,7 @@ const MenuComponent = (props) => {
     <Menu className={classes.menu}>
       {
         props.items.map((item, index) => (
-          <Menu.Item key={index}>
+          <Menu.Item key={index} disabled={props.disabled}>
             <NavLink
               to={item.to || item.split(' ').join('-')}
               className={classes.navLink}

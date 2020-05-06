@@ -6,18 +6,20 @@ import { Menu, Layout } from 'antd';
 import {
   filterByGenreActionCreator,
   changeSelectedGenreActionCreator,
-  clearSongListActionCreator
+  clearSongListActionCreator,
+  startSongsLoadingActionCreator,
 } from '../../store/songs/actions';
 import { genres } from '../../utility/music-genres';
 
 const Filter = (props) => {
   const { Sider } = Layout;
-  const { genre, getSongsByGenre, clearSongsList } = props;
+  const { genre, getSongsByGenre, startLoading, clearSongsList } = props;
 
   useEffect(() => {
     clearSongsList();
+    startLoading();
     setTimeout(() => getSongsByGenre(genre), 2000);
-  }, [genre, getSongsByGenre, clearSongsList])
+  }, [genre, getSongsByGenre, startLoading, clearSongsList])
 
   return (
     <Sider
@@ -33,6 +35,7 @@ const Filter = (props) => {
           <Menu.Item
             key={index}
             onClick={props.changeGenre.bind(this, index)}
+            disabled={props.loading || props.creating}
           >
             {item}
           </Menu.Item>
@@ -45,11 +48,14 @@ const Filter = (props) => {
 const mapStateToProps = (state) => {
   return {
     genre: state.songs.genre,
+    loading: state.songs.loading,
+    creating: state.songs.creating,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    startLoading: (key) => { dispatch(startSongsLoadingActionCreator()) },
     getSongsByGenre: (key) => { dispatch(filterByGenreActionCreator(key)) },
     changeGenre: (key) => { dispatch(changeSelectedGenreActionCreator(key)) },
     clearSongsList: () => { dispatch(clearSongListActionCreator()) },

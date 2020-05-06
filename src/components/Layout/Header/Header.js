@@ -17,10 +17,15 @@ const HeaderComponent = (props) => {
     props.logout();
     props.clearPlaylists();
   }
+  const disableLinks = props.loading || props.creating;
 
-  let authSection = <DesktopMenu position={'right'} items={['sign in', 'sign up']}></DesktopMenu>
-  if (props.email) authSection = <div className={'logout-btn'} onClick={logoutAndCleanup}>Logout</div>;
-
+  let authSection = <DesktopMenu position={'right'} disabled={disableLinks} items={['sign in', 'sign up']}></DesktopMenu>
+  if (props.email) authSection = (
+    <div
+      className={'logout-btn'}
+      onClick={disableLinks ? null : logoutAndCleanup}>{'Logout'}
+    </div >
+  );
 
   const linkToMyBand = {
     name: 'my band',
@@ -47,9 +52,9 @@ const HeaderComponent = (props) => {
         <img src={Logo} alt={'logo'} />
       </div>
 
-      <DesktopMenu position={'left'} items={actionLinks}></DesktopMenu>
-      <MobileMenu items={actionLinks}></MobileMenu>
-    
+      <DesktopMenu position={'left'} disabled={disableLinks} items={actionLinks}></DesktopMenu>
+      <MobileMenu items={actionLinks} disabled={disableLinks}></MobileMenu>
+
       {authSection}
       <SearchBar />
     </Header>
@@ -61,6 +66,8 @@ const mapStateToProps = (state) => {
     email: state.auth.email,
     isBand: state.auth.isBand,
     localId: state.auth.localId,
+    loading: state.songs.loading,
+    creating: state.songs.creating,
   }
 }
 

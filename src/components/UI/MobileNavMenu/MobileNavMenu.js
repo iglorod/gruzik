@@ -21,7 +21,7 @@ const MobileNavMenu = (props) => {
 
   return (
     <Dropdown
-      overlay={() => <Menu items={props.items} />}
+      overlay={() => <Menu items={props.items} disabled={props.disabled} />}
       placement="bottomRight"
       visible={menuIsOpen}
     >

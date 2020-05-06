@@ -8,7 +8,7 @@ const initialState = {
   playNow: false,
   playlists: [],
   percents: 0,
-  loading: true,
+  loading: false,
   creating: false,
   updating: [],                   //array of updating songs
   selectedSongCanPlay: false,     //is selected song enough loaded to start playing
@@ -30,6 +30,13 @@ const reducer = (state = initialState, action) => {
         ...state,
         creating: false,
         percents: 0,
+      }
+    }
+
+    case actionTypes.START_SONGS_LOADING: {
+      return {
+        ...state,
+        loading: true,
       }
     }
 

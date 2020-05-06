@@ -31,7 +31,7 @@ const Music = (props) => {
       <Col xs={{ span: 24 }} md={{ offset: 3, span: 18 }} lg={{ offset: 6, span: 12 }} >
         <Space direction='vertical' style={{ width: '100%' }}>
           <PlaylistHeat playlist={playlist} />
-          <Songs uxAtCenter />
+          <Songs />
         </Space>
       </Col>
     </Row>

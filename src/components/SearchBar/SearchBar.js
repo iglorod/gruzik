@@ -13,8 +13,6 @@ const SearchBar = (props) => {
   const [timerId, setTimerId] = useState(null);
   const [recivedSongs, setRecivedSongs] = useState([]);
 
-  // [{ value: 'text 1' }, { value: 'text 2' }]
-
   useEffect(() => {
     if (searchWord.length < 3) return;
 

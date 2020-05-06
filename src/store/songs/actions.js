@@ -13,6 +13,12 @@ import {
 } from './utility';
 import { getAudioDuration } from '../../utility/audio';
 
+export const startSongsLoadingActionCreator = () => {
+  return {
+    type: actionTypes.START_SONGS_LOADING,
+  }
+}
+
 export const finishSongsLoadingActionCreator = () => {
   return {
     type: actionTypes.FINISH_SONGS_LOADING,
@@ -255,6 +261,8 @@ export const fetchSongsBandNameActionCreator = (songs) => {
 
 export const fetchBandSongsActionCreator = (bandId) => {
   return dispatch => {
+    dispatch(startSongsLoadingActionCreator());
+
     let queryParams = `?orderBy="localId"&equalTo="${bandId}"`;
     axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE}/songs.json/${queryParams}`)
       .then((response) => {
@@ -270,6 +278,8 @@ export const fetchBandSongsActionCreator = (bandId) => {
 
 export const filterByGenreActionCreator = (key) => {
   return dispatch => {
+    dispatch(startSongsLoadingActionCreator());
+
     const selectedGenre = genres[key];
     let queryParams = `?orderBy="genre"&equalTo="${selectedGenre}"`;
     axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE}/songs.json/${queryParams}`)
@@ -410,6 +420,8 @@ export const fetchPlaylistsActionCreator = (userId) => {
 
 export const fetchPlaylistRecordsActionCreator = (playlistId) => {
   return dispatch => {
+    dispatch(startSongsLoadingActionCreator());
+
     let queryParams = `?orderBy="playlistId"&equalTo="${playlistId}"`;
     axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE}/playlists-songs.json/${queryParams}`)
       .then(response => {
