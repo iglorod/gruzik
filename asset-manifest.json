@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/gruzik/static/css/main.03f3b592.chunk.css",
+    "main.js": "/gruzik/static/js/main.77fdc1d4.chunk.js",
+    "main.js.map": "/gruzik/static/js/main.77fdc1d4.chunk.js.map",
+    "runtime-main.js": "/gruzik/static/js/runtime-main.e17dfd18.js",
+    "runtime-main.js.map": "/gruzik/static/js/runtime-main.e17dfd18.js.map",
+    "static/css/2.9a21246b.chunk.css": "/gruzik/static/css/2.9a21246b.chunk.css",
+    "static/js/2.af6f73ea.chunk.js": "/gruzik/static/js/2.af6f73ea.chunk.js",
+    "static/js/2.af6f73ea.chunk.js.map": "/gruzik/static/js/2.af6f73ea.chunk.js.map",
+    "index.html": "/gruzik/index.html",
+    "precache-manifest.21f27b735a231621cbc19b80851e0458.js": "/gruzik/precache-manifest.21f27b735a231621cbc19b80851e0458.js",
+    "service-worker.js": "/gruzik/service-worker.js",
+    "static/css/2.9a21246b.chunk.css.map": "/gruzik/static/css/2.9a21246b.chunk.css.map",
+    "static/css/main.03f3b592.chunk.css.map": "/gruzik/static/css/main.03f3b592.chunk.css.map",
+    "static/js/2.af6f73ea.chunk.js.LICENSE.txt": "/gruzik/static/js/2.af6f73ea.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.e17dfd18.js",
+    "static/css/2.9a21246b.chunk.css",
+    "static/js/2.af6f73ea.chunk.js",
+    "static/css/main.03f3b592.chunk.css",
+    "static/js/main.77fdc1d4.chunk.js"
+  ]
+}
