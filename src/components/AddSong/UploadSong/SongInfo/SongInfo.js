@@ -57,17 +57,17 @@ const SongInfo = (props) => {
 
   return (
     <Modal
-      title="Create new song"
+      title='Create new song'
       footer={null}
       visible
       onCancel={props.closeSongInfo}
     >
-      <Form name="nest-messages" onFinish={createSongHandler}>
+      <Form name='nest-messages' onFinish={createSongHandler}>
         <DataInputs stateInputs={songInputs} onChangeHandler={onChangeHandler} />
 
        <SongPicture songPicture={songPicture} setPicture={setSongPicture} />
 
-        <Divider orientation="right">
+        <Divider orientation='right'>
           <Space>
             <Button type='default' onClick={props.closeSongInfo}>Cancel</Button>
             <Button type='primary' htmlType={'submit'}>Ok</Button>

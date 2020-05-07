@@ -61,15 +61,15 @@ const CreateModal = (props) => {
 
   return (
     <Modal
-      title="Create new Playlist"
+      title='Create new Playlist'
       footer={null}
       visible
       onCancel={props.onCancel}
     >
-      <Form name="nest-messages" onFinish={createPlaylist}>
+      <Form name='nest-messages' onFinish={createPlaylist}>
       <DataInputs stateInputs={playlistData} onChangeHandler={onChangeHandler} />
 
-        <Divider orientation="right">
+        <Divider orientation='right'>
           <Space>
             <Button type='default' onClick={props.onCancel}>Cancel</Button>
             <Button type='primary' htmlType={'submit'}>Ok</Button>

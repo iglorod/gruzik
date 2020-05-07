@@ -8,7 +8,7 @@ import SongStatistics from './SongStatistics/SongStatistics';
 import { getDurationInHumanTime } from '../../../utility/audio';
 import classes from './Song.module.css';
 
-const Song = React.memo((props) => {
+const Song = (props) => {
   const { Meta } = Card;
   const { song, currentSong, playNow, selectedSongCanPlay } = props;
 
@@ -32,15 +32,15 @@ const Song = React.memo((props) => {
         avatar={
           <>
             <Avatar
-              shape="square"
+              shape='square'
               size='large'
-              src={`https://firebasestorage.googleapis.com/v0/b/`
+              src={'https://firebasestorage.googleapis.com/v0/b/'
                 + `${process.env.REACT_APP_FIREBASE_KEY_STORE_BUCKET}/o/pictures-of-songs%2F`
                 + `${song.imageName}?alt=media`} />
 
             <Avatar
               className={classes.avatarMask}
-              shape="square"
+              shape='square'
               size='large'
               icon={songImageIcon}
               onClick={props.onSongChoosed} />
@@ -73,6 +73,6 @@ const Song = React.memo((props) => {
       />
     </Card>
   )
-})
+}
 
-export default Song;
+export default React.memo(Song);

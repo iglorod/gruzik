@@ -15,7 +15,7 @@ const ContentComponent = () => {
   const { Content } = Layout;
 
   return (
-    <Content className="content-layout-background">
+    <Content className='content-layout-background'>
       <Switch>
         <Route path='/sign-up' component={SignUp} exact />
         <Route path='/sign-in' component={SignIn} exact />

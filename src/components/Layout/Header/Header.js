@@ -73,7 +73,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    logout: () => { dispatch(logoutActionCreator()) },
+    logout:         () => { dispatch(logoutActionCreator()) },
     clearPlaylists: () => { dispatch(clearPlaylistActionCreator()) },
   }
 }

@@ -24,7 +24,7 @@ const AuthInputs = ({ stateInputs, onChangeHandler }) => {
           (key === 'genre' || key === 'genres')
             ? <Select
               mode={key === 'genres' ? 'multiple' : null}
-              placeholder="Please select genres"
+              placeholder='Please select genres'
               value={stateInputs[key].value}
               onChange={onChangeHandler.bind(this, key)}
             >

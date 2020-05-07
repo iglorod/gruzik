@@ -19,8 +19,8 @@ const BandImage = (props) => {
         beforeUpload={validateImage.bind(this, 5)}
       >
         <div className={classes.backgroundMask}></div>
-        <Tooltip title="Upload new image">
-          <Button type="dashed" shape="circle" ghost icon={<UploadOutlined />} />
+        <Tooltip title='Upload new image'>
+          <Button type='dashed' shape='circle' ghost icon={<UploadOutlined />} />
         </Tooltip>
       </Upload>
     </>
@@ -30,8 +30,8 @@ const BandImage = (props) => {
   return (
     <>
       <img
-        alt="band poster"
-        src={`https://firebasestorage.googleapis.com/v0/b/`
+        alt='band poster'
+        src={'https://firebasestorage.googleapis.com/v0/b/'
           + `${process.env.REACT_APP_FIREBASE_KEY_STORE_BUCKET}/o/band-images%2F`
           + `${props.image}?alt=media`}
       />

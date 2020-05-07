@@ -6,10 +6,10 @@ import { Result, Button } from 'antd';
 const NotFound = () => {
   return (
     <Result
-      status="404"
-      title="404"
-      subTitle="Sorry, the page you visited does not exist."
-      extra={<Button type="primary"><Link to='/'>Music</Link></Button>}
+      status='404'
+      title='404'
+      subTitle='Sorry, the page you visited does not exist.'
+      extra={<Button type='primary'><Link to='/'>Music</Link></Button>}
     />
   )
 }

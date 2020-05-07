@@ -37,12 +37,12 @@ const EditableInput = (props) => {
   if (props.editable) {
     input = (
       <Popconfirm
-        title={`${props.confirmMessage} "${newValue}"?`}
+        title={`${props.confirmMessage} '${newValue}'?`}
         visible={showConfirm}
         onConfirm={confirmChange}
         onCancel={cancelChange}
-        okText="Yes"
-        cancelText="No"
+        okText='Yes'
+        cancelText='No'
       >
         <Paragraph className={'editable-paragraph'} style={props.style} editable={{ onChange: onChangeHandler }} >{props.value}</Paragraph>
       </Popconfirm>

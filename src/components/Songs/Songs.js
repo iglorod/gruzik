@@ -50,9 +50,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    likeSong:       (fileName, key) => { dispatch(addSongLikeActionCreator(fileName, key)) },
+    unlikeSong:     (fileName, key) => { dispatch(removeSongLikeActionCreator(fileName, key)) },
     startPlayMusic: (fileName) => { dispatch(startPlayMusicActionCreator(fileName)) },
-    likeSong: (fileName, key) => { dispatch(addSongLikeActionCreator(fileName, key)) },
-    unlikeSong: (fileName, key) => { dispatch(removeSongLikeActionCreator(fileName, key)) },
   }
 }
 

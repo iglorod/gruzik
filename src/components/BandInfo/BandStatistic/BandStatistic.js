@@ -11,13 +11,13 @@ const BandStatistic = (props) => {
   if (!props.songs) return <Skeleton title={false} paragraph={{ rows: 1 }} />
 
   const likesCount = props.songs.reduce((count, song) => count + song.likesCount, 0);
-  const listenedTimes = props.songs.reduce((count, song) => count + song.listened_times, 0);;
+  const listenedTimes = props.songs.reduce((count, song) => count + song.listened_times, 0);
   const songsCount = props.songs.length;
 
   return (
     <div className={classes.statistic}>
       <div>
-        <Tooltip placement="bottom" title={'Tracks count'}>
+        <Tooltip placement='bottom' title={'Tracks count'}>
           <PlaySquareOutlined /> {songsCount}
         </Tooltip>
       </div>

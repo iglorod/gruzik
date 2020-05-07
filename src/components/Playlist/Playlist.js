@@ -47,7 +47,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    clearSongsList: () => { dispatch(clearSongListActionCreator()) },
+    clearSongsList:     () => { dispatch(clearSongListActionCreator()) },
     fetchPlaylistSongs: (key) => { dispatch(fetchPlaylistRecordsActionCreator(key)) },
   }
 }

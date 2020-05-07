@@ -52,7 +52,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    signInLocally: () => { dispatch(signInLocallyActionCreator()) },
+    signInLocally:  () => { dispatch(signInLocallyActionCreator()) },
     fetchPlaylists: (userId) => { dispatch(fetchPlaylistsActionCreator(userId)) }
   }
 }

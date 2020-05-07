@@ -37,7 +37,7 @@ const UploadSong = (props) => {
       {openSongModal ? songInfo : null}
 
       <Upload
-        listType="picture-card"
+        listType='picture-card'
         className={classes.uploadArea}
         showUploadList={false}
         action={openSongInfoModal}
@@ -48,7 +48,7 @@ const UploadSong = (props) => {
           <div>
             {props.creating ? <LoadingOutlined /> : <PlusOutlined />}
           </div>
-          <div className="ant-upload-text">Upload new song</div>
+          <div className='ant-upload-text'>Upload new song</div>
         </div>
       </Upload >
 
@@ -57,7 +57,7 @@ const UploadSong = (props) => {
           strokeLinecap='square'
           strokeColor='#00B7BF'
           percent={props.percentLoaded}
-          status={props.error ? "exception" : "active"} />
+          status={props.error ? 'exception' : 'active'} />
         : null}
     </>
   )

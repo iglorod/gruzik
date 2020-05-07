@@ -4,9 +4,9 @@ import { Alert, Row, Col } from 'antd';
 
 const AlertMessage = ({ errorMessage }) => {
   const GridAlert = (() =>
-    <Row justify="center" align="middle">
+    <Row justify='center' align='middle'>
       <Col xs={24} sm={{ span: 12 }} md={{ span: 8 }} lg={{ span: 8 }} >
-        <Alert message={errorMessage} type="error" showIcon />
+        <Alert message={errorMessage} type='error' showIcon />
       </Col>
     </Row>
   )

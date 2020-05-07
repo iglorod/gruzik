@@ -1,6 +1,6 @@
 import * as actionTypes from '../actionTypes';
 import axios from 'axios'
-import firebase from '../../firebase';
+import { storeBandImage, removeBandImage } from './utility';
 
 export const setBandDataActionCreator = (bandData) => {
   return {
@@ -83,28 +83,17 @@ export const uploadImageActionCreator = (oldFileName, file) => {
   return dispatch => {
     dispatch(startUpdatingDataActionCreator());
 
-    const fileName = new Date().getTime() + file.name;
-
-    firebase.storage().ref('band-images/').child(fileName).put(file)
+    storeBandImage(file)
       .then(response => {
         const { name: image } = response.metadata;
 
-        dispatch(removeImageActionCreator(oldFileName))
+        dispatch(removeBandImage(oldFileName))
         dispatch(updateBandDataActionCreator({ image }))
       })
       .catch(error => {
         dispatch(bandErrorActionCreator(error))
         dispatch(finishUpdatingDataActionCreator());
       })
-  }
-}
-
-export const removeImageActionCreator = (imageName) => {
-  return dispatch => {
-    if (imageName === 'no-image.jpg') return;
-    
-    firebase.storage().ref(`band-images/${imageName}`).delete()
-      .catch(error => console.log(error.message));
   }
 }
 

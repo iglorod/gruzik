@@ -18,7 +18,7 @@ const AddToPlaylist = () => {
     <Dropdown
       overlay={() => <PlaylistsMenu />}
       visible={showPlaylists}
-      placement="topCenter"
+      placement='topCenter'
     >
       <AppstoreAddOutlined
         style={{ fontSize: '22px' }}

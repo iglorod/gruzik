@@ -22,7 +22,7 @@ export const validateSong = (song) => {
 
   const isLt2M = song.size / 1024 / 1024 < 30;
   if (!isLt2M) {
-    message.error(`Image must be smaller than 30MB!`);
+    message.error('Image must be smaller than 30MB!');
   }
 
   return isMpeg && isLt2M;

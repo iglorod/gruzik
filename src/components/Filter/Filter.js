@@ -24,11 +24,11 @@ const Filter = (props) => {
 
   return (
     <Sider
-      breakpoint="lg"
-      collapsedWidth="0"
-      width={200} className="site-layout-background">
+      breakpoint='lg'
+      collapsedWidth='0'
+      width={200} className='site-layout-background'>
       <Menu
-        mode="inline"
+        mode='inline'
         selectedKeys={[genre.toString()]}
         style={{ height: '100%', borderRight: 0, textAlign: 'left', }}
       >
@@ -56,7 +56,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    startLoading: (key) => { dispatch(startSongsLoadingActionCreator()) },
+    startLoading: () => { dispatch(startSongsLoadingActionCreator()) },
     getSongsByGenre: (key) => { dispatch(filterByGenreActionCreator(key)) },
     changeGenre: (key) => { dispatch(changeSelectedGenreActionCreator(key)) },
     clearSongsList: () => { dispatch(clearSongListActionCreator()) },

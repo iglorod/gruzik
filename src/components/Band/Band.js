@@ -26,7 +26,7 @@ const Band = (props) => {
   return (
     <Row>
       <Col xs={{ span: 24 }} md={{ offset: 3, span: 18 }} lg={{ offset: 6, span: 12 }} >
-        <Space direction="vertical">
+        <Space direction='vertical'>
           <BandInfo />
           <AddSong />
           <Songs />
@@ -38,10 +38,10 @@ const Band = (props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchBandData: (localId) => { dispatch(fetchBandDataActionCreator(localId)) },
+    fetchBandData:  (localId) => { dispatch(fetchBandDataActionCreator(localId)) },
     fetchBandSongs: (localId) => { dispatch(fetchBandSongsActionCreator(localId)) },
     clearSongsList: () => { dispatch(clearSongListActionCreator()) },
-    clearBandData: () => { dispatch(clearBandDataActionCreator()) },
+    clearBandData:  () => { dispatch(clearBandDataActionCreator()) },
   }
 }
 

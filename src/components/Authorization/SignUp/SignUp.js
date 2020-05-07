@@ -132,7 +132,7 @@ const SignUp = (props) => {
   return (
     <React.Fragment>
       <Head title='Sign Up' />
-      <Form {...layout} name="nest-messages" onFinish={signUpHandler} validateMessages={validateMessages}>
+      <Form {...layout} name='nest-messages' onFinish={signUpHandler} validateMessages={validateMessages}>
 
         <DataInputs stateInputs={stateInputs} onChangeHandler={onChangeHandler} />
 

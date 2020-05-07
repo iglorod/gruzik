@@ -5,7 +5,7 @@ import { Row, Col } from 'antd';
 
 const BottomNote = ({ to, note }) => {
   return (
-    <Row justify="end">
+    <Row justify='end'>
       <Col span={24}>
         <Link to={to} className={'redirect-link'}>
           {note}

@@ -51,7 +51,7 @@ const Player = (props) => {
       onEnded={() => { props.updateListenedTimes(playSong.fileName); props.playNext(); }}
       customAdditionalControls={[RHAP_UI.LOOP, ADD_TO_PLAYLIST]}
       customProgressBarSection={[SONG_DATA, RHAP_UI.CURRENT_TIME, RHAP_UI.PROGRESS_BAR, RHAP_UI.DURATION]}
-      src={`https://firebasestorage.googleapis.com/v0/b/`
+      src={'https://firebasestorage.googleapis.com/v0/b/'
         + `${process.env.REACT_APP_FIREBASE_KEY_STORE_BUCKET}/o/songs%2F`
         + `${playSong.fileName}?alt=media`}
     />
@@ -69,12 +69,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onPlayHandler: () => { dispatch(playSongActionCreator()) },
-    onPauseHandler: () => { dispatch(pauseSongActionCreator()) },
+    playNext:             () => { dispatch(playNextSongActionCreator()) },
+    playPrev:             () => { dispatch(playPrevSongActionCreator()) },
+    onPlayHandler:        () => { dispatch(playSongActionCreator()) },
+    onPauseHandler:       () => { dispatch(pauseSongActionCreator()) },
     onReadyToPlayHandler: () => { dispatch(songReadyToPlayActionCreator()) },
-    playNext: () => { dispatch(playNextSongActionCreator()) },
-    playPrev: () => { dispatch(playPrevSongActionCreator()) },
-    updateListenedTimes: (fileName) => { dispatch(updateSongListenedTimesActionCreator(fileName)) },
+    updateListenedTimes:  (fileName) => { dispatch(updateSongListenedTimesActionCreator(fileName)) },
   }
 }
 

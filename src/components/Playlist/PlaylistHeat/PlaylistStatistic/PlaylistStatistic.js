@@ -17,17 +17,17 @@ const PlaylistStatistic = (props) => {
   return (
     <>
       <div>
-        <Tooltip placement="bottom" title={'Playlist duration'}>
+        <Tooltip placement='bottom' title={'Playlist duration'}>
           <ClockCircleOutlined /> {playlistDuration}
         </Tooltip>
       </div>
       <div>
-        <Tooltip placement="bottom" title={'Tracks count'}>
+        <Tooltip placement='bottom' title={'Tracks count'}>
           <PlaySquareOutlined /> {props.songs.length}
         </Tooltip>
       </div>
       <div className={classes.shuffleButton}>
-        <Tooltip placement="bottom" title={'Shuffle songs'} onClick={props.shuffleSongs}>
+        <Tooltip placement='bottom' title={'Shuffle songs'} onClick={props.shuffleSongs}>
           <RedoOutlined /> {'Shuffle'}
         </Tooltip>
       </div>
