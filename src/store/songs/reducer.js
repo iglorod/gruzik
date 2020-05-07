@@ -139,11 +139,14 @@ const reducer = (state = initialState, action) => {
     }
 
     case actionTypes.PLAY_RECIVED_SONG: {
+      let songCanPlay = false;
+      if (state.playSong && state.playSong.fileName === action.song.fileName) songCanPlay = true;
+
       return {
         ...state,
         playSong: { ...action.song },
         playNow: true,
-        selectedSongCanPlay: false,
+        selectedSongCanPlay: songCanPlay,
       }
     }
 

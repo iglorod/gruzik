@@ -12,9 +12,7 @@ const PlaylistStatistic = (props) => {
   if (!props.songs.length) return null;
 
   let playlistDuration = props.songs.reduce((duration, song) => duration + +song.duration, 0).toString();
-  console.log(playlistDuration)
   playlistDuration = getDurationInHumanTime(playlistDuration);
-  console.log(playlistDuration)
 
   return (
     <>

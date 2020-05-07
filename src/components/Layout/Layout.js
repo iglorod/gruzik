@@ -21,8 +21,6 @@ const LayoutComponent = (props) => {
   }, [signInLocally])
 
   useEffect(() => {
-    console.log('change')
-    console.log(props.localId)
     if (props.localId) {
       fetchPlaylists(props.localId);
     }

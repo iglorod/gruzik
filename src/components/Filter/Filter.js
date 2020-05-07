@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import { Menu, Layout } from 'antd';
+import { RightSquareOutlined } from '@ant-design/icons';
 
 import {
   filterByGenreActionCreator,
@@ -29,7 +30,7 @@ const Filter = (props) => {
       <Menu
         mode="inline"
         selectedKeys={[genre.toString()]}
-        style={{ height: '100%', borderRight: 0 }}
+        style={{ height: '100%', borderRight: 0, textAlign: 'left', }}
       >
         {genres.map((item, index) => (
           <Menu.Item
@@ -37,7 +38,7 @@ const Filter = (props) => {
             onClick={props.changeGenre.bind(this, index)}
             disabled={props.loading || props.creating}
           >
-            {item}
+            <RightSquareOutlined /> {item}
           </Menu.Item>
         ))}
       </Menu>

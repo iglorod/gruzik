@@ -43,7 +43,7 @@ export const authErrorActionCreator = (error) => {
 export const setTimeoutIdActionCreator = (timerId) => {
   return {
     type: actionTypes.RESET_TIMEOUT_ID,
-    id: timerId,
+    timerId,
   }
 }
 

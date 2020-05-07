@@ -56,7 +56,6 @@ const CreateModal = (props) => {
     }
 
     props.createPlaylist(data);
-    console.log('here')
     props.onCancel();
   }
 
