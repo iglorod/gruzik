@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Form, Upload, Button } from 'antd';
+import { Form, Upload } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 
 import { validateImage } from '../../../../../utility/file-validation';
@@ -10,21 +10,17 @@ const SongPicture = (props) => {
   return (
     <Form.Item
       name={'Song picture'}
-      label={'Song picture'}
+      className={classes.formItem}
       rules={[{ required: true, }]}>
       <Upload
         fileList={null}
         action={props.setPicture}
         showUploadList={false}
         beforeUpload={validateImage.bind(this, 5)}>
-        <Button>
-          <UploadOutlined />
-          {'Upload song picture'}
-        </Button>
         {
           props.songPicture
             ? <img src={URL.createObjectURL(props.songPicture)} className={classes.songPicture} alt={'song'} />
-            : null
+            : <div className={classes.songPictureAlt}><UploadOutlined /> {'Picture'}</div>
         }
       </Upload>
     </Form.Item>

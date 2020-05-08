@@ -21,21 +21,22 @@ const AuthInputs = ({ stateInputs, onChangeHandler }) => {
         label={stateInputs[key].config.label}
         rules={[stateInputs[key].validationRules]}>
         {
-          (key === 'genre' || key === 'genres')
+          (key === 'genres' || key === 'tags')
             ? <Select
-              mode={key === 'genres' ? 'multiple' : null}
-              placeholder='Please select genres'
               value={stateInputs[key].value}
+              mode={key === 'genres' ? 'multiple' : 'tags'}
+              placeholder={stateInputs[key].config.placeholder}
+              tokenSeparators={key === 'genres' ? null : ['#', ',', '.']}
               onChange={onChangeHandler.bind(this, key)}
             >
-              {genresOptions}
+              {key === 'genres' ? genresOptions : null}
             </Select>
             : <Input
               type={stateInputs[key].config.type}
               value={stateInputs[key].value}
+              placeholder={stateInputs[key].config.placeholder}
               onChange={onChangeHandler.bind(this, key)}
             />
-
         }
       </Form.Item>
     );

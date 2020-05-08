@@ -9,7 +9,7 @@ const BandGenres = (props) => {
     <div className={classes.genresContainer}>
       {
         props.genres.map((genre, index) => (
-          <Tag key={index} className={classes.genre} color='purple'>{genre}</Tag>
+          <Tag key={index} className={classes.genre} color='#ff7875'>{genre}</Tag>
         ))
       }
     </div>

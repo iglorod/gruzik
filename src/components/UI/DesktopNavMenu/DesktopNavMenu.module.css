@@ -1,6 +1,11 @@
 .navLink {
+  font-size: 16px;
   margin: 0 15px;
-  color: lightgrey;
+  color: #f0f0f0;
+}
+
+.navLink:hover {
+  color: white;
 }
 
 .navLink::first-letter {

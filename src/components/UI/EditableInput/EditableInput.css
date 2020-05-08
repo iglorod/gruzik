@@ -1,5 +1,6 @@
 .editable-paragraph svg {
   font-size: 14px !important;
+  color: #ff7875;
 }
 
 .editable-paragraph.ant-typography-edit-content {

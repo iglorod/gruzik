@@ -2,9 +2,13 @@
   min-height: 100vh !important;
 }
 
+.header {
+  background: #ff7875 !important;
+}
+
 .header .logo {
   margin-right: 20px;
-  width: 120px;
+  width: 150px;
   float: left;
 }
 
@@ -27,7 +31,8 @@
 }
 
 .header .logout-btn {
-  color: lightgrey;
+  font-size: 16px;
+  color: #f0f0f0;
   display: flex;
   float: right;
   cursor: pointer;
@@ -36,14 +41,13 @@
 }
 
 .header .logout-btn:hover {
-  color: #1890ff;
+  color: white;
 }
 
 @media(max-width: 576px) {
   .ant-layout-header {
     padding: 0 5px !important;
   }
-
   .logo {
     margin: 0 !important;
   }
@@ -54,3 +58,87 @@
     display: none;
   }
 }
+
+/** Overwrite ant.d styles */
+.ant-input {
+  font-size: 16px !important;
+}
+
+.ant-select:not(.ant-select-disabled):hover .ant-select-selector, input:hover {
+  border-color: #ff4d5054 !important;
+}
+
+.ant-select-focused:not(.ant-select-customize-input) .ant-select-selector, .ant-input:focus {
+  border-color: #ff4d5054 !important;
+  box-shadow: 0 0 0 2px #d9363e62 !important;
+}
+
+.ant-btn.ant-btn-primary {
+  background-color: #ff7875 !important;
+  border-color: #ff7875 !important;
+}
+
+.ant-btn.ant-btn-default:hover {
+  color: #ff7875 !important;
+  border-color: #ff7875 !important;
+}
+
+.ant-spin-dot-item {
+  background: #ff7875 !important;
+}
+
+.ant-checkbox-checked .ant-checkbox-inner, .ant-checkbox-checked .ant-checkbox-inner {
+  background-color: #ff7875 !important;
+  border-color: #ff7875 !important;
+}
+
+.modal-note {
+  padding: 15px 0 20px;
+  text-align: center;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.ant-modal-body input,
+.ant-modal-body .ant-select-selector {
+  font-size: 16px;
+  border-radius: 0 !important;
+}
+
+.ant-col.ant-form-item-label label {
+  font-size: 16px !important;
+  color: rgba(0, 0, 0, 0.45) !important;
+}
+
+.ant-modal-content {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.ant-modal-body {
+  padding-top: 0 !important;
+}
+
+.ant-modal-header {
+  text-align: center;
+  background: #ff7875 !important;
+  border: none !important;
+}
+
+.ant-modal-title {
+  font-size: 22px !important;
+  color: white !important;
+}
+
+.ant-modal-close {
+  color: white !important;
+}
+
+.ant-menu-item.ant-menu-item-active {
+  color: #ff7875 !important;
+}
+
+.ant-menu-item.ant-menu-item-selected {
+  color: #ff7875 !important;
+  background: rgb(255, 120, 117, 0.1) !important;
+}
+/** Overwrite ant.d styles */

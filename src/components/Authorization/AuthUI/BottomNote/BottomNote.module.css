@@ -1,0 +1,8 @@
+.redirectLink {
+  color: #ffafae !important;
+}
+
+.redirectLink:hover {
+  color: #ff7875 !important;
+  text-decoration: underline;
+}

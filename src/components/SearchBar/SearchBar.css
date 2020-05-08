@@ -19,3 +19,8 @@
 .ant-select-item-option {
   padding-left: 24px !important;
 }
+
+.search_bar-container .ant-select-selector {
+  font-size: 12px;
+  border-radius: 0px;
+}

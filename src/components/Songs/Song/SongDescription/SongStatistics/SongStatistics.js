@@ -2,7 +2,7 @@ import React from 'react';
 
 import { CustomerServiceOutlined } from '@ant-design/icons';
 
-import { HeartIcon } from '../../../../utility/icons';
+import { HeartIcon } from '../../../../../utility/icons';
 import classes from './SongStatistics.module.css';
 
 const SongStatistics = (props) => {

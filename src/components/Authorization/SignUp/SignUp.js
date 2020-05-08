@@ -20,6 +20,7 @@ const SignUp = (props) => {
       config: {
         name: 'email',
         label: 'Email',
+        placeholder: 'Type your email here',
       },
       validationRules: {
         required: true,
@@ -32,6 +33,7 @@ const SignUp = (props) => {
         type: 'password',
         name: 'password',
         label: 'Password',
+        placeholder: 'Type password here',
       },
       validationRules: {
         required: true,
@@ -49,6 +51,7 @@ const SignUp = (props) => {
           config: {
             name: 'name',
             label: 'Band name',
+            placeholder: 'Come up with a group name',
           },
           validationRules: {
             required: true,
@@ -62,6 +65,7 @@ const SignUp = (props) => {
             type: 'text',
             name: 'genres',
             label: 'Genres',
+            placeholder: 'Please select genres',
           },
           validationRules: {
             required: true,

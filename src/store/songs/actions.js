@@ -10,6 +10,7 @@ import {
   getSong,
   isSongExistInPlaylist,
   getSongs,
+  saveSongTag,
 } from './utility';
 import { getAudioDuration } from '../../utility/audio';
 
@@ -193,27 +194,20 @@ export const createSongInfoActionCreator = (songInfo) => {
   }
 }
 
-export const uploadSongActionCreator = (song, songPicture, songInfo) => {
-  return async dispatch => {
-    dispatch(startCreatingSongActionCreator());
-    songInfo.fileName = new Date().getTime() + song.name;
-    songInfo.duration = await getAudioDuration(song);
+export const saveSongTagsActionCreator = (song) => {
+  return (dispatch, getState) => {
+    const token = getState().auth.idToken;
 
-    const storeRef = firebase.storage().ref('songs/').child(songInfo.fileName).put(song);
-
-    const totalUploadSize = song.size + songPicture.size;
-    storeRef.on('state_changed', function (snapshot) {
-      const progress = (snapshot.bytesTransferred / totalUploadSize).toFixed(2) * 100;
-      dispatch(setLoadedPercentActionCreator(progress));
-    })
-
-    storeRef
+    Promise.all(song.tags.map(tag => {
+      const songTag = {
+        songName: song.fileName,
+        tag,
+      }
+      return saveSongTag(songTag, token)
+    }))
       .then(() => {
-        dispatch(uploadSongPicture(songPicture, songInfo, totalUploadSize))
-      })
-      .catch(error => {
-        dispatch(songsErrorActionCreator(error))
-        dispatch(finishCreatingSongActionCreator());
+        delete song.tags;
+        dispatch(createSongInfoActionCreator(song))
       })
   }
 }
@@ -232,7 +226,32 @@ export const uploadSongPicture = (songPicture, songInfo, totalUploadSize) => {
 
     storeRef
       .then(() => {
-        dispatch(createSongInfoActionCreator(songInfo))
+        dispatch(saveSongTagsActionCreator(songInfo))
+      })
+      .catch(error => {
+        dispatch(songsErrorActionCreator(error))
+        dispatch(finishCreatingSongActionCreator());
+      })
+  }
+}
+
+export const uploadSongActionCreator = (song, songPicture, songInfo) => {
+  return async dispatch => {
+    dispatch(startCreatingSongActionCreator());
+    songInfo.fileName = new Date().getTime() + song.name;
+    songInfo.duration = await getAudioDuration(song);
+
+    const storeRef = firebase.storage().ref('songs/').child(songInfo.fileName).put(song);
+
+    const totalUploadSize = song.size + songPicture.size;
+    storeRef.on('state_changed', function (snapshot) {
+      const progress = (snapshot.bytesTransferred / totalUploadSize).toFixed(2) * 100;
+      dispatch(setLoadedPercentActionCreator(progress));
+    })
+
+    storeRef
+      .then(() => {
+        dispatch(uploadSongPicture(songPicture, songInfo, totalUploadSize))
       })
       .catch(error => {
         dispatch(songsErrorActionCreator(error))

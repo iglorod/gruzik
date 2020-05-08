@@ -19,10 +19,6 @@
   border: rgba(0, 0, 0, 0.07) solid 1px !important;
 }
 
-.activeSongCard .bottomSection {
-  color: #00B7BF;
-}
-
 .songContainer {
   display: flex;
 }
@@ -49,43 +45,4 @@
   color: rgba(0, 0, 0, 0.45);
 }
 
-.bottomSection {
-  font-size: 12px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.bottomSection .bandName a {
-  color: rgba(0, 0, 0, 0.45);
-}
-
-.bottomSection .bandName a:hover {
-  text-decoration: underline;
-}
-
-.activeSongCard .bottomSection .bandName a {
-  color: #00B7BF !important;
-}
-
-.songStatistics {
-  display: flex;
-  user-select: none;
-}
-
-.songStatistics > div:last-child {
-  margin-left: 10px;
-}
-
-.avatarMask {
-  position: absolute !important;
-  left: 16px;
-  background: rgba(0, 0, 0, 0.5) !important;
-  cursor: pointer;
-  opacity: 0;
-  transition: ease .3s;
-}
-
-.avatarMask:hover {
-  opacity: 1;
-}
 

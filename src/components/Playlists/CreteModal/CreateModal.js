@@ -61,11 +61,13 @@ const CreateModal = (props) => {
 
   return (
     <Modal
-      title='Create new Playlist'
+      title='Create new playlist'
       footer={null}
       visible
       onCancel={props.onCancel}
     >
+      <div className={'modal-note'}>{'PLEASE ENTER PLAYLIST NAME AND DESCRIPTION'}</div>
+
       <Form name='nest-messages' onFinish={createPlaylist}>
       <DataInputs stateInputs={playlistData} onChangeHandler={onChangeHandler} />
 

@@ -76,3 +76,11 @@ export const isSongExistInPlaylist = ({ playlistId, songName }) => {
       .catch(error => reject(error))
   })
 }
+
+export const saveSongTag = (obj, token) => {
+  return new Promise((resolve, reject) => {
+    axios.post(`${process.env.REACT_APP_FIREBASE_DATABASE}/song-tag.json/?auth=${token}`, obj)
+      .then(() => resolve())
+      .catch(error => reject(error))
+  })
+}

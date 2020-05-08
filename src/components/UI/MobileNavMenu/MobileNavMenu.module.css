@@ -2,6 +2,11 @@
   display: none !important;
 }
 
+.mobileMenu:hover, .mobileMenu:focus {
+  color: white !important;
+  border-color: white !important;
+}
+
 @media(max-width: 787px) {
   .mobileMenu {
     display: block !important;

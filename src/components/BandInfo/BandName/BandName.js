@@ -6,7 +6,7 @@ import { updateBandDataActionCreator } from '../../../store/band/actions';
 
 const BandName = (props) => {
   const style = {
-    fontSize: '18px',
+    fontSize: '20px',
     fontWeight: '500',
     margin: 'auto'
   }

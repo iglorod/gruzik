@@ -19,6 +19,7 @@ const SignIn = (props) => {
       config: {
         name: 'email',
         label: 'Email',
+        placeholder: 'Type your email here',
       },
       validationRules: {
         required: true,
@@ -31,6 +32,7 @@ const SignIn = (props) => {
         type: 'password',
         name: 'password',
         label: 'Password',
+        placeholder: 'Type your password here',
       },
       validationRules: {
         required: true,

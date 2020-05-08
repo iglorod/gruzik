@@ -1,0 +1,30 @@
+.bottomSection {
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.bottomSection .bandName a {
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.bottomSection .bandName a:hover {
+  text-decoration: underline;
+}
+
+.bottomSectionActive {
+  color: #ff7875;
+}
+
+.bottomSectionActive .bandName a {
+  color: #ff7875 !important;
+}
+
+.songStatistics {
+  display: flex;
+  user-select: none;
+}
+
+.songStatistics > div:last-child {
+  margin-left: 10px;
+}

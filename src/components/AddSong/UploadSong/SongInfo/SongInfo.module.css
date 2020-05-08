@@ -1,0 +1,9 @@
+.songInfo {
+  display: flex;
+}
+
+.songInputs {
+  width: 100% !important;
+}
+
+

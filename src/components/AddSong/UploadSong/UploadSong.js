@@ -55,7 +55,7 @@ const UploadSong = (props) => {
       {props.creating
         ? <Progress
           strokeLinecap='square'
-          strokeColor='#00B7BF'
+          strokeColor='#ff7875'
           percent={props.percentLoaded}
           status={props.error ? 'exception' : 'active'} />
         : null}

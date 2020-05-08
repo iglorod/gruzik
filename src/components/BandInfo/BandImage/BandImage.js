@@ -42,7 +42,6 @@ const BandImage = (props) => {
 const mapStateToProps = (state) => {
   return {
     userId: state.auth.localId,
-    userToken: state.auth.idToken,
   }
 }
 

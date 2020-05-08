@@ -1,0 +1,12 @@
+.avatarMask {
+  position: absolute !important;
+  left: 16px;
+  background: rgba(0, 0, 0, 0.5) !important;
+  cursor: pointer;
+  opacity: 0;
+  transition: ease .3s;
+}
+
+.avatarMask:hover {
+  opacity: 1;
+}

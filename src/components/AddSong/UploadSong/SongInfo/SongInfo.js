@@ -4,6 +4,7 @@ import { Modal, Form, Button, Space, Divider } from 'antd';
 
 import DataInputs from '../../../UI/DataInputs/DataInputs';
 import SongPicture from './SongPicture/SongPicture';
+import classes from './SongInfo.module.css';
 
 const SongInfo = (props) => {
   const [songPicture, setSongPicture] = useState(null);
@@ -12,6 +13,7 @@ const SongInfo = (props) => {
       config: {
         name: 'name',
         label: 'Name',
+        placeholder: 'Come up with the track name'
       },
       validationRules: {
         required: true,
@@ -21,11 +23,12 @@ const SongInfo = (props) => {
       },
       value: '',
     },
-    genre: {
+    tags: {
       config: {
         type: 'text',
-        name: 'genre',
-        label: 'Genre',
+        name: 'tags',
+        label: 'Tags',
+        placeholder: 'Spread tags with <#> <,> <.>'
       },
       validationRules: {
         required: true,
@@ -35,7 +38,7 @@ const SongInfo = (props) => {
   })
 
   const onChangeHandler = (inputName, event) => {
-    const newValue = (inputName === 'genre') ? event : event.target.value;
+    const newValue = (inputName === 'tags') ? event : event.target.value;
     setSongInputs(prevState => ({
       ...prevState,
       [inputName]: {
@@ -60,12 +63,20 @@ const SongInfo = (props) => {
       title='Create new song'
       footer={null}
       visible
+      width={620}
       onCancel={props.closeSongInfo}
     >
+      <div className={'modal-note'}>{'PLEASE FILL ALL FIELDS AND SELECT IMAGE FOR SONG'}</div>
       <Form name='nest-messages' onFinish={createSongHandler}>
-        <DataInputs stateInputs={songInputs} onChangeHandler={onChangeHandler} />
+        <div className={classes.songInfo}>
+          <div>
+            <SongPicture songPicture={songPicture} setPicture={setSongPicture} />
+          </div>
 
-       <SongPicture songPicture={songPicture} setPicture={setSongPicture} />
+          <div className={classes.songInputs}>
+            <DataInputs stateInputs={songInputs} onChangeHandler={onChangeHandler} />
+          </div>
+        </div>
 
         <Divider orientation='right'>
           <Space>
