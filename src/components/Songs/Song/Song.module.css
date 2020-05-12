@@ -1,13 +1,12 @@
 .songCard {
-  transition: ease .3s;
+  margin: 5px 0 !important;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1) !important;
+  border: none !important;
+  transition: all .3s;
 }
 
 .songCard:hover {
-  background: whitesmoke;
-}
-
-.songCard:not(:last-child) {
-  border-bottom: none !important;
+  background: rgba(0, 0, 0, 0.02);
 }
 
 .songCard>div {
@@ -15,8 +14,7 @@
 }
 
 .activeSongCard {
-  background: rgba(0, 0, 0, 0.07) !important;
-  border: rgba(0, 0, 0, 0.07) solid 1px !important;
+  margin: 15px 0 !important;
 }
 
 .songContainer {
@@ -44,5 +42,3 @@
   font-size: 12px;
   color: rgba(0, 0, 0, 0.45);
 }
-
-

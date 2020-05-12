@@ -14,6 +14,7 @@ import {
   playPrevSongActionCreator,
   updateSongListenedTimesActionCreator,
 } from '../../store/songs/actions';
+import { saveSongTagsToLocalStorage } from '../../utility/suggest-collection';
 import SongInfo from './SongInfo/SongInfo';
 import './Player.css';
 
@@ -45,6 +46,7 @@ const Player = (props) => {
       className={'audio-player'}
       onPlay={props.onPlayHandler}
       onPause={props.onPauseHandler}
+      onAbort={saveSongTagsToLocalStorage.bind(this, playSong.tags, props.userId)}
       onClickNext={props.playNext}
       onClickPrevious={props.playPrev}
       onCanPlay={props.onReadyToPlayHandler}
@@ -69,12 +71,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    playNext:             () => { dispatch(playNextSongActionCreator()) },
-    playPrev:             () => { dispatch(playPrevSongActionCreator()) },
-    onPlayHandler:        () => { dispatch(playSongActionCreator()) },
-    onPauseHandler:       () => { dispatch(pauseSongActionCreator()) },
+    playNext: () => { dispatch(playNextSongActionCreator()) },
+    playPrev: () => { dispatch(playPrevSongActionCreator()) },
+    onPlayHandler: () => { dispatch(playSongActionCreator()) },
+    onPauseHandler: () => { dispatch(pauseSongActionCreator()) },
     onReadyToPlayHandler: () => { dispatch(songReadyToPlayActionCreator()) },
-    updateListenedTimes:  (fileName) => { dispatch(updateSongListenedTimesActionCreator(fileName)) },
+    updateListenedTimes: (fileName) => { dispatch(updateSongListenedTimesActionCreator(fileName)) },
   }
 }
 

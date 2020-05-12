@@ -52,7 +52,7 @@ const reducer = (state = initialState, action) => {
       }
     }
     case actionTypes.LOGIN: {
-      clearLocalStorage();
+      clearLocalStorage([...Object.keys(initialState)]);
       if (action.rememberMe) {
         saveToLocalStorage(action.userData);
       }
@@ -74,7 +74,8 @@ const reducer = (state = initialState, action) => {
     case actionTypes.LOGIN_LOCALY: {
       return {
         ...state,
-        ...getDataFromLocalStorage(),
+        loading: false,
+        ...getDataFromLocalStorage([...Object.keys(initialState)]),
       }
     }
 
@@ -99,7 +100,7 @@ const reducer = (state = initialState, action) => {
     }
 
     case actionTypes.LOGOUT: {
-      clearLocalStorage();
+      clearLocalStorage([...Object.keys(initialState)]);
       clearTimeout(state.refreshTimerId);
       return { ...initialState, loading: false }
     }

@@ -43,6 +43,18 @@ export const getSongLikesCount = (song, localId) => {
   })
 }
 
+export const getSongTags = (song) => {
+  return new Promise((resolve, reject) => {
+    let queryParams = `?orderBy="songName"&equalTo="${song.fileName}"`;
+    axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE}/song-tag.json/${queryParams}`)
+      .then((response) => {
+        const tags = Object.values(response.data).map(songTag => songTag.tag);
+        resolve(tags);
+      })
+      .catch(error => reject(error))
+  })
+}
+
 export const getSong = (fileName) => {
   return new Promise((resolve, reject) => {
     let queryParams = `?orderBy="fileName"&equalTo="${fileName}"`;

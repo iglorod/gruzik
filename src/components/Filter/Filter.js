@@ -18,8 +18,8 @@ const Filter = (props) => {
 
   useEffect(() => {
     clearSongsList();
-    startLoading();
-    setTimeout(() => getSongsByGenre(genre), 2000);
+    //startLoading();
+    //setTimeout(() => getSongsByGenre(genre), 2000);
   }, [genre, getSongsByGenre, startLoading, clearSongsList])
 
   return (

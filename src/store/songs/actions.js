@@ -11,6 +11,7 @@ import {
   isSongExistInPlaylist,
   getSongs,
   saveSongTag,
+  getSongTags,
 } from './utility';
 import { getAudioDuration } from '../../utility/audio';
 
@@ -177,12 +178,16 @@ export const createSongInfoActionCreator = (songInfo) => {
     songInfo.localId = getState().auth.localId;
     songInfo.listened_times = 0;
 
+    const songTags = songInfo.tags;
+    delete songInfo.tags;         //we don't want to save song tags in songs.json
+
     axios.post(`${process.env.REACT_APP_FIREBASE_DATABASE}/songs.json/?auth=${getState().auth.idToken}`, songInfo)
       .then(() => {
         songInfo.bandName = getState().band.bandName;
         songInfo.likesCount = 0;
         songInfo.userIsLikedSong = false;
         songInfo.userLikeId = null;
+        songInfo.tags = songTags;
 
         dispatch(unshiftSongToListActionCreator(songInfo));
         dispatch(finishCreatingSongActionCreator());
@@ -206,7 +211,6 @@ export const saveSongTagsActionCreator = (song) => {
       return saveSongTag(songTag, token)
     }))
       .then(() => {
-        delete song.tags;
         dispatch(createSongInfoActionCreator(song))
       })
   }
@@ -324,7 +328,7 @@ export const getSongsLikesCountActionCreator = (songs) => {
             ...songLikes
           }
         })
-        dispatch(addSongsToListActionCreator(songs));
+        dispatch(getSongsTagsActionCreator(songs));
       })
   }
 }
@@ -386,6 +390,18 @@ export const updateSongListenedTimesActionCreator = (fileName) => {
           .catch(error => {
             dispatch(songsErrorActionCreator(error));
           })
+      })
+  }
+}
+
+export const getSongsTagsActionCreator = (songs) => {
+  return dispatch => {
+    Promise.all(songs.map(song => getSongTags(song)))
+      .then(songsTags => {
+        songsTags.forEach((songTags, index) => {
+          songs[index].tags = songTags;
+        })
+        dispatch(addSongsToListActionCreator(songs));
       })
   }
 }

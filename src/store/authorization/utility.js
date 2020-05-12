@@ -9,15 +9,20 @@ export const saveToLocalStorage = (data) => {
   }
 }
 
-export const getDataFromLocalStorage = () => {
+export const getDataFromLocalStorage = (keys) => {
   const userData = {};
   for (let [key, value] of Object.entries(localStorage)) {
-    userData[key] = value;
+    if (keys.includes(key)) {
+      userData[key] = value;
+    }
   }
 
   return userData;
 }
 
-export const clearLocalStorage = () => {
-  localStorage.clear();
+export const clearLocalStorage = (keys) => {
+  for (let key of keys) {
+    localStorage.removeItem(key);
+  }
 }
+

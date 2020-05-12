@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { trim } from 'lodash';
 
 import { Modal, Form, Button, Space, Divider } from 'antd';
 
@@ -38,7 +39,13 @@ const SongInfo = (props) => {
   })
 
   const onChangeHandler = (inputName, event) => {
-    const newValue = (inputName === 'tags') ? event : event.target.value;
+    let newValue = '';
+    if (inputName === 'tags') {
+      newValue = event.map(item => trim(item));
+    } else {
+      newValue = event.target.value;
+    }
+
     setSongInputs(prevState => ({
       ...prevState,
       [inputName]: {

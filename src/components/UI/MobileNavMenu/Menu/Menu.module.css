@@ -10,7 +10,6 @@
 
 .navLink:hover {
   color: #ff7875 !important;
-  background: rgb(255, 120, 117, 0.1) !important;
 }
 
 .navLink::first-letter {

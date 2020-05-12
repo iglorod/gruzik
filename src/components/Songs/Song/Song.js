@@ -12,7 +12,7 @@ const Song = (props) => {
   const { song, currentSong, playNow, selectedSongCanPlay } = props;
 
   const songCardClasses = [classes.songCard];
-  if (currentSong) songCardClasses.push(classes.activeSongCard);
+  if (currentSong) songCardClasses.unshift(classes.activeSongCard);
 
   const songDuration = getDurationInHumanTime(song.duration);
 

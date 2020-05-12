@@ -6,7 +6,7 @@ import { Layout } from 'antd';
 import SignUp from '../../Authorization/SignUp/SignUp';
 import SignIn from '../../Authorization/SignIn/SignIn';
 import Band from '../../Band/Band';
-import Music from '../../Music/Music';
+import Main from '../../Main/Main';
 import Playlists from '../../Playlists/Playlists';
 import Playlist from '../../Playlist/Playlist';
 import NotFound from '../../NotFound/NotFound';
@@ -22,7 +22,7 @@ const ContentComponent = () => {
         <Route path='/band' component={Band} exact />
         <Route path='/playlist' component={Playlist} exact />
         <Route path='/playlists' component={Playlists} exact />
-        <Route path='/' component={Music} exact />
+        <Route path='/' component={Main} exact />
         <Route path='/' component={NotFound} />
       </Switch>
     </Content>

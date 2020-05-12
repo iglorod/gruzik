@@ -26,18 +26,21 @@ const LayoutComponent = (props) => {
     }
   }, [fetchPlaylists, props.localId])
 
+
+  let content = (
+    <Layout>
+      <Route path='/' component={Filter} exact />
+      <Layout style={{ padding: '24px' }}>
+        <Content />
+      </Layout>
+    </Layout>
+  )
+  if (loading) content = <ModalSpinner />
+
   return (
     <Layout className='main-layout'>
-      {loading ? <ModalSpinner /> : null}
       <Header />
-
-      <Layout>
-        <Route path='/' component={Filter} exact />
-        <Layout style={{ padding: '24px' }}>
-          <Content />
-        </Layout>
-      </Layout>
-
+      {content}
       <Footer />
     </Layout>
   )
@@ -52,7 +55,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    signInLocally:  () => { dispatch(signInLocallyActionCreator()) },
+    signInLocally: () => { dispatch(signInLocallyActionCreator()) },
     fetchPlaylists: (userId) => { dispatch(fetchPlaylistsActionCreator(userId)) }
   }
 }
