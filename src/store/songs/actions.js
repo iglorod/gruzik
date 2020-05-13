@@ -300,7 +300,7 @@ export const fetchSongsByTagActionCreator = (tag) => {
       .then(response => Object.values(response.data))
       .then(tagData => getSongs(tagData))
       .then(songsItems => songsItems.map(songItem => songItem[Object.keys(songItem)[0]]))
-      .then(songs => dispatch(fetchSongsBandNameActionCreator(songs.reverse())))
+      .then(songs => dispatch(fetchSongsBandNameActionCreator(songs)))
       .catch(error => {
         dispatch(songsErrorActionCreator(error));
       })

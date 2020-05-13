@@ -27,7 +27,6 @@
   width: calc(100% - 40px);
   height: calc(100% - 40px);
   left: 20px;
-  cursor: pointer;
   transition: all .1s;
 }
 
@@ -62,6 +61,7 @@
 
 .playIcon>span {
   color: #fff;
+  cursor: pointer;
   transition: all .1s;
 }
 

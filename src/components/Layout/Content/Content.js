@@ -22,7 +22,7 @@ const ContentComponent = () => {
         <Route path='/band' component={Band} exact />
         <Route path='/playlist' component={Playlist} exact />
         <Route path='/playlists' component={Playlists} exact />
-        <Route path='/collection' component={Collection} exact />
+        <Route path='/collection' component={Collection}/>
         <Route path='/' component={Main} />
       </Switch>
     </Content>

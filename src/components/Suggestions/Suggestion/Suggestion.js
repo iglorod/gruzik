@@ -31,7 +31,7 @@ const Suggestion = (props) => {
   const openCollection = () => {
     setCollectionChoosed(true);
     setTimeout(() => {
-      props.history.push('/collection', { tag: props.tag });
+      props.history.push('/collection', { tag: props.tag, })
     }, 500)
   }
 
