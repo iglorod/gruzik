@@ -31,8 +31,9 @@
 }
 
 .header .logout-btn {
-  font-size: 16px;
-  color: #f0f0f0;
+  font-size: 14px;
+  color: rgba(255, 255,255, 0.7);
+  font-family: 'Open Sans', sans-serif;
   display: flex;
   float: right;
   cursor: pointer;
@@ -50,6 +51,7 @@
   }
   .logo {
     margin: 0 !important;
+    width: 140px !important;
   }
 }
 

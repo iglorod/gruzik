@@ -2,7 +2,6 @@ import * as actionTypes from '../actionTypes';
 import firebase from '../../firebase';
 import axios from 'axios';
 import { message } from 'antd';
-import { genres } from '../../utility/music-genres';
 
 import {
   bandNamesCachingDecorator,
@@ -114,13 +113,6 @@ export const pauseSongActionCreator = () => {
 export const songReadyToPlayActionCreator = () => {
   return {
     type: actionTypes.SELECTED_SONG_READY_TO_PLAY,
-  }
-}
-
-export const changeSelectedGenreActionCreator = (key) => {
-  return {
-    type: actionTypes.CHANGE_SELECTED_GENRE,
-    key,
   }
 }
 
@@ -299,18 +291,16 @@ export const fetchBandSongsActionCreator = (bandId) => {
   }
 }
 
-export const filterByGenreActionCreator = (key) => {
+export const fetchSongsByTagActionCreator = (tag) => {
   return dispatch => {
     dispatch(startSongsLoadingActionCreator());
 
-    const selectedGenre = genres[key];
-    let queryParams = `?orderBy="genre"&equalTo="${selectedGenre}"`;
-    axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE}/songs.json/${queryParams}`)
-      .then((response) => {
-        response.data
-          ? dispatch(fetchSongsBandNameActionCreator(Object.values(response.data).reverse()))
-          : dispatch(finishSongsLoadingActionCreator());
-      })
+    let queryParams = `?orderBy="tag"&equalTo="${tag}"`;
+    axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE}/song-tag.json/${queryParams}`)
+      .then(response => Object.values(response.data))
+      .then(tagData => getSongs(tagData))
+      .then(songsItems => songsItems.map(songItem => songItem[Object.keys(songItem)[0]]))
+      .then(songs => dispatch(fetchSongsBandNameActionCreator(songs.reverse())))
       .catch(error => {
         dispatch(songsErrorActionCreator(error));
       })

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const getSongsByName = (searchWord) => {
+export const fetchSongsByName = (searchWord) => {
   return new Promise((resolve, reject) => {
     let queryParams = `?orderBy="name"&startAt="${searchWord}"`;
     axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE}/songs.json/${queryParams}`)
@@ -58,6 +58,20 @@ export const fetchSongTags = (song) => {
   })
 }
 
+export const fetchSong = (fileName) => {
+  return new Promise((resolve, reject) => {
+    let queryParams = `?orderBy="fileName"&equalTo="${fileName}"`;
+    axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE}/songs.json/${queryParams}`)
+      .then(response => {
+        if (!response.data) resolve();
+
+        const song = Object.values(response.data)[0];
+        resolve(song);
+      })
+      .catch(error => reject(error))
+  })
+}
+
 export const sortSongsByBandName = (song1, song2) => {
   if (song1.bandName > song2.bandName) return 1;
   if (song1.bandName === song2.bandName) return 0;
@@ -66,12 +80,26 @@ export const sortSongsByBandName = (song1, song2) => {
 
 export const fetchSongs = (searchWord) => {
   return new Promise((resolve, reject) => {
-    getSongsByName(searchWord)
+    fetchSongsByName(searchWord)
       .then(songs => Promise.all(songs.map(song => fetchSongBandName(song))))
       .then(songs => Promise.all(songs.map(song => fetchSongTags(song))))
       .then(songs => Promise.all(songs.map(song => fetchSongLikesCount(song))))
       .then(songs => songs.sort(sortSongsByBandName))
       .then(songs => resolve(songs))
+      .catch(error => reject(error))
+  })
+}
+
+export const fetchImageByTag = (tag) => {
+  return new Promise((resolve, reject) => {
+    let queryParams = `?orderBy="tag"&equalTo="${tag}"&limitToFirst=1`;
+    axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE}/song-tag.json/${queryParams}`)
+      .then(response => {
+        const songFileName = Object.values(response.data)[0].songName;
+        return fetchSong(songFileName);
+      })
+      .then(song => song.imageName)
+      .then(imageName => resolve(imageName))
       .catch(error => reject(error))
   })
 }

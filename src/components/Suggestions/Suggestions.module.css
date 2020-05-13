@@ -1,0 +1,12 @@
+.suggestionsTitle {
+  font-size: 24px;
+  color: #ff7875 !important;
+  padding: 40px 20px 20px;
+  display: block;
+  text-align: left;
+}
+
+.suggestionsTitle:hover {
+  color: #ffafae !important;
+  text-decoration: underline;
+}

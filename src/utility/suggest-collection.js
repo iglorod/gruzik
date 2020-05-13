@@ -62,7 +62,7 @@ export const getRecentTagsFromLocalStorage = (userId) => {
   return cleanUpTags(history).slice(0, 12);
 }
 
-export const getPopularTagsFromLocalStorage = (userId) => {
+export const getOftenTagsFromLocalStorage = (userId) => {
   let tagsHistory = { ...JSON.parse(localStorage.getItem(userId)) };
   if (!tagsHistory) return;
 

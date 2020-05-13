@@ -3,7 +3,6 @@ import { message } from 'antd';
 
 const initialState = {
   songs: [],
-  genre: 0,
   playSong: null,
   playNow: false,
   playlists: [],
@@ -164,13 +163,6 @@ const reducer = (state = initialState, action) => {
       }
     }
 
-    case actionTypes.CHANGE_SELECTED_GENRE: {
-      return {
-        ...state,
-        genre: action.key,
-      }
-    }
-
     case actionTypes.TOGGLE_SONG_LIKES: {
       const stateSongsClone = [...state.songs];
       const songIndex = stateSongsClone.findIndex(song => song.fileName === action.fileName);
@@ -245,7 +237,6 @@ const reducer = (state = initialState, action) => {
         playSong: state.playSong,
         playNow: state.playNow,
         selectedSongCanPlay: state.selectedSongCanPlay,
-        genre: state.genre,
         playlists: state.playlists,
       }
     }

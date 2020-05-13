@@ -1,32 +1,37 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import { Row, Col } from 'antd';
-
-import Suggestion from '../Suggestion/Suggestion';
-import { getRecentTagsFromLocalStorage, getPopularTagsFromLocalStorage } from '../../utility/suggest-collection';
+import Suggestions from '../Suggestions/Suggestions';
+import { getRecentTagsFromLocalStorage, getOftenTagsFromLocalStorage } from '../../utility/suggest-collection';
 import { clearSongListActionCreator } from '../../store/songs/actions';
 
 const Music = (props) => {
   const { clearSongsList } = props;
 
+  const [oftenSuggestion, setOthenSuggestion] = useState(null);
+  const [recentSuggestion, setRecentSuggestion] = useState(null);
+
   useEffect(() => {
-    const popular = getPopularTagsFromLocalStorage(props.localId);
-    const recent = getRecentTagsFromLocalStorage(props.localId);
+    if (!props.localId) return;
+
+    setOthenSuggestion(getOftenTagsFromLocalStorage(props.localId));
+    setRecentSuggestion(getRecentTagsFromLocalStorage(props.localId));
 
     return () => {
       clearSongsList();
     }
   }, [clearSongsList])
 
+  if (!oftenSuggestion || !recentSuggestion) return null;
+
   return (
     <>
-      <div>#tags</div>
-      {/*<Row>
-        <Col xs={{ span: 24 }} sm={{ span: 12 }} md={{ span: 8 }} lg={{ span: 6 }} >
-          <Suggestion />
-        </Col>
-      </Row>*/}
+      <Suggestions
+        title={'recent'}
+        suggestions={recentSuggestion} />
+      <Suggestions
+        title={'often'}
+        suggestions={oftenSuggestion} />
     </>
   )
 }

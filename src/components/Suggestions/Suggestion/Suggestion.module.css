@@ -1,0 +1,72 @@
+.collectionPreview {
+  font-size: 20px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.poster {
+  height: calc(100% - 40px);
+}
+
+.imageBackground {
+  margin: 20px;
+  height: 100%;
+  background-blend-mode: multiply;
+}
+
+.posterImage {
+  padding: 30px;
+  width: 100%;
+  height: 100%;
+}
+
+.posterMask {
+  position: absolute;
+  width: calc(100% - 40px);
+  height: calc(100% - 40px);
+  left: 20px;
+  cursor: pointer;
+  transition: all .1s;
+}
+
+.posterMask:hover {
+  box-shadow: 0 40px 15px 5px rgba(0, 0, 0, 0.5) inset
+}
+
+.maskTitle {
+  font-size: 14px;
+  color: #d9d9d9;
+  position: absolute;
+  bottom: -10px;
+  width: 100%;
+  font-family: 'Cantarell', sans-serif;
+  user-select: none;
+}
+
+.maskTitle>img {
+  width: 12px;
+  margin-right: 5px;
+}
+
+.playIcon {
+  position: absolute;
+  font-size: 30px;
+  color: #d9d9d9;
+  text-align: right;
+  padding: 27px 35px;
+  width: 100%;
+  bottom: 0;
+}
+
+.playIcon>span {
+  color: #fff;
+  transition: all .1s;
+}
+
+.playIcon>span:hover {
+  font-size: 35px;
+  color: #ffafae;
+}
+
