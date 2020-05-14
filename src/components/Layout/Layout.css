@@ -85,6 +85,11 @@
   border-color: #ff7875 !important;
 }
 
+.ant-btn-dashed:hover, .ant-btn-dashed:focus {
+  color: #ff7875 !important;
+  border-color: #ff7875 !important;
+}
+
 .ant-spin-dot-item {
   background: #ff7875 !important;
 }
@@ -144,3 +149,19 @@
   background: rgb(255, 120, 117, 0.1) !important;
 }
 /** Overwrite ant.d styles */
+
+
+/** Overwrite scrollbar styles */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ffafae; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ff7875; 
+}
+/** Overwrite scrollbar styles */
+

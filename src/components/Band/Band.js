@@ -64,7 +64,6 @@ const mapDispatchToProps = (dispatch) => {
     clearSongsList: () => { dispatch(clearSongListActionCreator()) },
     clearBandData: () => { dispatch(clearBandDataActionCreator()) },
     startPlay: (song) => { dispatch(startPlayRecivedSongActionCreator(song)) },
-
   }
 }
 

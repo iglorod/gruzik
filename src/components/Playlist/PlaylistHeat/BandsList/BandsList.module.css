@@ -1,0 +1,9 @@
+.bandLink {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.45);
+  margin: 0 5px;
+}
+
+.bandLink:hover {
+  color: #ffafae;
+}

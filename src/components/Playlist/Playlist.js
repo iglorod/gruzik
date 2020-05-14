@@ -7,7 +7,11 @@ import { Row, Col, Space } from 'antd';
 import PlaylistHeat from './PlaylistHeat/PlaylistHeat';
 import CurrentSong from '../CurrentSong/CurrentSong';
 import Songs from '../Songs/Songs';
-import { clearSongListActionCreator, fetchPlaylistRecordsActionCreator } from '../../store/songs/actions';
+import {
+  clearSongListActionCreator,
+  fetchPlaylistRecordsActionCreator,
+  startPlayRecivedSongActionCreator,
+} from '../../store/songs/actions';
 
 const Music = (props) => {
   const { key: playlistKey } = props.location.state;
@@ -40,7 +44,7 @@ const Music = (props) => {
       </Col>
       <Col xs={{ span: 24 }} sm={{ span: 12, offset: 2 }} md={{ span: 16, offset: 2 }} lg={{ span: 14, offset: 2 }} >
         <Space direction='vertical' style={{ width: '100%' }}>
-          <PlaylistHeat playlist={playlist} />
+          <PlaylistHeat playlist={playlist} songs={props.songs} />
           <Songs />
         </Space>
       </Col>
@@ -61,6 +65,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     clearSongsList: () => { dispatch(clearSongListActionCreator()) },
     fetchPlaylistSongs: (key) => { dispatch(fetchPlaylistRecordsActionCreator(key)) },
+    startPlay: (song) => { dispatch(startPlayRecivedSongActionCreator(song)) },
   }
 }
 

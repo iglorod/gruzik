@@ -1,0 +1,9 @@
+.tag {
+  color: #ff7875;
+}
+
+.tag:hover {
+  color: #ffafae;
+  text-decoration: underline;
+}
+

@@ -1,20 +1,33 @@
 import React from 'react';
 
-import { Skeleton } from 'antd';
+import { Skeleton, Spin } from 'antd';
 
-import PlaylistStatistic from './PlaylistStatistic/PlaylistStatistic';
+import Statistics from './Statistics/Statistics';
+import BandsList from './BandsList/BandsList';
+import Tags from './Tags/Tags';
 import classes from './PlaylistHeat.module.css';
 
-const PlaylistHeat = ({ playlist }) => {
+const PlaylistHeat = ({ playlist, songs }) => {
   if (!playlist) return <Skeleton active />;
+
+  let additionalData = <Spin size='small' />
+  if (songs.length > 0) {
+    additionalData = (
+      <>
+        <div className={classes.bands}>{<BandsList songs={songs} />}</div>
+        <div className={classes.tags}>{<Tags songs={songs} />}</div>
+        <div className={classes.statistic}><Statistics /></div>
+      </>
+    )
+  }
 
   return (
     <div className={classes.heat}>
       <div className={classes.title}>{playlist.name}</div>
       <div className={classes.description}>{playlist.description}</div>
-      <div className={classes.statistic}><PlaylistStatistic /></div>
+      {additionalData}
     </div>
   )
 }
 
-export default PlaylistHeat;
+export default React.memo(PlaylistHeat);

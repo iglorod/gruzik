@@ -3,6 +3,7 @@
   font-family: 'Open Sans', sans-serif;
   color: rgba(255, 255,255, 0.7);
   margin: 0 15px;
+  user-select: none;
 }
 
 .navLink:hover {
