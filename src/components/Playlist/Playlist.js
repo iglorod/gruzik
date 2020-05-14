@@ -14,13 +14,18 @@ const Music = (props) => {
   const { playlists, clearSongsList, fetchPlaylistSongs } = props;
 
   useEffect(() => {
-    clearSongsList();
     fetchPlaylistSongs(playlistKey);
 
     return () => {
       clearSongsList();
     }
   }, [playlistKey, fetchPlaylistSongs, clearSongsList]);
+
+  useEffect(() => {
+    if (!props.playSong && props.songs.length > 0) {
+      props.startPlay(props.songs[0]);
+    }
+  }, [props.playSong, props.songs])
 
   if (!props.localId) {
     return <Redirect to={'/'} />;
@@ -47,6 +52,8 @@ const mapStateToProps = (state) => {
   return {
     playlists: state.songs.playlists,
     localId: state.auth.localId,
+    songs: state.songs.songs,
+    playSong: state.songs.playSong,
   }
 }
 

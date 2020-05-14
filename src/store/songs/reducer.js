@@ -231,6 +231,17 @@ const reducer = (state = initialState, action) => {
       }
     }
 
+    case actionTypes.REORDER_SONGS: {
+      const songsClone = [...state.songs];
+      const [replaced] = songsClone.splice(action.oldIndex, 1);
+      songsClone.splice(action.newIndex, 0, replaced);
+
+      return {
+        ...state,
+        songs: [...songsClone]
+      }
+    }
+
     case actionTypes.CLEAR_SONGS_LIST: {
       return {
         ...initialState,

@@ -18,9 +18,12 @@ const Filter = (props) => {
   useEffect(() => {
     const tag = props.location.state.tag;
 
-    clearSongsList();
     startLoading();
     setTimeout(() => getSongsByTag(tag), 1000);
+    
+    return () => {
+      clearSongsList();
+    }
   }, [getSongsByTag, startLoading, clearSongsList, props.location.state])
 
   useEffect(() => {

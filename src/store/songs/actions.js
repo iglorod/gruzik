@@ -165,6 +165,14 @@ export const shuffleSongsActionCreator = () => {
   }
 }
 
+export const reorderSongsListActionCreator = (oldIndex, newIndex) => {
+  return {
+    type: actionTypes.REORDER_SONGS,
+    oldIndex,
+    newIndex,
+  }
+}
+
 export const createSongInfoActionCreator = (songInfo) => {
   return (dispatch, getState) => {
     songInfo.localId = getState().auth.localId;
