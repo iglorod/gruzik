@@ -1,0 +1,32 @@
+.mobileMenu {
+  display: none !important;
+}
+
+.desktopMenu {
+  display: block !important;
+  float: right;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.mobileMenu, .desktopMenu {
+  color: #ff7875 !important;
+  background: #fff !important;
+}
+
+.mobileMenu:hover, .mobileMenu:focus, .desktopMenu:hover, .desktopMenu:focus {
+  color: #ffafae !important;
+}
+
+@media(max-width: 787px) {
+  .mobileMenu {
+    display: block !important;
+    float: right;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .desktopMenu {
+    display: none !important;
+  }
+}
+

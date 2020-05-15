@@ -6,12 +6,14 @@ const initialState = {
   localId: null,
   email: null,
   isBand: false,
+  username: '',
+  image: '',
   idToken: null,
   refreshToken: null,
   expiresIn: null,
   refreshTimerId: null,
   loading: true,
-  authStart: false,
+  submitting: false,
   errorMessage: null,
 }
 
@@ -35,8 +37,15 @@ const reducer = (state = initialState, action) => {
     case actionTypes.AUTH_START: {
       return {
         ...state,
-        authStart: true,
+        submitting: true,
         errorMessage: null,
+      }
+    }
+
+    case actionTypes.AUTH_FINISH: {
+      return {
+        ...state,
+        submitting: false,
       }
     }
 
@@ -48,7 +57,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         errorMessage,
-        authStart: false,
+        submitting: false,
       }
     }
     case actionTypes.LOGIN: {
@@ -65,9 +74,12 @@ const reducer = (state = initialState, action) => {
         localId: action.userData.localId,
         email: action.userData.email,
         isBand: action.userData.isBand || false,
+        username: action.userData.username || '',
+        image: action.userData.image || '',
         idToken: action.userData.idToken,
         refreshToken: action.userData.refreshToken,
         expiresIn: expiresIn,
+        submitting: false,
       }
     }
 
@@ -96,6 +108,15 @@ const reducer = (state = initialState, action) => {
         idToken: action.tokens.idToken,
         refreshToken: action.tokens.refreshToken,
         expiresIn: action.tokens.expiresIn,
+      }
+    }
+
+    case actionTypes.SET_USER_DATA: {
+      message.success('Profile data was updated');
+      saveToLocalStorage(action.data)
+      return {
+        ...state,
+        ...action.data,
       }
     }
 

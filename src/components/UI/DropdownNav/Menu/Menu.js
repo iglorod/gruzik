@@ -4,6 +4,8 @@ import { NavLink } from 'react-router-dom';
 
 import { Menu } from 'antd';
 
+import ModalWrapper from '../../ModalWrapper/ModalWrapper';
+import Profile from '../../../Profile/Profile';
 import { logoutActionCreator } from '../../../../store/authorization/actions';
 import { clearPlaylistActionCreator } from '../../../../store/songs/actions';
 import classes from './Menu.module.css';
@@ -14,7 +16,7 @@ const MenuComponent = (props) => {
     props.clearPlaylists();
   }
 
-  let authSection = ['sign in', 'sign up']
+  let authButton = ['sign in', 'sign up']
     .map((item, index) => (
       <Menu.Item key={index} disabled={props.disabled}>
         <NavLink
@@ -28,15 +30,30 @@ const MenuComponent = (props) => {
       </Menu.Item>
     ));
 
-  if (props.email) authSection = (
-    <Menu.Item>
-      <div
-        className={classes.navLink}
-        onClick={props.disabled ? null :logoutAndCleanup}>
-        {'Logout'}
-      </div>;
-    </Menu.Item>
-  )
+  if (props.email) {
+    authButton = (
+      <Menu.Item>
+        <div
+          className={classes.navLink}
+          onClick={props.disabled ? null : logoutAndCleanup}>
+          {'Logout'}
+        </div>;
+      </Menu.Item>
+    )
+  }
+
+  let profileButton = null;
+  if (props.email && props.isBand.toString() == 'false') {
+    profileButton = (
+      <Menu.Item>
+        <ModalWrapper
+          className={classes.navLink}
+          modal={Profile}
+          label='My Profile'
+          disabled={props.disabled} />
+      </Menu.Item>
+    )
+  }
 
   return (
     <Menu className={classes.menu}>
@@ -54,8 +71,10 @@ const MenuComponent = (props) => {
           </Menu.Item>
         ))
       }
+      {profileButton}
+
       <Menu.Divider />
-      {authSection}
+      {authButton}
     </Menu>
   )
 }
@@ -63,12 +82,13 @@ const MenuComponent = (props) => {
 const mapStateToProps = (state) => {
   return {
     email: state.auth.email,
+    isBand: state.auth.isBand,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    logout:         () => { dispatch(logoutActionCreator()) },
+    logout: () => { dispatch(logoutActionCreator()) },
     clearPlaylists: () => { dispatch(clearPlaylistActionCreator()) },
   }
 }

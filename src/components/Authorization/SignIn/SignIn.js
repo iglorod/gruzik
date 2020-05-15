@@ -105,7 +105,7 @@ const SignIn = (props) => {
 
         <Alert errorMessage={props.errorMessage} />
 
-        <SubmitButton authStart={props.authStart} label={'Sign In'} />
+        <SubmitButton loading={props.submitting} label={'Sign In'} />
 
         <BottomNote to='/sign-up' note={'Don\'t have an account? Sign Up'} />
       </Form>
@@ -117,7 +117,7 @@ const mapStateToProps = (state) => {
   return {
     errorMessage: state.auth.errorMessage,
     email: state.auth.email,
-    authStart: state.auth.authStart
+    submitting: state.auth.submitting
   }
 }
 

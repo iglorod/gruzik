@@ -1,0 +1,13 @@
+.userInfo {
+  display: flex;
+}
+
+.userInputs {
+  width: 100% !important;
+}
+
+.checkbox {
+  color: rgba(0, 0, 0, 0.45) !important;
+  text-align: right;
+  display: block !important;
+}

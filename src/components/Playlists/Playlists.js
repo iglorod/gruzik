@@ -50,6 +50,7 @@ const Playlists = (props) => {
             }}>
               <Card.Grid className={classes.playlist}>
                 <ExportOutlined className={classes.playlistIcon} />
+                <div className={classes.playlistHeat}></div>
                 <div className={classes.playlistInfo}>
                   <div>
                     {playlist.name}

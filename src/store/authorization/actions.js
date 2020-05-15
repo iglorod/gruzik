@@ -1,5 +1,12 @@
 import * as actionTypes from '../actionTypes';
 import axios from 'axios';
+import {
+  storeUserImage,
+  removeUserImage,
+  getUserKey,
+  getUserData,
+  updateUserData
+} from './utility';
 
 export const startLoadingActionCreator = () => {
   return {
@@ -33,6 +40,12 @@ export const authStartActionCreator = () => {
   }
 }
 
+export const authFinishActionCreator = () => {
+  return {
+    type: actionTypes.AUTH_FINISH,
+  }
+}
+
 export const authErrorActionCreator = (error) => {
   return {
     type: actionTypes.AUTH_ERROR,
@@ -44,6 +57,13 @@ export const setTimeoutIdActionCreator = (timerId) => {
   return {
     type: actionTypes.RESET_TIMEOUT_ID,
     timerId,
+  }
+}
+
+export const setUserDataActionCreator = (data) => {
+  return {
+    type: actionTypes.SET_USER_DATA,
+    data,
   }
 }
 
@@ -88,25 +108,48 @@ export const resetTokenTimer = () => { //set token auto-refreshing
 
 export const postBandDataActionCreator = (createdUser, newUser) => {
   return dispatch => {
+    const band = {
+      localId: createdUser.localId,
+      bandName: newUser.bandName,
+      genres: newUser.genres,
+      description: 'No description yet',
+    }
+
+    axios.post(`${process.env.REACT_APP_FIREBASE_DATABASE}/bands.json/?auth=${createdUser.idToken}`, band)
+      .then(() => {
+        createdUser.isBand = true;
+        dispatch(loginActionCreator(createdUser))
+        dispatch(resetTokenTimer());
+      })
+      .catch(error => dispatch(authErrorActionCreator(error)))
+  }
+}
+
+export const postUserDataActionCreator = (createdUser, newUser) => {
+  return dispatch => {
+    const username = newUser.email.split('@')[0];
+
+    const user = {
+      localId: createdUser.localId,
+      username: username,
+    }
+
+    axios.post(`${process.env.REACT_APP_FIREBASE_DATABASE}/users.json/?auth=${createdUser.idToken}`, user)
+      .then(() => {
+        createdUser.username = username;
+        dispatch(loginActionCreator(createdUser))
+        dispatch(resetTokenTimer());
+      })
+      .catch(error => dispatch(authErrorActionCreator(error)))
+  }
+}
+
+export const postProfileDataActionCreator = (createdUser, newUser) => {
+  return dispatch => {
     if (newUser.bandName) {
-      const band = {
-        localId: createdUser.localId,
-        bandName: newUser.bandName,
-        genres: newUser.genres,
-        description: 'No description yet',
-      }
-
-      axios.post(`${process.env.REACT_APP_FIREBASE_DATABASE}/bands.json/?auth=${createdUser.idToken}`, band)
-        .then(() => {
-          createdUser.isBand = true;
-          dispatch(loginActionCreator(createdUser))
-          dispatch(resetTokenTimer());
-        })
-        .catch(error => dispatch(authErrorActionCreator(error)))
-
+      dispatch(postBandDataActionCreator(createdUser, newUser));
     } else {
-      dispatch(loginActionCreator(createdUser))
-      dispatch(resetTokenTimer());
+      dispatch(postUserDataActionCreator(createdUser, newUser))
     }
   }
 }
@@ -115,10 +158,10 @@ export const setUserTypeActionCreator = (user, rememberMe) => { //band or regula
   return dispatch => {
     let queryParams = `?orderBy="localId"&equalTo="${user.localId}"&limitToFirst=1`;
     axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE}/bands.json/${queryParams}`)
-      .then(response => {
-        if (response.data) {
-          user.isBand = true;
-        }
+      .then(response => user.isBand = !!response.data)
+      .then(isBand => isBand ? null : getUserData(user.localId))
+      .then(userData => {
+        user = userData ? { ...user, ...userData } : user;
 
         dispatch(loginActionCreator(user, rememberMe))
         dispatch(resetTokenTimer());
@@ -139,7 +182,7 @@ export const signUpActionCreator = (newUser) => {
 
     axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.REACT_APP_FIREBASE_KEY}`, authData)
       .then(response => {
-        dispatch(postBandDataActionCreator(response.data, newUser));
+        dispatch(postProfileDataActionCreator(response.data, newUser));
       })
       .catch(error => dispatch(authErrorActionCreator(error)))
   }
@@ -189,6 +232,44 @@ export const refreshTokenActionCreator = (token) => {
         dispatch(authErrorActionCreator(err));
         dispatch(logoutActionCreator());
       });
+  }
+}
+
+export const updateUserDataActionCreator = ({ username, image }) => {
+  return (dispatch, getState) => {
+    dispatch(authStartActionCreator());
+    const token = getState().auth.idToken;
+    const localId = getState().auth.localId;
+
+    const data = {};
+    if (username) data.username = username;
+    if (image) data.image = image;
+
+    getUserKey(localId)
+      .then(key => updateUserData(data, key, token))
+      .then(() => {
+        dispatch(setUserDataActionCreator(data));
+        dispatch(authFinishActionCreator());
+      })
+      .catch(error => dispatch(authErrorActionCreator(error)))
+  }
+}
+
+export const uploadUserImageActionCreator = (userData) => {
+  return dispatch => {
+    dispatch(authStartActionCreator());
+    if (!userData.image) {
+      return dispatch(updateUserDataActionCreator(userData));
+    }
+
+    storeUserImage(userData.image)
+      .then(response => {
+        const { name: image } = response.metadata;
+
+        dispatch(removeUserImage(userData.oldImage));
+        dispatch(updateUserDataActionCreator({ ...userData, image }));
+      })
+      .catch(error => dispatch(authErrorActionCreator(error)))
   }
 }
 

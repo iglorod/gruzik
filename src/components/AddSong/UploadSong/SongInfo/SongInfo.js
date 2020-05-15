@@ -4,7 +4,7 @@ import { trim } from 'lodash';
 import { Modal, Form, Button, Space, Divider } from 'antd';
 
 import DataInputs from '../../../UI/DataInputs/DataInputs';
-import SongPicture from './SongPicture/SongPicture';
+import FormPicture from '../../../UI/FormPicture/FormPicture';
 import classes from './SongInfo.module.css';
 
 const SongInfo = (props) => {
@@ -77,7 +77,12 @@ const SongInfo = (props) => {
       <Form name='nest-messages' onFinish={createSongHandler}>
         <div className={classes.songInfo}>
           <div>
-            <SongPicture songPicture={songPicture} setPicture={setSongPicture} />
+            <FormPicture
+              picture={songPicture}
+              name='Song picture'
+              pictureSize={5}
+              rules={[{ required: true, }]}
+              setPicture={setSongPicture} />
           </div>
 
           <div className={classes.songInputs}>

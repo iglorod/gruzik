@@ -144,7 +144,7 @@ const SignUp = (props) => {
 
         <Alert errorMessage={props.errorMessage} />
 
-        <SubmitButton authStart={props.authStart} label={'Sign Up'} />
+        <SubmitButton loading={props.submitting} label={'Sign Up'} />
         <BottomNote to='/sign-in' note='Already have an account? Sign In' />
       </Form>
     </React.Fragment>
@@ -155,7 +155,7 @@ const mapStateToProps = (state) => {
   return {
     errorMessage: state.auth.errorMessage,
     email: state.auth.email,
-    authStart: state.auth.authStart
+    submitting: state.auth.submitting
   }
 }
 

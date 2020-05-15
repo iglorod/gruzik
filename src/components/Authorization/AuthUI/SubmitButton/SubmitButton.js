@@ -4,14 +4,14 @@ import { Button } from 'antd';
 
 import classes from './SubmitButton.module.css';
 
-const SubmitButton = ({ authStart, label }) => {
+const SubmitButton = ({ loading, label }) => {
   return (
     <Button
       type='primary'
       htmlType='submit'
       className={classes.submitButton}
-      loading={authStart}
-      disabled={authStart}
+      loading={loading}
+      disabled={loading}
     >
       {label}
     </Button>

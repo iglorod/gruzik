@@ -2,30 +2,17 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { Layout } from 'antd';
+import { MenuFoldOutlined, UserOutlined } from '@ant-design/icons';
 
 import SearchBar from '../../SearchBar/SearchBar';
-import { logoutActionCreator } from '../../../store/authorization/actions';
-import { clearPlaylistActionCreator } from '../../../store/songs/actions';
 import Logo from '../../../assets/images/logo.png';
 import DesktopMenu from '../../UI/DesktopNavMenu/DesktopNavMenu';
-import MobileMenu from '../../UI/MobileNavMenu/MobileNavMenu';
+import DropdownNav from '../../UI/DropdownNav/DropdownNav';
 
 const { Header } = Layout;
 
 const HeaderComponent = (props) => {
-  const logoutAndCleanup = () => {
-    props.logout();
-    props.clearPlaylists();
-  }
   const disableLinks = props.loading || props.creating;
-
-  let authSection = <DesktopMenu position={'right'} disabled={disableLinks} items={['sign in', 'sign up']}></DesktopMenu>
-  if (props.email) authSection = (
-    <div
-      className={'logout-btn'}
-      onClick={disableLinks ? null : logoutAndCleanup}>{'Logout'}
-    </div >
-  );
 
   const linkToMyBand = {
     name: 'my band',
@@ -37,6 +24,25 @@ const HeaderComponent = (props) => {
     }
   }
 
+  const profileLinks = [];
+  if (props.isBand.toString() === 'true') profileLinks.push(linkToMyBand)
+
+  let authSection = (
+    <DesktopMenu
+      items={['sign in', 'sign up']}
+      disabled={disableLinks}
+      position={'right'} />
+  )
+  if (props.email) {
+    authSection = (
+      <DropdownNav
+        items={profileLinks}
+        disabled={disableLinks}
+        visible='desktop'
+        icon={<UserOutlined />} />
+    )
+  }
+
   const linkToMyMusic = {
     name: 'music',
     to: '/',
@@ -44,7 +50,6 @@ const HeaderComponent = (props) => {
 
   const actionLinks = [linkToMyMusic];
   if (props.email) actionLinks.push('playlists');
-  if (props.isBand) actionLinks.push(linkToMyBand)
 
   return (
     <Header className='header'>
@@ -52,8 +57,8 @@ const HeaderComponent = (props) => {
         <img src={Logo} alt={'logo'} />
       </div>
 
-      <DesktopMenu position={'left'} disabled={disableLinks} items={actionLinks}></DesktopMenu>
-      <MobileMenu items={actionLinks} disabled={disableLinks}></MobileMenu>
+      <DesktopMenu items={actionLinks} disabled={disableLinks} position={'left'} />
+      <DropdownNav items={[...profileLinks, ...actionLinks]} disabled={disableLinks} visible='mobile' icon={<MenuFoldOutlined />} />
 
       {authSection}
       <SearchBar />
@@ -71,11 +76,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    logout:         () => { dispatch(logoutActionCreator()) },
-    clearPlaylists: () => { dispatch(clearPlaylistActionCreator()) },
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(HeaderComponent);
+export default connect(mapStateToProps)(HeaderComponent);

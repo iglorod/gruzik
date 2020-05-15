@@ -6,6 +6,8 @@ import Suggestion from './Suggestion/Suggestion';
 import classes from './Suggestions.module.css';
 
 const Suggestions = (props) => {
+  if (props.suggestions.length === 0) return null;
+
   return (
     <>
       <a name={props.title} href={`#${props.title}`} className={classes.suggestionsTitle}>{`#${props.title}`}</a>

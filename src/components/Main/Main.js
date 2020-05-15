@@ -20,7 +20,7 @@ const Music = (props) => {
     return () => {
       clearSongsList();
     }
-  }, [clearSongsList])
+  }, [clearSongsList, props.localId])
 
   if (!oftenSuggestion || !recentSuggestion) return null;
 
