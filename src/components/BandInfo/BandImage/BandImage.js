@@ -6,6 +6,7 @@ import { UploadOutlined } from '@ant-design/icons';
 
 import { uploadImageActionCreator } from '../../../store/band/actions';
 import { validateImage } from '../../../utility/file-validation';
+import { createSrc } from '../../../utility/user';
 import classes from './BandImage.module.css';
 
 const BandImage = (props) => {
@@ -31,9 +32,7 @@ const BandImage = (props) => {
     <>
       <img
         alt='band poster'
-        src={'https://firebasestorage.googleapis.com/v0/b/'
-          + `${process.env.REACT_APP_FIREBASE_KEY_STORE_BUCKET}/o/band-images%2F`
-          + `${props.image}?alt=media`}
+        src={createSrc(props.image, 'band-images')}
       />
       {uploadButton}
     </>)

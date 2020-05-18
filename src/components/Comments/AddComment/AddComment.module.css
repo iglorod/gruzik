@@ -1,0 +1,10 @@
+.searchInput input {
+  font-size: 12px !important;
+  z-index: 0 !important;
+}
+
+.searchInput button {
+  font-size: 12px !important;
+  height: 28px;
+}
+

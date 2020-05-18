@@ -4,6 +4,7 @@ import { Avatar } from 'antd';
 import { PlayCircleFilled, PauseCircleFilled, LoadingOutlined } from '@ant-design/icons';
 
 import classes from './SongAvatar.module.css';
+import { createSrc } from '../../../../utility/user';
 
 const SongAvatar = (props) => {
   const { isCurrentAndPlay, selectedSongCanPlay } = props;
@@ -21,9 +22,7 @@ const SongAvatar = (props) => {
       <Avatar
         shape='square'
         size='large'
-        src={'https://firebasestorage.googleapis.com/v0/b/'
-          + `${process.env.REACT_APP_FIREBASE_KEY_STORE_BUCKET}/o/pictures-of-songs%2F`
-          + `${props.imageName}?alt=media`} />
+        src={createSrc(props.imageName, 'pictures-of-songs')} />
 
       <Avatar
         className={classes.avatarMask}

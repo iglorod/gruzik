@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import Suggestions from '../Suggestions/Suggestions';
 import { getRecentTagsFromLocalStorage, getOftenTagsFromLocalStorage } from '../../utility/suggest-collection';
 import { clearSongListActionCreator } from '../../store/songs/actions';
-
 const Music = (props) => {
   const { clearSongsList } = props;
 

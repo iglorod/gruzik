@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Avatar } from 'antd';
 
 import classes from './SongInfo.module.css';
+import { createSrc } from '../../../utility/user';
 
 const SongInfo = (props) => {
   const linkToBand = (
@@ -21,9 +22,7 @@ const SongInfo = (props) => {
         <Avatar
           shape='square'
           className={classes.avatar}
-          src={'https://firebasestorage.googleapis.com/v0/b/'
-            + `${process.env.REACT_APP_FIREBASE_KEY_STORE_BUCKET}/o/pictures-of-songs%2F`
-            + `${props.imageName}?alt=media`} alt={'song'} />
+          src={createSrc(props.imageName, 'pictures-of-songs')} />
       </div>
       <div className={classes.textInfo}>
         <div>{props.name}</div>

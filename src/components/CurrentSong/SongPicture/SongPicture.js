@@ -2,14 +2,13 @@ import React from 'react';
 
 import { PauseOutlined, LoadingOutlined, CaretRightOutlined } from '@ant-design/icons';
 
+import { createSrc } from '../../../utility/user';
 import classes from './SongPicture.module.css';
 
 const SongPicture = (props) => {
   const { image, playingNow, canPlay } = props;
   
-  const imageSrc = 'https://firebasestorage.googleapis.com/v0/b/'
-    + `${process.env.REACT_APP_FIREBASE_KEY_STORE_BUCKET}/o/pictures-of-songs%2F`
-    + `${image}?alt=media`;
+  const imageSrc = createSrc(image, 'pictures-of-songs');
 
   const songStateIcon = (
     playingNow

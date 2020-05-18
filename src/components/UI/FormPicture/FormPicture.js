@@ -5,6 +5,7 @@ import { UploadOutlined } from '@ant-design/icons';
 
 import { validateImage } from '../../../utility/file-validation';
 import classes from './FormPicture.module.css';
+import { createSrc } from '../../../utility/user';
 
 const FormPicture = (props) => {
   let picture = (
@@ -16,11 +17,9 @@ const FormPicture = (props) => {
   if (props.picture) {
     let src = null;
     try {
-      src = URL.createObjectURL(props.picture)
+      src = URL.createObjectURL(props.picture);
     } catch (error) {
-      src = 'https://firebasestorage.googleapis.com/v0/b/'
-        + `${process.env.REACT_APP_FIREBASE_KEY_STORE_BUCKET}/o/user-images%2F`
-        + `${props.picture}?alt=media`
+      src = createSrc(props.picture, 'user-images');
     }
 
     picture = (

@@ -6,6 +6,7 @@ import { PlayCircleFilled, LoadingOutlined } from '@ant-design/icons';
 
 // import { fetchImageByTag } from '../../../utility/song-queries';
 import Logo from '../../../assets/images/icon.png';
+import { createSrc } from '../../../utility/user';
 import classes from './Suggestion.module.css';
 
 import testImg from '../../../assets/test.jpg';
@@ -35,9 +36,7 @@ const Suggestion = (props) => {
     }, 500)
   }
 
-  const imageSrc = testImg/*'https://firebasestorage.googleapis.com/v0/b/'
-  + `${process.env.REACT_APP_FIREBASE_KEY_STORE_BUCKET}/o/pictures-of-songs%2F`
-  + `${imageName}?alt=media`;*/
+  const imageSrc = testImg;/*createSrc(imageName, 'pictures-of-songs')*/
 
   const mask = (
     <div className={classes.posterMask}>

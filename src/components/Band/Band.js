@@ -6,6 +6,7 @@ import { Row, Col, Space } from 'antd';
 import BandInfo from '../BandInfo/BandInfo';
 import AddSong from '../AddSong/CreateSong';
 import CurrentSong from '../CurrentSong/CurrentSong';
+import Comments from '../Comments/Comments';
 import Songs from '../Songs/Songs';
 import { fetchBandDataActionCreator, clearBandDataActionCreator } from '../../store/band/actions';
 import {
@@ -38,6 +39,7 @@ const Band = (props) => {
     <Row>
       <Col xs={{ span: 24 }} sm={{ span: 10 }} md={{ span: 6 }} lg={{ span: 6, offset: 2 }} >
         <CurrentSong />
+        <Comments />
       </Col>
       <Col xs={{ span: 24 }} sm={{ span: 12, offset: 2 }} md={{ span: 16, offset: 2 }} lg={{ span: 14, offset: 2 }} >
         <Space direction='vertical' style={{ width: '100%' }}>

@@ -7,6 +7,7 @@ import { Row, Col, Space } from 'antd';
 import PlaylistHeat from './PlaylistHeat/PlaylistHeat';
 import CurrentSong from '../CurrentSong/CurrentSong';
 import Songs from '../Songs/Songs';
+import Comments from '../Comments/Comments';
 import {
   clearSongListActionCreator,
   fetchPlaylistRecordsActionCreator,
@@ -41,6 +42,7 @@ const Music = (props) => {
     <Row>
       <Col xs={{ span: 24 }} sm={{ span: 10 }} md={{ span: 6 }} lg={{ span: 6, offset: 2 }} >
         <CurrentSong />
+        <Comments />
       </Col>
       <Col xs={{ span: 24 }} sm={{ span: 12, offset: 2 }} md={{ span: 16, offset: 2 }} lg={{ span: 14, offset: 2 }} >
         <Space direction='vertical' style={{ width: '100%' }}>

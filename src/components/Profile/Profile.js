@@ -23,7 +23,7 @@ const Profile = (props) => {
       validationRules: {
         type: 'string',
         min: 4,
-        max: 15,
+        max: 10,
       },
       value: props.username,
     },

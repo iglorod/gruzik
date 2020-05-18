@@ -1,0 +1,19 @@
+.ant-list.ant-list-split {
+  text-align: left;
+}
+
+.ant-list.ant-list-split .ant-spin-nested-loading {
+  max-height: 200px;
+  overflow: auto;
+}
+
+.ant-list.ant-list-split .ant-comment:first-child {
+  animation: blinker 1s linear none;
+}
+
+@keyframes blinker {
+  50% {
+    box-shadow: 0 0 50px inset #ffe3e2;
+    border-radius: 5px;
+  }
+}
