@@ -7,6 +7,7 @@ import thunk from 'redux-thunk';
 import authReducer from './store/authorization/reducer';
 import bandReducer from './store/band/reducer';
 import songsReducer from './store/songs/reducer';
+import adminReducer from './store/admin/reducer';
 
 import './index.css';
 import App from './App';
@@ -16,6 +17,7 @@ const store = createStore(combineReducers({
   auth: authReducer,
   band: bandReducer,
   songs: songsReducer,
+  adm: adminReducer,
 }), applyMiddleware(thunk));
 
 ReactDOM.render(

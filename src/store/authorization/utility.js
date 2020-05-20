@@ -53,11 +53,12 @@ export const getUserKey = (localId) => {
   })
 }
 
-export const getUserData = (localId) => {
+export const getUserData = (localId, isAdmin) => {
   return new Promise((resolve, reject) => {
     let queryParams = `?orderBy="localId"&equalTo="${localId}"`;
     axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE}/users.json/${queryParams}`)
       .then(response => Object.values(response.data)[0])
+      .then(data => isAdmin ? { ...data, isAdmin } : data)
       .then(data => resolve(data))
       .catch(error => reject(error))
   })
@@ -71,3 +72,14 @@ export const updateUserData = (data, key, token) => {
       .catch(error => reject(error));
   })
 }
+
+export const userIsAdmin = (localId) => {
+  return new Promise((resolve, reject) => {
+    let queryParams = `?orderBy="localId"&equalTo="${localId}"`;
+    axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE}/admins.json/${queryParams}`)
+      .then(response => Object.keys(response.data).length > 0)
+      .then(isAdmin => resolve(isAdmin))
+      .catch(error => reject(error))
+  })
+}
+

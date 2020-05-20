@@ -10,6 +10,7 @@ import Main from '../../Main/Main';
 import Playlists from '../../Playlists/Playlists';
 import Playlist from '../../Playlist/Playlist';
 import Collection from '../../Collection/Collection';
+import Admin from '../../Admin/Admin';
 
 const ContentComponent = () => {
   const { Content } = Layout;
@@ -22,7 +23,8 @@ const ContentComponent = () => {
         <Route path='/band' component={Band} exact />
         <Route path='/playlist' component={Playlist} exact />
         <Route path='/playlists' component={Playlists} exact />
-        <Route path='/collection' component={Collection}/>
+        <Route path='/collection' component={Collection} exact />
+        <Route path='/admin' component={Admin} exact />
         <Route path='/' component={Main} />
       </Switch>
     </Content>

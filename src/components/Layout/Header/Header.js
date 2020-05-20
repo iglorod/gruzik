@@ -50,6 +50,7 @@ const HeaderComponent = (props) => {
 
   const actionLinks = [linkToMyMusic];
   if (props.email) actionLinks.push('playlists');
+  if (props.isAdmin) actionLinks.push('admin');
 
   return (
     <Header className='header'>
@@ -69,7 +70,8 @@ const HeaderComponent = (props) => {
 const mapStateToProps = (state) => {
   return {
     email: state.auth.email,
-    isBand: state.auth.isBand,
+    isAdmin: state.auth.isAdmin, 
+    isBand: state.auth.isBand, 
     localId: state.auth.localId,
     loading: state.songs.loading,
     creating: state.songs.creating,

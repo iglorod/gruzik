@@ -5,7 +5,8 @@ import {
   removeUserImage,
   getUserKey,
   getUserData,
-  updateUserData
+  updateUserData,
+  userIsAdmin,
 } from './utility';
 
 export const startLoadingActionCreator = () => {
@@ -159,9 +160,10 @@ export const setUserTypeActionCreator = (user, rememberMe) => { //band or regula
     let queryParams = `?orderBy="localId"&equalTo="${user.localId}"&limitToFirst=1`;
     axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE}/bands.json/${queryParams}`)
       .then(response => user.isBand = !!response.data)
-      .then(isBand => isBand ? null : getUserData(user.localId))
+      .then(isBand => isBand ? null : userIsAdmin(user.localId))
+      .then(isAdmin => getUserData(user.localId, isAdmin))
       .then(userData => {
-        user = userData ? { ...user, ...userData } : user;
+        user = { ...user, ...userData };
 
         dispatch(loginActionCreator(user, rememberMe))
         dispatch(resetTokenTimer());

@@ -50,7 +50,6 @@ export const commentsOwnersCachingDecorator = () => {
       axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE}/users.json/${queryParams}`)             //fetching user
         .then(response => {
           if (Object.keys(response.data).length > 0) {
-            console.log(response.data)
             let { username: author, image: avatar = 'profile.png' } = Object.values(response.data)[0];
             avatar = createSrc(avatar, 'user-images');
 

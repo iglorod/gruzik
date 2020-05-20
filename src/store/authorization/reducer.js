@@ -15,6 +15,9 @@ const initialState = {
   loading: true,
   submitting: false,
   errorMessage: null,
+
+
+  isAdmin: false,
 }
 
 const reducer = (state = initialState, action) => {
@@ -62,7 +65,7 @@ const reducer = (state = initialState, action) => {
     }
     case actionTypes.LOGIN: {
       clearLocalStorage([...Object.keys(initialState)]);
-      if (action.rememberMe) {
+      if (action.rememberMe/* && !action.userData.isAdmin*/) {
         saveToLocalStorage(action.userData);
       }
 
@@ -73,6 +76,7 @@ const reducer = (state = initialState, action) => {
         loading: false,
         localId: action.userData.localId,
         email: action.userData.email,
+        isAdmin: action.userData.isAdmin || false,
         isBand: action.userData.isBand || false,
         username: action.userData.username || '',
         image: action.userData.image || '',

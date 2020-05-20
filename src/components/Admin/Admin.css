@@ -1,0 +1,70 @@
+[data-theme='compact'] .site-collapse-custom-collapse .site-collapse-custom-panel, .site-collapse-custom-collapse {
+  background: transparent !important;
+}
+
+[data-theme='compact'] .site-collapse-custom-collapse .site-collapse-custom-panel, .site-collapse-custom-collapse .site-collapse-custom-panel {
+  margin-bottom: 20px;
+  border: 1px solid #ff7875 !important;
+  border-radius: 5px !important;
+  background: #ff7875;
+  overflow: hidden;
+}
+
+[data-theme='compact'] .site-collapse-custom-collapse .site-collapse-custom-panel, .site-collapse-custom-collapse .site-collapse-custom-panel.pane-should-update {
+  border: 1px solid #ffafae !important;
+  background: #ffafae;
+}
+
+[data-theme='compact'] .site-collapse-custom-collapse .site-collapse-custom-panel, .site-collapse-custom-collapse .site-collapse-custom-panel .ant-collapse-header {
+  color: #fff !important;
+}
+
+[data-theme='compact'] .site-collapse-custom-collapse .site-collapse-custom-panel, .site-collapse-custom-collapse .site-collapse-custom-panel .ant-collapse-content.ant-collapse-content-active {
+  background: #fff;
+}
+
+[data-theme='compact'] .site-collapse-custom-collapse .site-collapse-custom-panel, .site-collapse-custom-collapse .site-collapse-custom-panel .ant-collapse-content.ant-collapse-content-active .ant-collapse-content-box {
+  padding: 10px;
+}
+
+.site-collapse-custom-collapse .site-collapse-custom-panel .ant-select-selector {
+  border: none;
+}
+
+.site-collapse-custom-collapse .site-collapse-custom-panel .ant-input-affix-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 30px;
+  color: #fff;
+  border: none;
+  max-width: 300px;
+  box-shadow: none !important;
+  transform: translateY(-50%);
+  background: transparent;
+}
+
+.site-collapse-custom-collapse .site-collapse-custom-panel .ant-input-affix-wrapper .ant-input {
+  color: #fff;
+  font-size: 14px !important;
+  box-shadow: none !important;
+  background: transparent;
+}
+
+.site-collapse-custom-collapse .site-collapse-custom-panel .ant-input-affix-wrapper .ant-input::placeholder {
+  color: #eaeaea;
+}
+
+.site-collapse-custom-collapse .site-collapse-custom-panel .collapse-show-actions {
+  margin: 0 5px;
+  opacity: 1;
+  cursor: pointer;
+}
+
+.site-collapse-custom-collapse .site-collapse-custom-panel .ant-collapse-extra .collapse-should-not-update {
+  margin: 0 5px;
+  opacity: 0;
+}
+
+.site-collapse-custom-collapse .site-collapse-custom-panel .action-buttons {
+  display: flex;
+}
