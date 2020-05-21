@@ -1,14 +1,20 @@
 import React from 'react';
 
+import { Popconfirm } from 'antd';
 import { LoadingOutlined, MinusSquareFilled } from '@ant-design/icons';
 
 const DeleteCollection = (props) => {
   return (
-    <div className={'collapse-show-actions'}
-      onClick={props.loading ? null : props.onClick}
+    <Popconfirm
+      title='Are you sure delete this collection?'
+      onConfirm={props.loading ? null : props.onClick}
+      okText='Yes'
+      cancelText='No'
     >
-      {props.loading ? <LoadingOutlined /> : <MinusSquareFilled />}
-    </div>
+      <div className={'collapse-show-actions'}>
+        {props.loading ? <LoadingOutlined /> : <MinusSquareFilled />}
+      </div>
+    </Popconfirm>
   )
 }
 

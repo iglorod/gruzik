@@ -91,7 +91,8 @@ export const createCollectionActionCreator = (data, token) => {
   return dispatch => {
     dispatch(startCreatingActionCreator())
     axios.post(`${process.env.REACT_APP_FIREBASE_DATABASE}/admin-collections.json/?auth=${token}`, data)
-      .then(() => {
+      .then((response) => {
+        data.key = response.data.name;
         dispatch(addCollectionToListActionCreator(data));
         dispatch(finishCreatingActionCreator());
       })
@@ -102,6 +103,7 @@ export const updateCollectionActionCreator = (data, index, token) => {
   return dispatch => {
     dispatch(startUpdatingActionCreator(index));
     const { name, tags } = data;
+    console.log(data);
     axios.patch(`${process.env.REACT_APP_FIREBASE_DATABASE}/admin-collections/${data.key}.json/?auth=${token}`, { name, tags })
       .then(() => {
         dispatch(setUpdatesToCollectionActionCreator(index));

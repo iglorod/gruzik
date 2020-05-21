@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { message } from 'antd';
+import { debounce } from 'lodash';
 
-import { Collapse, Select } from 'antd';
+import { Collapse, Select, Spin, Row, Col } from 'antd';
 import { CaretRightOutlined } from '@ant-design/icons';
 
 import ModalSpinner from '../UI/ModalSpinner/ModalSpinner';
 import PanelHeat from './PanelHeat/PanelHeat';
 import SaveCollection from './SaveCollection/SaveCollection';
 import DeleteButton from './DeleteCollection/DeleteCollection';
+import InfoPanel from './InfoPanel/InfoPanel';
 import {
   fetchCollectionsActionCreator,
   newCollectionValuesActionCreator,
@@ -17,16 +19,28 @@ import {
   updateCollectionActionCreator,
   deleteCollectionActionCreator,
 } from '../../store/admin/actions';
+import { getTagsByWord } from '../../utility/admin';
 import './Admin.css';
 
 const Admin = (props) => {
   const { Panel } = Collapse;
+  const { Option } = Select;
   const [createCollectionName, setCreateCollectionName] = useState('');
   const [createCollectionTags, setCreateCollectionTags] = useState([]);
+  const [searchTags, setSearchTags] = useState([]);
+  const [fetchingSearchTags, setFetchingSearchTags] = useState(false);
 
   useEffect(() => {
     props.fetchCollection();
   }, [])
+
+  const debounceTagsSearch = useRef(debounce((word, callback) => {
+    getTagsByWord(word)
+      .then(response => Array.from(response))
+      .then(tags => setSearchTags(tags))
+      .then(() => callback())
+      .catch(error => message.error(error.message))
+  }, 800));
 
   if (!props.isAdmin) return <Redirect to='/' />;
   if (props.loading) return <div style={{ position: 'relative' }}><ModalSpinner /></div>
@@ -45,6 +59,7 @@ const Admin = (props) => {
       message.warn('Each collection must contain no more than 12 tags')
       return;
     }
+
     setCreateCollectionTags(tags);
   }
 
@@ -90,68 +105,93 @@ const Admin = (props) => {
     props.deleteCollection(collection, index, idToken);
   }
 
+  const changeSearchResult = (event) => {
+    const word = event.target.value;
+    if (word.length < 2) {
+      setSearchTags([]);
+      return;
+    }
+    setFetchingSearchTags(true);
+    debounceTagsSearch.current(word, setFetchingSearchTags.bind(this, false));
+  }
+
   return (
-    <Collapse
-      bordered={false}
-      expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
-      className='site-collapse-custom-collapse'
-    >
-      {
-        props.collections.map((collection, index) => (
+    <Row>
+      <Col xs={{ span: 24 }} sm={{ span: 12 }} md={{ span: 16 }} lg={{ span: 16 }}>      
+        <Collapse
+          bordered={false}
+          expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
+          className='site-collapse-custom-collapse'
+        >
+          {
+            props.collections.map((collection, index) => (
+              <Panel
+                key={index}
+                header={
+                  <PanelHeat
+                    value={collection.name}
+                    onChange={handleCollectionNameChange.bind(this, index)} />
+                }
+                extra={
+                  <div className={'action-buttons'}>
+                    <SaveCollection
+                      loading={props.updating === index}
+                      onClick={updateCollection.bind(this, collection, index)}
+                      enabled={collection.shouldUpdate} />
+                    <DeleteButton
+                      loading={props.deleting === index}
+                      onClick={deleteCollection.bind(this, collection, index, props.idToken)} />
+                  </div>
+                }
+                className={`site-collapse-custom-panel ${collection.shouldUpdate ? 'pane-should-update' : null}`}
+              >
+                <Select
+                  tokenSeparators={['#', '.', ',']}
+                  mode='tags'
+                  style={{ width: '100%' }}
+                  placeholder='Collection tags'
+                  value={collection.tags}
+                  onChange={handleCollectionTagsChange.bind(this, index)} />
+              </Panel>
+            ))
+          }
           <Panel
-            key={index}
+            key={props.collections.length + 1}
             header={
               <PanelHeat
-                value={collection.name}
-                onChange={handleCollectionNameChange.bind(this, index)} />
+                value={createCollectionName}
+                onChange={handleCreateCollectionNameChange} />
             }
             extra={
-              <div className={'action-buttons'}>
-                <SaveCollection
-                  loading={props.updating === index}
-                  onClick={updateCollection.bind(this, collection, index)}
-                  enabled={collection.shouldUpdate} />
-                <DeleteButton
-                  loading={props.deleting === index}
-                  onClick={deleteCollection.bind(this, collection, index, props.idToken)} />
-              </div>
+              <SaveCollection
+                loading={props.creating}
+                onClick={createCollection}
+                enabled={createCollectionName.length > 0 && createCollectionTags.length > 0} />
             }
-            className={`site-collapse-custom-panel ${collection.shouldUpdate ? 'pane-should-update' : null}`}
+            className='site-collapse-custom-panel'
           >
             <Select
               tokenSeparators={['#', '.', ',']}
-              mode='tags'
+              mode='multiple'
               style={{ width: '100%' }}
               placeholder='Collection tags'
-              value={collection.tags}
-              onChange={handleCollectionTagsChange.bind(this, index)} />
+              value={createCollectionTags}
+              notFoundContent={fetchingSearchTags ? <Spin size='small' /> : null}
+              onInput={changeSearchResult}
+              onChange={handleCreateCollectionTagsChange}>
+              {
+                searchTags.map((tag) => (
+                  <Option key={tag}>{tag}</Option>
+                ))
+              }
+            </Select>
           </Panel>
-        ))
-      }
-      <Panel
-        key={props.collections.length + 1}
-        header={
-          <PanelHeat
-            value={createCollectionName}
-            onChange={handleCreateCollectionNameChange} />
-        }
-        extra={
-          <SaveCollection
-            loading={props.creating}
-            onClick={createCollection}
-            enabled={createCollectionName.length > 0 && createCollectionTags.length > 0} />
-        }
-        className='site-collapse-custom-panel'
-      >
-        <Select
-          tokenSeparators={['#', '.', ',']}
-          mode='tags'
-          style={{ width: '100%' }}
-          placeholder='Collection tags'
-          value={createCollectionTags}
-          onChange={handleCreateCollectionTagsChange} />
-      </Panel>
-    </Collapse>
+        </Collapse>
+      </Col>
+      <Col xs={{ span: 24 }} sm={{ span: 11, offset: 1 }} md={{ span: 7, offset: 1 }} >
+        <InfoPanel />
+      </Col>
+    </Row>
   )
 }
 

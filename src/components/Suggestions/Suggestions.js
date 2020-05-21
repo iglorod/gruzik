@@ -15,7 +15,7 @@ const Suggestions = (props) => {
         {
           props.suggestions.map((tag, index) => (
             <Col key={index} xs={{ span: 24 }} sm={{ span: 12 }} md={{ span: 8 }} lg={{ span: 6 }} >
-              <Suggestion tag={tag[0]} />
+              <Suggestion tag={tag} />
             </Col>
           ))
         }

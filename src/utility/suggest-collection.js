@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export const saveSongTagsToLocalStorage = (tags, userId) => {
   let tagsHistory = JSON.parse(localStorage.getItem(userId));
   if (!tagsHistory) tagsHistory = {};
@@ -52,6 +54,10 @@ export const cleanUpTags = (history) => {
   return searchTags;
 }
 
+export const getTagNames = (tags) => {
+  return tags.map(tag => tag[0]);
+}
+
 export const getRecentTagsFromLocalStorage = (userId) => {
   let tagsHistory = { ...JSON.parse(localStorage.getItem(userId)) };
   if (!tagsHistory) return;
@@ -59,7 +65,8 @@ export const getRecentTagsFromLocalStorage = (userId) => {
   const sortFunc = (a, b) => b[1].time - a[1].time;
 
   let history = sortTags(tagsHistory, sortFunc);
-  return cleanUpTags(history).slice(0, 12);
+  const tags = cleanUpTags(history).slice(0, 12);
+  return getTagNames(tags);
 }
 
 export const getOftenTagsFromLocalStorage = (userId) => {
@@ -68,6 +75,17 @@ export const getOftenTagsFromLocalStorage = (userId) => {
 
   const sortFunc = (a, b) => b[1].count - a[1].count;
 
-  return sortTags(tagsHistory, sortFunc).slice(0, 12);
+  const tags = sortTags(tagsHistory, sortFunc).slice(0, 12);
+  return getTagNames(tags);
+}
+
+export const fetchAdminCollections = () => {
+  return new Promise((resolve, reject) => {
+    axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE}/admin-collections.json/`)
+      .then(response => response.data)
+      .then(collections => collections ? Object.values(collections) : null)
+      .then(collections => resolve(collections))
+      .catch(error => reject(error))
+  })
 }
 

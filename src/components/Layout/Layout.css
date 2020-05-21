@@ -32,7 +32,7 @@
 
 .header .logout-btn {
   font-size: 14px;
-  color: rgba(255, 255,255, 0.7);
+  color: rgba(255, 255, 255, 0.7);
   font-family: 'Open Sans', sans-serif;
   display: flex;
   float: right;
@@ -62,6 +62,7 @@
 }
 
 /** Overwrite ant.d styles */
+
 .ant-input {
   font-size: 16px !important;
 }
@@ -106,8 +107,7 @@
   color: rgba(0, 0, 0, 0.45);
 }
 
-.ant-modal-body input,
-.ant-modal-body .ant-select-selector {
+.ant-modal-body input, .ant-modal-body .ant-select-selector {
   font-size: 16px;
   border-radius: 0 !important;
 }
@@ -148,20 +148,33 @@
   color: #ff7875 !important;
   background: rgb(255, 120, 117, 0.1) !important;
 }
+
+.ant-radio-checked .ant-radio-inner {
+  border-color: #ff7875 !important;
+}
+
+.ant-radio-inner::after {
+  background-color: #ff7875 !important;
+}
+
+.ant-radio-wrapper:hover .ant-radio, .ant-radio:hover .ant-radio-inner, .ant-radio-input:focus+.ant-radio-inner {
+  border-color: #ff7875 !important;
+}
+
 /** Overwrite ant.d styles */
 
-
 /** Overwrite scrollbar styles */
+
 ::-webkit-scrollbar {
   width: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #ffafae; 
+  background: #ffafae;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #ff7875; 
+  background: #ff7875;
 }
-/** Overwrite scrollbar styles */
 
+/** Overwrite scrollbar styles */
