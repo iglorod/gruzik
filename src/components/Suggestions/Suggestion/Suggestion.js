@@ -4,21 +4,18 @@ import { withRouter } from 'react-router-dom';
 import { Spin } from 'antd';
 import { PlayCircleFilled, LoadingOutlined } from '@ant-design/icons';
 
-// import { fetchImageByTag } from '../../../utility/song-queries';
+import { fetchImageByTag } from '../../../utility/song-queries';
 import Logo from '../../../assets/images/icon.png';
 import { createSrc } from '../../../utility/user';
 import classes from './Suggestion.module.css';
-
-import testImg from '../../../assets/test.jpg';
 
 const Suggestion = (props) => {
   const [imageName, setImageName] = useState(null);
   const [collectionChoosed, setCollectionChoosed] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => setImageName(true), 1000)
-    /* fetchImageByTag(props.tag)
-       .then(imageName => setImageName(imageName))*/
+    fetchImageByTag(props.tag)
+      .then(imageName => setImageName(imageName))
   }, [])
 
   if (!imageName) return (
@@ -36,7 +33,7 @@ const Suggestion = (props) => {
     }, 500)
   }
 
-  const imageSrc = testImg;/*createSrc(imageName, 'pictures-of-songs')*/
+  const imageSrc = createSrc(imageName, 'pictures-of-songs')
 
   const mask = (
     <div className={classes.posterMask}>
@@ -60,4 +57,4 @@ const Suggestion = (props) => {
   )
 }
 
-export default withRouter(Suggestion);
+export default React.memo(withRouter(Suggestion));

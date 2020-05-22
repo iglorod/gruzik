@@ -173,12 +173,20 @@ const Admin = (props) => {
                 className={`site-collapse-custom-panel ${collection.shouldUpdate ? 'pane-should-update' : null}`}
               >
                 <Select
-                  tokenSeparators={['#', '.', ',']}
-                  mode='tags'
+                  mode='multiple'
                   style={{ width: '100%' }}
                   placeholder='Collection tags'
                   value={collection.tags}
-                  onChange={handleCollectionTagsChange.bind(this, index)} />
+                  notFoundContent={fetchingSearchTags ? <Spin size='small' /> : null}
+                  onInput={changeSearchResult}
+                  onChange={handleCollectionTagsChange.bind(this, index)}
+                >
+                  {
+                    searchTags.map((tag) => (
+                      <Option key={tag}>{tag}</Option>
+                    ))
+                  }
+                </Select>
               </Panel>
             ))
           }
@@ -198,14 +206,14 @@ const Admin = (props) => {
             className='site-collapse-custom-panel'
           >
             <Select
-              tokenSeparators={['#', '.', ',']}
               mode='multiple'
               style={{ width: '100%' }}
               placeholder='Collection tags'
               value={createCollectionTags}
               notFoundContent={fetchingSearchTags ? <Spin size='small' /> : null}
               onInput={changeSearchResult}
-              onChange={handleCreateCollectionTagsChange}>
+              onChange={handleCreateCollectionTagsChange}
+            >
               {
                 searchTags.map((tag) => (
                   <Option key={tag}>{tag}</Option>

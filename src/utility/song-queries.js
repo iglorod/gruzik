@@ -94,11 +94,10 @@ export const fetchImageByTag = (tag) => {
   return new Promise((resolve, reject) => {
     let queryParams = `?orderBy="tag"&equalTo="${tag}"&limitToFirst=1`;
     axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE}/song-tag.json/${queryParams}`)
-      .then(response => {
-        const songFileName = Object.values(response.data)[0].songName;
-        return fetchSong(songFileName);
-      })
+      .then(response => Object.values(response.data)[0].songName)
+      .then(songFileName => fetchSong(songFileName))
       .then(song => song.imageName)
+      .then(imageName => { console.log(imageName); return imageName; })
       .then(imageName => resolve(imageName))
       .catch(error => reject(error))
   })
