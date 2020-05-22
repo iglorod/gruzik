@@ -24,10 +24,17 @@ export const addCollectionToListActionCreator = (data) => {
   }
 }
 
-export const setUpdatesToCollectionActionCreator = (index) => {
+export const setUpdatesToCollectionActionCreator = (data, index) => {
   return {
     type: actionTypes.UPDATE_COLLECTION,
+    data,
     index,
+  }
+}
+
+export const sortCollectionsActionCreator = () => {
+  return {
+    type: actionTypes.SORT_COLLECTIONS,
   }
 }
 
@@ -83,6 +90,7 @@ export const fetchCollectionsActionCreator = () => {
       .then(data => data ? data : {})
       .then(collections => Object.entries(collections).map(([key, collection]) => ({ ...collection, key })))
       .then(collections => dispatch(setCollectionsActionCreator(collections)))
+      .then(() => dispatch(sortCollectionsActionCreator()))
       .catch(error => message.error(error.message))
   }
 }
@@ -94,6 +102,7 @@ export const createCollectionActionCreator = (data, token) => {
       .then((response) => {
         data.key = response.data.name;
         dispatch(addCollectionToListActionCreator(data));
+        dispatch(sortCollectionsActionCreator());
         dispatch(finishCreatingActionCreator());
       })
   }
@@ -102,11 +111,11 @@ export const createCollectionActionCreator = (data, token) => {
 export const updateCollectionActionCreator = (data, index, token) => {
   return dispatch => {
     dispatch(startUpdatingActionCreator(index));
-    const { name, tags } = data;
-    console.log(data);
-    axios.patch(`${process.env.REACT_APP_FIREBASE_DATABASE}/admin-collections/${data.key}.json/?auth=${token}`, { name, tags })
+    const { name, tags, position } = data;
+    axios.patch(`${process.env.REACT_APP_FIREBASE_DATABASE}/admin-collections/${data.key}.json/?auth=${token}`, { name, tags, position })
       .then(() => {
-        dispatch(setUpdatesToCollectionActionCreator(index));
+        dispatch(setUpdatesToCollectionActionCreator(data, index));
+        dispatch(sortCollectionsActionCreator());
         dispatch(finishUpdatingActionCreator());
       })
   }
@@ -118,7 +127,18 @@ export const deleteCollectionActionCreator = (data, index, token) => {
     axios.delete(`${process.env.REACT_APP_FIREBASE_DATABASE}/admin-collections/${data.key}.json/?auth=${token}`)
       .then(() => {
         dispatch(deleteCollectionFromListActionCreator(index));
+        dispatch(sortCollectionsActionCreator());
         dispatch(finishDeletingActionCreator());
       })
+  }
+}
+
+export const reorderActionCreator = (oldCollectionPosition, newCollectionPosition, token) => {
+  return dispatch => {
+    const { collection: firstCollection, index: oldIndex } = oldCollectionPosition;
+    const { collection: secondCollection, index: newIndex } = newCollectionPosition;
+
+    dispatch(updateCollectionActionCreator({ ...firstCollection, position: secondCollection.position }, oldIndex, token));
+    dispatch(updateCollectionActionCreator({ ...secondCollection, position: firstCollection.position }, newIndex, token));
   }
 }

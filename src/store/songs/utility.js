@@ -23,7 +23,6 @@ export const bandNamesCachingDecorator = (src) => {
   }
 }
 
-
 export const getSongLikesCount = (song, localId) => {
   return new Promise((resolve, reject) => {
     let queryParams = `?orderBy="fileName"&equalTo="${song.fileName}"`;

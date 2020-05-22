@@ -13,26 +13,28 @@ import { clearSongListActionCreator } from '../../store/songs/actions';
 const Music = (props) => {
   const { clearSongsList } = props;
 
-  const [oftenSuggestion, setOthenSuggestion] = useState(null);
-  const [recentSuggestion, setRecentSuggestion] = useState(null);
+  const [oftenSuggestion, setOthenSuggestion] = useState([]);
+  const [recentSuggestion, setRecentSuggestion] = useState([]);
   const [adminSuggestions, setAdminSuggestions] = useState([]);
 
   useEffect(() => {
-    if (!props.localId) return;
-
-    setOthenSuggestion(getOftenTagsFromLocalStorage(props.localId));
-    setRecentSuggestion(getRecentTagsFromLocalStorage(props.localId));
-
     fetchAdminCollections()
       .then(collections => setAdminSuggestions(collections))
       .catch(error => message.error(error.message))
+
+    if (!props.localId) {
+      setOthenSuggestion([]);
+      setRecentSuggestion([]);
+      return;
+    }
+
+    setOthenSuggestion(getOftenTagsFromLocalStorage(props.localId));
+    setRecentSuggestion(getRecentTagsFromLocalStorage(props.localId));
 
     return () => {
       clearSongsList();
     }
   }, [clearSongsList, props.localId])
-
-  if (!oftenSuggestion || !recentSuggestion) return null;
 
   return (
     <>

@@ -60,6 +60,11 @@
   cursor: pointer;
 }
 
+.site-collapse-custom-collapse .site-collapse-custom-panel .collapse-disabled-actions {
+  opacity: .7;
+  cursor: default !important;
+}
+
 .site-collapse-custom-collapse .site-collapse-custom-panel .ant-collapse-extra .collapse-should-not-update {
   margin: 0 5px;
   opacity: 0;

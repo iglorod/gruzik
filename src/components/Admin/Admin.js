@@ -5,11 +5,12 @@ import { message } from 'antd';
 import { debounce } from 'lodash';
 
 import { Collapse, Select, Spin, Row, Col } from 'antd';
-import { CaretRightOutlined } from '@ant-design/icons';
+import { CaretRightOutlined, UpOutlined, DownOutlined } from '@ant-design/icons';
 
 import ModalSpinner from '../UI/ModalSpinner/ModalSpinner';
 import PanelHeat from './PanelHeat/PanelHeat';
 import SaveCollection from './SaveCollection/SaveCollection';
+import ReorderButton from './ReorderCollection/ReorderCollection';
 import DeleteButton from './DeleteCollection/DeleteCollection';
 import InfoPanel from './InfoPanel/InfoPanel';
 import {
@@ -18,6 +19,7 @@ import {
   createCollectionActionCreator,
   updateCollectionActionCreator,
   deleteCollectionActionCreator,
+  reorderActionCreator,
 } from '../../store/admin/actions';
 import { getTagsByWord } from '../../utility/admin';
 import './Admin.css';
@@ -32,7 +34,7 @@ const Admin = (props) => {
 
   useEffect(() => {
     props.fetchCollection();
-  }, [])
+  }, [props.fetchCollection])
 
   const debounceTagsSearch = useRef(debounce((word, callback) => {
     getTagsByWord(word)
@@ -83,9 +85,12 @@ const Admin = (props) => {
       return;
     }
 
+    const collectionsCount = props.collections.length;
+
     const collection = {
       name: createCollectionName,
       tags: createCollectionTags,
+      position: collectionsCount ? props.collections[collectionsCount - 1].position + 1 : 0,
     }
     props.saveCollection(collection, props.idToken);
     setTimeout(() => clearNewCollectionState(), 500);
@@ -115,9 +120,23 @@ const Admin = (props) => {
     debounceTagsSearch.current(word, setFetchingSearchTags.bind(this, false));
   }
 
+  const collectionWithIndex = (index) => {
+    return {
+      collection: props.collections[index],
+      index,
+    }
+  }
+
+  const reorderCollections = (oldIndex, newIndex, event) => {
+    event.stopPropagation();
+    if (!props.collections[oldIndex] || !props.collections[newIndex]) return;
+
+    props.reorder(collectionWithIndex(oldIndex), collectionWithIndex(newIndex), props.idToken);
+  }
+
   return (
     <Row>
-      <Col xs={{ span: 24 }} sm={{ span: 12 }} md={{ span: 16 }} lg={{ span: 16 }}>      
+      <Col xs={{ span: 24 }} sm={{ span: 12 }} md={{ span: 16 }} lg={{ span: 16 }}>
         <Collapse
           bordered={false}
           expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
@@ -138,6 +157,14 @@ const Admin = (props) => {
                       loading={props.updating === index}
                       onClick={updateCollection.bind(this, collection, index)}
                       enabled={collection.shouldUpdate} />
+                    <ReorderButton
+                      icon={<DownOutlined />}
+                      enabled={props.updating === null}
+                      onClick={reorderCollections.bind(this, index, index + 1)} />
+                    <ReorderButton
+                      icon={<UpOutlined />}
+                      enabled={props.updating === null}
+                      onClick={reorderCollections.bind(this, index, index - 1)} />
                     <DeleteButton
                       loading={props.deleting === index}
                       onClick={deleteCollection.bind(this, collection, index, props.idToken)} />
@@ -214,6 +241,7 @@ const dispatchToProps = (dispatch) => {
     saveCollection: (data, token) => { dispatch(createCollectionActionCreator(data, token)) },
     updateCollection: (data, index, token) => { dispatch(updateCollectionActionCreator(data, index, token)) },
     deleteCollection: (data, index, token) => { dispatch(deleteCollectionActionCreator(data, index, token)) },
+    reorder: (firstCollection, secondCollections, token) => { dispatch(reorderActionCreator(firstCollection, secondCollections, token)) },
   }
 }
 

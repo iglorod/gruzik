@@ -43,8 +43,13 @@ const reducer = (state = initialState, action) => {
     }
 
     case actionTypes.UPDATE_COLLECTION: {
+      if (action.index === null) return state;
+
       const collectionsClone = [...state.collections];
-      collectionsClone[action.index].shouldUpdate = false;
+      collectionsClone[action.index] = {
+        ...action.data, 
+        shouldUpdate: false,
+      }
 
       return {
         ...state,
@@ -59,6 +64,17 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         collections: collectionsClone,
+      }
+    }
+
+    case actionTypes.SORT_COLLECTIONS: {
+      if (state.collections.length === 0) return state;
+      const collectionsClone = [...state.collections];
+      collectionsClone.sort((a, b) => a.position - b.position);
+
+      return {
+        ...state,
+        collections: [...collectionsClone],
       }
     }
 

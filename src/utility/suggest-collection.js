@@ -84,8 +84,8 @@ export const fetchAdminCollections = () => {
     axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE}/admin-collections.json/`)
       .then(response => response.data)
       .then(collections => collections ? Object.values(collections) : null)
+      .then(collections => collections.sort((a, b) => a.position - b.position))
       .then(collections => resolve(collections))
       .catch(error => reject(error))
   })
 }
-
