@@ -12,19 +12,24 @@ import {
   clearSongListActionCreator,
   fetchPlaylistRecordsActionCreator,
   startPlayRecivedSongActionCreator,
+  fetchLikedSongsActionCreator,
 } from '../../store/songs/actions';
 
 const Music = (props) => {
   const { key: playlistKey } = props.location.state;
-  const { playlists, clearSongsList, fetchPlaylistSongs } = props;
+  const { playlists, localId, clearSongsList, fetchPlaylistSongs, fetchLikedSongs } = props;
 
   useEffect(() => {
-    fetchPlaylistSongs(playlistKey);
+    if (playlistKey === 'liked') {
+      fetchLikedSongs(localId);
+    } else {
+      fetchPlaylistSongs(playlistKey);
+    }
 
     return () => {
       clearSongsList();
     }
-  }, [playlistKey, fetchPlaylistSongs, clearSongsList]);
+  }, [playlistKey, fetchPlaylistSongs, clearSongsList, fetchLikedSongs, localId]);
 
   useEffect(() => {
     if (!props.playSong && props.songs.length > 0) {
@@ -32,7 +37,7 @@ const Music = (props) => {
     }
   }, [props.playSong, props.songs])
 
-  if (!props.localId) {
+  if (!localId) {
     return <Redirect to={'/'} />;
   }
 
@@ -46,7 +51,7 @@ const Music = (props) => {
       </Col>
       <Col xs={{ span: 24 }} sm={{ span: 12, offset: 2 }} md={{ span: 16, offset: 2 }} lg={{ span: 14, offset: 2 }} >
         <Space direction='vertical' style={{ width: '100%' }}>
-          <PlaylistHeat playlist={playlist} songs={props.songs} />
+          <PlaylistHeat playlist={playlist} playlistKey={playlistKey} songs={props.songs} />
           <Songs />
         </Space>
       </Col>
@@ -67,6 +72,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     clearSongsList: () => { dispatch(clearSongListActionCreator()) },
     fetchPlaylistSongs: (key) => { dispatch(fetchPlaylistRecordsActionCreator(key)) },
+    fetchLikedSongs: (localId) => { dispatch(fetchLikedSongsActionCreator(localId)) },
     startPlay: (song) => { dispatch(startPlayRecivedSongActionCreator(song)) },
   }
 }

@@ -68,7 +68,7 @@ export const getSong = (fileName) => {
 
 export const getSongs = (data) => {
   return new Promise((resolve, reject) => {
-    Promise.all(data.map(item => getSong(item.songName)))
+    Promise.all(data.map(item => getSong(item.songName || item.fileName)))
       .then(songs => resolve(songs))
       .catch(error => reject(error))
   })

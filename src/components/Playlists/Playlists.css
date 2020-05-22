@@ -1,12 +1,12 @@
-.playlistCard {
+.playlist-card {
   border: none !important;
 }
 
-.playlistCard>div:first-child {
+.playlist-card>div:first-child {
   border: none;
 }
 
-.playlistCard>div:first-child div {
+.playlist-card>div:first-child div {
   font-size: 18px;
   color: rgba(0, 0, 0, 0.65);
   padding-bottom: 20px;
@@ -56,55 +56,6 @@
   }
 }
 
-.playlistInfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.playlistInfo>div:first-child {
-  font-size: 16px;
-  font-weight: 500;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
-}
-
-.playlistInfo>div:last-child {
-  font-size: 12px;
-  font-weight: 300;
-  text-align: justify;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  display: -webkit-box;
-}
-
-.addPlaylistButton {
+.add-playlist-button {
   font-size: 20px;
 }
-
-.playlistIcon {
-  position: absolute;
-  color: #fff !important;
-  top: 5px;
-  left: 5px;
-  z-index: 9;
-}
-
-.playlistHeat {
-  position: absolute;
-  width: 100%;
-  height: 25px;
-  left: 0;
-  top: 0;
-  background: #ff9f9d;
-  transition: all .3s;
-}
-
-.playlist:hover .playlistHeat {
-  background: #ff7875;
-}
-

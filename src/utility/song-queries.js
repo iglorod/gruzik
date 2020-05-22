@@ -103,3 +103,13 @@ export const fetchImageByTag = (tag) => {
       .catch(error => reject(error))
   })
 }
+
+export const fetchLikedSongsCount = (localId) => {
+  return new Promise((resolve, reject) => {
+    let queryParams = `?orderBy="localId"&equalTo="${localId}"`;
+    axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE}/song_likes.json/${queryParams}`)
+      .then(response => Object.values(response.data))
+      .then(likedSongs => resolve(likedSongs.length))
+      .catch(error => reject(error))
+  })
+}

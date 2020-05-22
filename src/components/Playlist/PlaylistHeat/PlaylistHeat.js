@@ -5,10 +5,14 @@ import { Skeleton, Spin } from 'antd';
 import Statistics from './Statistics/Statistics';
 import BandsList from './BandsList/BandsList';
 import Tags from './Tags/Tags';
+import { likedSongs } from '../../../utility/music-genres';
 import classes from './PlaylistHeat.module.css';
 
-const PlaylistHeat = ({ playlist, songs }) => {
-  if (!playlist) return <Skeleton active />;
+const PlaylistHeat = ({ playlist, playlistKey, songs }) => {
+  if (playlistKey === 'liked') {
+    playlist = likedSongs;
+  }
+  else if (!playlist) return <Skeleton active />;
 
   let additionalData = <Spin size='small' />
   if (songs.length > 0) {

@@ -1,16 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
-import { Card } from 'antd';
-import { PlusCircleOutlined, AppstoreOutlined, ExportOutlined } from '@ant-design/icons';
+import { Card, message } from 'antd';
+import { PlusCircleOutlined, AppstoreOutlined } from '@ant-design/icons';
 
 import CreateModal from './CreteModal/CreateModal';
-import classes from './Playlists.module.css';
+import PlaylistPoster from './PlaylistPoster/PlaylistPoster';
+import { likedSongs } from '../../utility/music-genres';
+import { fetchLikedSongsCount } from '../../utility/song-queries';
+
+import './Playlists.css';
 
 const Playlists = (props) => {
-  const [showCreateModal, setShowCreateModal] = useState(false)
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [likedSongsCount, setLikedSongsCount] = useState(0);
   const { playlists } = props;
+
+  useEffect(() => {
+    fetchLikedSongsCount(props.localId)
+      .then(likedSongsCount => setLikedSongsCount(likedSongsCount))
+      .catch(error => message.error(error.message))
+  })
 
   if (!props.localId) {
     return <Redirect to={'/'} />;
@@ -37,35 +48,18 @@ const Playlists = (props) => {
     <>
       {createModal}
       <Card
-        className={classes.playlistCard}
+        className={'playlist-card'}
         title={<><AppstoreOutlined /> {'Playlists'}</>}
       >
+        {likedSongsCount > 0 ? <PlaylistPoster playlist={likedSongs} /> : null}
         {
           playlists.map((playlist, index) => (
-            <Link key={index} to={{
-              pathname: '/playlist',
-              state: {
-                key: playlist.key,
-              }
-            }}>
-              <Card.Grid className={classes.playlist}>
-                <ExportOutlined className={classes.playlistIcon} />
-                <div className={classes.playlistHeat}></div>
-                <div className={classes.playlistInfo}>
-                  <div>
-                    {playlist.name}
-                  </div>
-                  <div>
-                    {playlist.description}
-                  </div>
-                </div>
-              </Card.Grid>
-            </Link>
+            <PlaylistPoster key={index} playlist={playlist} />
           ))
         }
 
-        <Card.Grid className={classes.playlist} onClick={openCreateModal}>
-          <div className={classes.addPlaylistButton}>
+        <Card.Grid className={'playlist'} onClick={openCreateModal}>
+          <div className={'add-playlist-button'}>
             <PlusCircleOutlined />
           </div>
         </Card.Grid>

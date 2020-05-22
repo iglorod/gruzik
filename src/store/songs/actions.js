@@ -467,3 +467,17 @@ export const fetchPlaylistRecordsActionCreator = (playlistId) => {
       .catch(error => dispatch(songsErrorActionCreator(error)))
   }
 }
+
+export const fetchLikedSongsActionCreator = (localId) => {
+  return dispatch => {
+    dispatch(startSongsLoadingActionCreator());
+
+    let queryParams = `?orderBy="localId"&equalTo="${localId}"`;
+    axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE}/song_likes.json/${queryParams}`)
+      .then(response => Object.values(response.data))
+      .then(likedSongs => getSongs(likedSongs))
+      .then(songsItems => songsItems.map(songItem => songItem[Object.keys(songItem)[0]]))
+      .then(songs => dispatch(fetchSongsBandNameActionCreator(songs)))
+      .catch(error => dispatch(songsErrorActionCreator(error)))
+  }
+}
