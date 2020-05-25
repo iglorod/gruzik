@@ -17,9 +17,14 @@ const Suggestions = (props) => {
   }, [props.suggestions.length])
 
   useEffect(() => {
-    if (showSuggestions === false) {
+    if (showSuggestions === false && props.suggestions.length > 0) {
       window.addEventListener('scroll', checkOffset.current);
     } else {
+      checkOffset.current.cancel();
+      window.removeEventListener('scroll', checkOffset.current);
+    }
+
+    return () => {
       checkOffset.current.cancel();
       window.removeEventListener('scroll', checkOffset.current);
     }
@@ -28,6 +33,7 @@ const Suggestions = (props) => {
   const checkOffset = useRef(throttle(() => {
     const userOffset = window.pageYOffset + window.innerHeight;
     const elementOffset = titleRef.current.offsetTop;
+
     if (userOffset - elementOffset > 0) {
       setShowSuggestions(true);
     }

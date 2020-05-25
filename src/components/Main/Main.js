@@ -18,10 +18,6 @@ const Music = (props) => {
   const [adminSuggestions, setAdminSuggestions] = useState([]);
 
   useEffect(() => {
-    fetchAdminCollections()
-      .then(collections => setAdminSuggestions(collections))
-      .catch(error => message.error(error.message))
-
     if (!props.localId) {
       setOthenSuggestion([]);
       setRecentSuggestion([]);
@@ -35,6 +31,12 @@ const Music = (props) => {
       clearSongsList();
     }
   }, [clearSongsList, props.localId])
+
+  useEffect(() => {
+    fetchAdminCollections()
+      .then(collections => setAdminSuggestions(collections))
+      .catch(error => message.error(error.message))
+  }, [])
 
   return (
     <>
